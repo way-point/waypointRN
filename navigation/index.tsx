@@ -9,15 +9,18 @@ import {cityAtom, currentTheme} from '../constants/atoms';
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/SignIn/LoginScreen';
 import RegisterScreen from '../screens/SignIn/RegisterScreen';
-import {FontAwesome5, Feather, Ionicons, Octicons} from '@expo/vector-icons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import {
   RootStackParamList,
   RootTabParamList,
   SignInStackParamList,
-} from '../types';
+} from './types';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ProfileImage from '../components/ProfileImage';
-import {BlurView} from 'expo-blur';
+import {BlurView} from '@react-native-community/blur';
 
 const BottomTabNavigator = () => {
   const Stack = createBottomTabNavigator<RootTabParamList>();
@@ -33,8 +36,8 @@ const BottomTabNavigator = () => {
         headerBackground: () => {
           return Platform.OS === 'ios' ? (
             <BlurView
-              tint={colors[currTheme].blur}
-              intensity={30}
+              blurType={colors[currTheme].blur}
+              blurAmount={30}
               style={StyleSheet.absoluteFill}
             />
           ) : null;
@@ -162,7 +165,7 @@ const SignInNavigator = () => {
   );
 };
 
-const ifSignIn = false;
+const ifSignIn = true;
 
 const Navigation = () => {
   const [currTheme] = useAtom(currentTheme);

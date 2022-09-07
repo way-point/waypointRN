@@ -27,7 +27,7 @@ const NativeBaseWrapper = ({children}: NativeBaseWrapperProps) => {
   // TODO: disable this when user wants specific theme
   useEffect(() => {
     setCurrTheme(colorScheme);
-  }, [colorScheme]);
+  }, [colorScheme, setCurrTheme]);
 
   const components = {
     Text: {

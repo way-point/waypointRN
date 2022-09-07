@@ -1,4 +1,3 @@
-import {FontAwesome} from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SplashScreen from 'react-native-splash-screen';
 import {useAtom} from 'jotai';
@@ -16,8 +15,6 @@ export default function useCachedResources() {
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-        SplashScreen.default.show();
-
         const theme = (await AsyncStorage.getItem('theme')) as ThemeType;
         if (theme) {
           setCurrTheme(theme);
@@ -34,7 +31,7 @@ export default function useCachedResources() {
     }
 
     loadResourcesAndDataAsync();
-  }, []);
+  }, [colorScheme, setCurrTheme]);
 
   return isLoadingComplete;
 }
