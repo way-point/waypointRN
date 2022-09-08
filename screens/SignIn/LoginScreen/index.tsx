@@ -16,6 +16,7 @@ import {currentTheme} from '../../../constants/atoms';
 import {SignInProp} from '../../../navigation/types';
 import AuthButtons from '../AuthButtons';
 import SubmitButton from '../SubmitButton';
+import Example from './example';
 
 const LoginScreen = () => {
   const [currTheme] = useAtom(currentTheme);
@@ -81,6 +82,7 @@ const LoginScreen = () => {
             </Pressable>
           </Box>
         </Stack>
+        <Example />
       </ScrollView>
     </Box>
   );
