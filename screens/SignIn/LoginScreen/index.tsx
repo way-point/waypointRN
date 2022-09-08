@@ -11,12 +11,18 @@ import {
   Text,
 } from 'native-base';
 import React, {useRef} from 'react';
-import {TextInput} from 'react-native';
+import {StyleSheet, TextInput} from 'react-native';
 import {currentTheme} from '../../../constants/atoms';
 import {SignInProp} from '../../../navigation/types';
 import AuthButtons from '../AuthButtons';
 import SubmitButton from '../SubmitButton';
-import Example from './example';
+
+const styles = StyleSheet.create({
+  scrollView: {
+    justifyContent: 'center',
+    flexGrow: 1,
+  },
+});
 
 const LoginScreen = () => {
   const [currTheme] = useAtom(currentTheme);
@@ -26,8 +32,7 @@ const LoginScreen = () => {
 
   return (
     <Box flex={1}>
-      <ScrollView
-        contentContainerStyle={{justifyContent: 'center', flexGrow: 1}}>
+      <ScrollView contentContainerStyle={styles.scrollView}>
         <Stack space={4} w="75%" maxW="450px" mx="auto">
           <Text fontSize={25} fontWeight={500}>
             SignIn
@@ -82,7 +87,6 @@ const LoginScreen = () => {
             </Pressable>
           </Box>
         </Stack>
-        <Example />
       </ScrollView>
     </Box>
   );

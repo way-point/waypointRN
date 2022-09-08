@@ -40,7 +40,9 @@ const BottomTabNavigator = () => {
               blurAmount={30}
               style={StyleSheet.absoluteFill}
             />
-          ) : null;
+          ) : (
+            <Box style={StyleSheet.absoluteFill} />
+          );
         },
       }}>
       <Stack.Screen
@@ -66,6 +68,7 @@ const BottomTabNavigator = () => {
           headerTitle: () => {
             return city ? <Text fontSize={18}>{city}</Text> : <Spinner />;
           },
+          headerTitleAlign: 'center',
         }}
       />
 
@@ -165,7 +168,7 @@ const SignInNavigator = () => {
   );
 };
 
-const ifSignIn = true;
+const ifSignIn = false;
 
 const Navigation = () => {
   const [currTheme] = useAtom(currentTheme);

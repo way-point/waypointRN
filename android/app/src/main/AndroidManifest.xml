@@ -13,5 +13,8 @@
         <data android:scheme="waypoint"/>
       </intent-filter>
     </activity>
+    <meta-data
+     android:name="com.google.android.geo.API_KEY"
+     android:value="AIzaSyCwhWzOkKFwHoiIE4_QsDKWe_u8-rzDS70"/>
   </application>
 </manifest>
