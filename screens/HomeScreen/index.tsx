@@ -3,7 +3,6 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import MapView, {LatLng, Marker, Region} from 'react-native-maps';
 import Layout from '../../constants/Layout';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useAtom} from 'jotai';
 import {cityAtom, currentTheme} from '../../constants/atoms';
 import AddPostButton from '../../components/AddPostButton';
@@ -50,7 +49,6 @@ const HomeScreen = () => {
 
   return (
     <Box flex={1} alignContent="center" justifyContent="center">
-      <AddPostButton />
       <MapView
         initialRegion={region}
         style={styles.map}
@@ -61,17 +59,13 @@ const HomeScreen = () => {
         }}>
         {Markers.map(e => {
           return (
-            <Marker
-              onPress={() => {
-                console.log('test');
-              }}
-              key={e.id}
-              coordinate={e.coordinate}>
+            <Marker key={e.id} coordinate={e.coordinate}>
               <Menu />
             </Marker>
           );
         })}
       </MapView>
+      <AddPostButton />
     </Box>
   );
 };

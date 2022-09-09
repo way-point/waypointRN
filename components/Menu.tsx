@@ -1,10 +1,11 @@
 import {MenuView} from '@react-native-menu/menu';
 import {useAtom} from 'jotai';
-import {Box, useTheme} from 'native-base';
+import {Pressable, useTheme} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react';
 import {Platform, StyleSheet} from 'react-native';
 import {currentTheme} from '../constants/atoms';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 const styles = StyleSheet.create({
   padding: {
@@ -19,6 +20,11 @@ const Menu = () => {
   if (Platform.OS === 'android') {
     return null;
   }
+
+  const options = {
+    enableVibrateFallback: true,
+    ignoreAndroidSystemSettings: false,
+  };
 
   return (
     // @ts-ignore
@@ -50,7 +56,11 @@ const Menu = () => {
           image: 'trash',
         },
       ]}>
-      <Box
+      <Pressable
+        onLongPress={() => {
+          ReactNativeHapticFeedback.trigger('impactHeavy', options);
+        }}
+        bg={colors[currTheme].background}
         borderRadius={10}
         borderColor={colors[currTheme].text}
         borderWidth={1}>
@@ -60,7 +70,7 @@ const Menu = () => {
           color={colors[currTheme].text}
           style={styles.padding}
         />
-      </Box>
+      </Pressable>
     </MenuView>
   );
 };

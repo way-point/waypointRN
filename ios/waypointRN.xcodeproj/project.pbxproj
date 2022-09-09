@@ -34,6 +34,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1FE77C7B84749584F100336C /* libPods-waypointRN-waypointRNTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ECE1627E443E01DB54DD2376 /* libPods-waypointRN-waypointRNTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		E20989519ECE786DED5FDA58 /* libPods-waypointRN.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E10D8B4C893D8FE5CB54DCA /* libPods-waypointRN.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,7 @@
 				026549BA28CAD3960080A0A6 /* FirebaseAppDistribution-Beta in Frameworks */,
 				026549B628CAD3960080A0A6 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				026549B228CAD3960080A0A6 /* FirebaseAnalytics in Frameworks */,
+				E20989519ECE786DED5FDA58 /* libPods-waypointRN.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,11 +242,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "waypointRN" */;
 			buildPhases = (
+				EBB7D69C091D456868270316 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				D42D06E9F19169FE592C52D2 /* [CP] Copy Pods Resources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
-				EBB7D69C091D456868270316 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				F77D51F4E994DE546A1DB0E2 /* [CP] Embed Pods Frameworks */,
