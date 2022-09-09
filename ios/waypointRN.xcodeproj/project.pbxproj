@@ -24,17 +24,15 @@
 		0265498728C954F20080A0A6 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0265497728C954F20080A0A6 /* EvilIcons.ttf */; };
 		0265498828C954F20080A0A6 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0265497828C954F20080A0A6 /* SimpleLineIcons.ttf */; };
 		0265498928C954F20080A0A6 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0265497928C954F20080A0A6 /* MaterialIcons.ttf */; };
-		0265498C28C97D7A0080A0A6 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0265498B28C97D7A0080A0A6 /* FirebaseAnalytics */; };
-		0265498E28C97D7A0080A0A6 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 0265498D28C97D7A0080A0A6 /* FirebaseAnalyticsOnDeviceConversion */; };
-		0265499028C97D7A0080A0A6 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0265498F28C97D7A0080A0A6 /* FirebaseAnalyticsSwift */; };
-		0265499228C97D7A0080A0A6 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 0265499128C97D7A0080A0A6 /* FirebaseAnalyticsWithoutAdIdSupport */; };
-		0265499428C97D7A0080A0A6 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 0265499328C97D7A0080A0A6 /* FirebaseAppCheck */; };
-		0265499628C97D7A0080A0A6 /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 0265499528C97D7A0080A0A6 /* FirebaseAppDistribution-Beta */; };
-		0C80B921A6F3F58F76C31292 /* libPods-waypointRN.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-waypointRN.a */; };
+		026549B228CAD3960080A0A6 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 026549B128CAD3960080A0A6 /* FirebaseAnalytics */; };
+		026549B428CAD3960080A0A6 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 026549B328CAD3960080A0A6 /* FirebaseAnalyticsSwift */; };
+		026549B628CAD3960080A0A6 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 026549B528CAD3960080A0A6 /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		026549B828CAD3960080A0A6 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 026549B728CAD3960080A0A6 /* FirebaseAppCheck */; };
+		026549BA28CAD3960080A0A6 /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 026549B928CAD3960080A0A6 /* FirebaseAppDistribution-Beta */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		7699B88040F8A987B510C191 /* libPods-waypointRN-waypointRNTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-waypointRN-waypointRNTests.a */; };
+		1FE77C7B84749584F100336C /* libPods-waypointRN-waypointRNTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ECE1627E443E01DB54DD2376 /* libPods-waypointRN-waypointRNTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -74,13 +72,13 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = waypointRN/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = waypointRN/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = waypointRN/main.m; sourceTree = "<group>"; };
-		19F6CBCC0A4E27FBF8BF4A61 /* libPods-waypointRN-waypointRNTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-waypointRN-waypointRNTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B4392A12AC88292D35C810B /* Pods-waypointRN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-waypointRN.debug.xcconfig"; path = "Target Support Files/Pods-waypointRN/Pods-waypointRN.debug.xcconfig"; sourceTree = "<group>"; };
-		5709B34CF0A7D63546082F79 /* Pods-waypointRN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-waypointRN.release.xcconfig"; path = "Target Support Files/Pods-waypointRN/Pods-waypointRN.release.xcconfig"; sourceTree = "<group>"; };
-		5B7EB9410499542E8C5724F5 /* Pods-waypointRN-waypointRNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-waypointRN-waypointRNTests.debug.xcconfig"; path = "Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5DCACB8F33CDC322A6C60F78 /* libPods-waypointRN.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-waypointRN.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		323F733E6550B3A03E6E8E6B /* Pods-waypointRN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-waypointRN.release.xcconfig"; path = "Target Support Files/Pods-waypointRN/Pods-waypointRN.release.xcconfig"; sourceTree = "<group>"; };
+		48104D57CC102D2C9ADF6783 /* Pods-waypointRN-waypointRNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-waypointRN-waypointRNTests.release.xcconfig"; path = "Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests.release.xcconfig"; sourceTree = "<group>"; };
+		6E10D8B4C893D8FE5CB54DCA /* libPods-waypointRN.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-waypointRN.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = waypointRN/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		89C6BE57DB24E9ADA2F236DE /* Pods-waypointRN-waypointRNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-waypointRN-waypointRNTests.release.xcconfig"; path = "Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests.release.xcconfig"; sourceTree = "<group>"; };
+		E446958EFC343828F2DC562C /* Pods-waypointRN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-waypointRN.debug.xcconfig"; path = "Target Support Files/Pods-waypointRN/Pods-waypointRN.debug.xcconfig"; sourceTree = "<group>"; };
+		ECE1627E443E01DB54DD2376 /* libPods-waypointRN-waypointRNTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-waypointRN-waypointRNTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED26AA9C00A760B6FBA445B8 /* Pods-waypointRN-waypointRNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-waypointRN-waypointRNTests.debug.xcconfig"; path = "Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -89,7 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7699B88040F8A987B510C191 /* libPods-waypointRN-waypointRNTests.a in Frameworks */,
+				1FE77C7B84749584F100336C /* libPods-waypointRN-waypointRNTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,13 +95,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0265499628C97D7A0080A0A6 /* FirebaseAppDistribution-Beta in Frameworks */,
-				0265499028C97D7A0080A0A6 /* FirebaseAnalyticsSwift in Frameworks */,
-				0265499228C97D7A0080A0A6 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
-				0265498C28C97D7A0080A0A6 /* FirebaseAnalytics in Frameworks */,
-				0265498E28C97D7A0080A0A6 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
-				0265499428C97D7A0080A0A6 /* FirebaseAppCheck in Frameworks */,
-				0C80B921A6F3F58F76C31292 /* libPods-waypointRN.a in Frameworks */,
+				026549B828CAD3960080A0A6 /* FirebaseAppCheck in Frameworks */,
+				026549B428CAD3960080A0A6 /* FirebaseAnalyticsSwift in Frameworks */,
+				026549BA28CAD3960080A0A6 /* FirebaseAppDistribution-Beta in Frameworks */,
+				026549B628CAD3960080A0A6 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				026549B228CAD3960080A0A6 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,8 +164,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				5DCACB8F33CDC322A6C60F78 /* libPods-waypointRN.a */,
-				19F6CBCC0A4E27FBF8BF4A61 /* libPods-waypointRN-waypointRNTests.a */,
+				6E10D8B4C893D8FE5CB54DCA /* libPods-waypointRN.a */,
+				ECE1627E443E01DB54DD2376 /* libPods-waypointRN-waypointRNTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -208,10 +204,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-waypointRN.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-waypointRN.release.xcconfig */,
-				5B7EB9410499542E8C5724F5 /* Pods-waypointRN-waypointRNTests.debug.xcconfig */,
-				89C6BE57DB24E9ADA2F236DE /* Pods-waypointRN-waypointRNTests.release.xcconfig */,
+				E446958EFC343828F2DC562C /* Pods-waypointRN.debug.xcconfig */,
+				323F733E6550B3A03E6E8E6B /* Pods-waypointRN.release.xcconfig */,
+				ED26AA9C00A760B6FBA445B8 /* Pods-waypointRN-waypointRNTests.debug.xcconfig */,
+				48104D57CC102D2C9ADF6783 /* Pods-waypointRN-waypointRNTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -223,12 +219,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "waypointRNTests" */;
 			buildPhases = (
-				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
+				D93CA07520C19B2DEAF515C7 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
-				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
+				FE26D44EFCF09FC66C6F90E9 /* [CP] Embed Pods Frameworks */,
+				97D78DB7FFBE7D70B52883D0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -244,14 +240,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "waypointRN" */;
 			buildPhases = (
-				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
-				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
-				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
+				D42D06E9F19169FE592C52D2 /* [CP] Copy Pods Resources */,
+				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+				EBB7D69C091D456868270316 /* [CP] Check Pods Manifest.lock */,
+				FD10A7F022414F080027D42C /* Start Packager */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
-				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				F77D51F4E994DE546A1DB0E2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -259,12 +255,11 @@
 			);
 			name = waypointRN;
 			packageProductDependencies = (
-				0265498B28C97D7A0080A0A6 /* FirebaseAnalytics */,
-				0265498D28C97D7A0080A0A6 /* FirebaseAnalyticsOnDeviceConversion */,
-				0265498F28C97D7A0080A0A6 /* FirebaseAnalyticsSwift */,
-				0265499128C97D7A0080A0A6 /* FirebaseAnalyticsWithoutAdIdSupport */,
-				0265499328C97D7A0080A0A6 /* FirebaseAppCheck */,
-				0265499528C97D7A0080A0A6 /* FirebaseAppDistribution-Beta */,
+				026549B128CAD3960080A0A6 /* FirebaseAnalytics */,
+				026549B328CAD3960080A0A6 /* FirebaseAnalyticsSwift */,
+				026549B528CAD3960080A0A6 /* FirebaseAnalyticsWithoutAdIdSupport */,
+				026549B728CAD3960080A0A6 /* FirebaseAppCheck */,
+				026549B928CAD3960080A0A6 /* FirebaseAppDistribution-Beta */,
 			);
 			productName = waypointRN;
 			productReference = 13B07F961A680F5B00A75B9A /* waypointRN.app */;
@@ -297,7 +292,7 @@
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			packageReferences = (
-				0265498A28C97D7A0080A0A6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				026549B028CAD3960080A0A6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -361,24 +356,41 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
+		97D78DB7FFBE7D70B52883D0 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-waypointRN/Pods-waypointRN-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-waypointRN/Pods-waypointRN-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-waypointRN/Pods-waypointRN-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
+		D42D06E9F19169FE592C52D2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-waypointRN/Pods-waypointRN-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-waypointRN/Pods-waypointRN-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-waypointRN/Pods-waypointRN-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D93CA07520C19B2DEAF515C7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -400,7 +412,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
+		EBB7D69C091D456868270316 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -422,55 +434,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */ = {
+		F77D51F4E994DE546A1DB0E2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-waypointRN/Pods-waypointRN-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-waypointRN/Pods-waypointRN-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-waypointRN/Pods-waypointRN-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-waypointRN/Pods-waypointRN-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-waypointRN/Pods-waypointRN-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-waypointRN/Pods-waypointRN-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -490,6 +468,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FE26D44EFCF09FC66C6F90E9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-waypointRN-waypointRNTests/Pods-waypointRN-waypointRNTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -525,9 +520,12 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-waypointRN-waypointRNTests.debug.xcconfig */;
+			baseConfigurationReference = ED26AA9C00A760B6FBA445B8 /* Pods-waypointRN-waypointRNTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				DEVELOPMENT_TEAM = Q8RK5RZ36Q;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -552,10 +550,13 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-waypointRN-waypointRNTests.release.xcconfig */;
+			baseConfigurationReference = 48104D57CC102D2C9ADF6783 /* Pods-waypointRN-waypointRNTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = Q8RK5RZ36Q;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				INFOPLIST_FILE = waypointRNTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -576,13 +577,14 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-waypointRN.debug.xcconfig */;
+			baseConfigurationReference = E446958EFC343828F2DC562C /* Pods-waypointRN.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q8RK5RZ36Q;
 				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				INFOPLIST_FILE = waypointRN/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -604,12 +606,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-waypointRN.release.xcconfig */;
+			baseConfigurationReference = 323F733E6550B3A03E6E8E6B /* Pods-waypointRN.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q8RK5RZ36Q;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				INFOPLIST_FILE = waypointRN/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -798,7 +801,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0265498A28C97D7A0080A0A6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		026549B028CAD3960080A0A6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
@@ -809,34 +812,29 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0265498B28C97D7A0080A0A6 /* FirebaseAnalytics */ = {
+		026549B128CAD3960080A0A6 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0265498A28C97D7A0080A0A6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 026549B028CAD3960080A0A6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
 		};
-		0265498D28C97D7A0080A0A6 /* FirebaseAnalyticsOnDeviceConversion */ = {
+		026549B328CAD3960080A0A6 /* FirebaseAnalyticsSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0265498A28C97D7A0080A0A6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsOnDeviceConversion;
-		};
-		0265498F28C97D7A0080A0A6 /* FirebaseAnalyticsSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0265498A28C97D7A0080A0A6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 026549B028CAD3960080A0A6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalyticsSwift;
 		};
-		0265499128C97D7A0080A0A6 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+		026549B528CAD3960080A0A6 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0265498A28C97D7A0080A0A6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 026549B028CAD3960080A0A6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalyticsWithoutAdIdSupport;
 		};
-		0265499328C97D7A0080A0A6 /* FirebaseAppCheck */ = {
+		026549B728CAD3960080A0A6 /* FirebaseAppCheck */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0265498A28C97D7A0080A0A6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 026549B028CAD3960080A0A6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAppCheck;
 		};
-		0265499528C97D7A0080A0A6 /* FirebaseAppDistribution-Beta */ = {
+		026549B928CAD3960080A0A6 /* FirebaseAppDistribution-Beta */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0265498A28C97D7A0080A0A6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 026549B028CAD3960080A0A6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseAppDistribution-Beta";
 		};
 /* End XCSwiftPackageProductDependency section */

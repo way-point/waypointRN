@@ -1,17 +1,13 @@
 import {Box, useTheme} from 'native-base';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import MapView, {
-  LatLng,
-  Marker,
-  PROVIDER_GOOGLE,
-  Region,
-} from 'react-native-maps';
+import MapView, {LatLng, Marker, Region} from 'react-native-maps';
 import Layout from '../../constants/Layout';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useAtom} from 'jotai';
 import {cityAtom, currentTheme} from '../../constants/atoms';
 import AddPostButton from '../../components/AddPostButton';
+import Menu from '../../components/Menu';
 
 const region: Region = {
   latitude: 37.78825,
@@ -71,17 +67,7 @@ const HomeScreen = () => {
               }}
               key={e.id}
               coordinate={e.coordinate}>
-              <Box
-                borderRadius={10}
-                borderColor={colors[currTheme].text}
-                borderWidth={1}>
-                <MaterialCommunityIcons
-                  name="roller-skate"
-                  size={24}
-                  color={colors[currTheme].text}
-                  style={{padding: 3}}
-                />
-              </Box>
+              <Menu />
             </Marker>
           );
         })}
