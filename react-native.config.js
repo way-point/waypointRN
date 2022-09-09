@@ -5,10 +5,5 @@ module.exports = {
         ios: null,
       },
     },
-    '@react-native-menu/menu': {
-      platforms: {
-        android: null,
-      },
-    },
   },
 };
