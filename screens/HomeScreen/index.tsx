@@ -7,6 +7,10 @@ import {useAtom} from 'jotai';
 import {cityAtom, currentTheme} from '../../constants/atoms';
 import AddPostButton from '../../components/AddPostButton';
 import Menu from '../../components/Menu';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {enableLatestRenderer} from 'react-native-maps';
+
+enableLatestRenderer();
 
 const region: Region = {
   latitude: 37.78825,
@@ -52,15 +56,30 @@ const HomeScreen = () => {
       <MapView
         initialRegion={region}
         style={styles.map}
-        // provider={PROVIDER_GOOGLE}
         customMapStyle={colors[currTheme].map}
         onRegionChangeComplete={({latitude, longitude}) => {
           getCurrentCity(latitude, longitude);
         }}>
         {Markers.map(e => {
           return (
-            <Marker key={e.id} coordinate={e.coordinate}>
-              <Menu />
+            <Marker
+              coordinate={e.coordinate}
+              onPress={() => {
+                console.log('testing...');
+              }}>
+              <Menu>
+                <Box
+                  borderRadius={10}
+                  borderColor={colors[currTheme].text}
+                  borderWidth={1}>
+                  <MaterialCommunityIcons
+                    name="roller-skate"
+                    size={24}
+                    color={colors[currTheme].text}
+                    style={styles.padding}
+                  />
+                </Box>
+              </Menu>
             </Marker>
           );
         })}
