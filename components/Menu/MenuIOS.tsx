@@ -8,7 +8,11 @@ interface MenuIOSProps {
 const MenuIOS = ({children}: MenuIOSProps) => {
   return (
     <ContextMenu
-      actions={[{title: 'Title 1'}, {title: 'Title 2'}]}
+      actions={[
+        {title: 'Follow', systemIcon: 'person'},
+        {title: 'Share', systemIcon: 'square.and.arrow.up'},
+        {title: 'Report', systemIcon: 'flag.fill', destructive: true},
+      ]}
       onPress={e => {
         console.warn(
           `Pressed ${e.nativeEvent.name} at index ${e.nativeEvent.index}`,

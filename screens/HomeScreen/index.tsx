@@ -1,8 +1,7 @@
 import {Box, useTheme} from 'native-base';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import MapView, {LatLng, Marker, Region} from 'react-native-maps';
-import Layout from '../../constants/Layout';
 import {useAtom} from 'jotai';
 import {cityAtom, currentTheme} from '../../constants/atoms';
 import AddPostButton from '../../components/AddPostButton';
@@ -51,12 +50,18 @@ const HomeScreen = () => {
     setCity(city);
   };
 
+  useEffect(() => {
+    getCurrentCity(region.latitude, region.longitude);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Box flex={1} alignContent="center" justifyContent="center">
       <MapView
         initialRegion={region}
-        style={styles.map}
+        style={StyleSheet.absoluteFill}
         customMapStyle={colors[currTheme].map}
+        toolbarEnabled={false}
         onRegionChangeComplete={({latitude, longitude}) => {
           getCurrentCity(latitude, longitude);
         }}>
@@ -90,9 +95,8 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  map: {
-    width: Layout.window.width,
-    height: Layout.window.height,
+  padding: {
+    padding: 3,
   },
 });
 
