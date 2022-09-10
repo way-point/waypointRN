@@ -2,7 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useAtom} from 'jotai';
-import {Box, Spinner, Text, useTheme} from 'native-base';
+import {Box, Input, Spinner, Text, useTheme} from 'native-base';
 import {Platform, StyleSheet} from 'react-native';
 import React from 'react';
 import {cityAtom, currentTheme} from '../constants/atoms';
@@ -21,6 +21,8 @@ import {
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ProfileImage from '../components/ProfileImage';
 import {BlurView} from '@react-native-community/blur';
+import ExploreScreen from '../screens/ExploreScreen';
+import Layout from '../constants/Layout';
 
 const BottomTabNavigator = () => {
   const Stack = createBottomTabNavigator<RootTabParamList>();
@@ -74,7 +76,7 @@ const BottomTabNavigator = () => {
 
       <Stack.Screen
         name="Search"
-        component={HomeScreen}
+        component={ExploreScreen}
         options={{
           tabBarIcon: ({color, focused}) => {
             return (
@@ -92,7 +94,14 @@ const BottomTabNavigator = () => {
               </Box>
             );
           },
-          title: 'Santa Cruz',
+          headerTitle: () => {
+            return (
+              <Input
+                width={Layout.window.width - 100}
+                placeholder="What's on your mind?"
+              />
+            );
+          },
         }}
       />
 

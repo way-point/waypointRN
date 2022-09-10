@@ -12,6 +12,8 @@ import {cityAtom, currentTheme} from '../../constants/atoms';
 import AddPostButton from '../../components/AddPostButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {enableLatestRenderer} from 'react-native-maps';
+import Layout from '../../constants/Layout';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 enableLatestRenderer();
 
@@ -41,6 +43,9 @@ const HomeScreen = () => {
   const {colors} = useTheme();
   const [currTheme] = useAtom(currentTheme);
   const [, setCity] = useAtom(cityAtom);
+  const bottomTabHeight = useBottomTabBarHeight();
+
+  console.log(bottomTabHeight);
 
   const getCurrentCity = async (latitude: number, longitude: number) => {
     const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`;
@@ -59,12 +64,23 @@ const HomeScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const styles = StyleSheet.create({
+    maps: {
+      width: Layout.window.width,
+      height: Layout.window.height,
+      top: -bottomTabHeight,
+    },
+    padding: {
+      padding: 3,
+    },
+  });
+
   return (
     <Box flex={1} alignContent="center" justifyContent="center">
       <MapView
         initialRegion={region}
         provider={PROVIDER_GOOGLE}
-        style={StyleSheet.absoluteFill}
+        style={styles.maps}
         customMapStyle={colors[currTheme].map}
         toolbarEnabled={false}
         onRegionChangeComplete={({latitude, longitude}) => {
@@ -97,11 +113,5 @@ const HomeScreen = () => {
     </Box>
   );
 };
-
-const styles = StyleSheet.create({
-  padding: {
-    padding: 3,
-  },
-});
 
 export default HomeScreen;
