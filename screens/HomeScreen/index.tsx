@@ -1,11 +1,15 @@
 import {Box, useTheme} from 'native-base';
 import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
-import MapView, {LatLng, Marker, Region} from 'react-native-maps';
+import MapView, {
+  LatLng,
+  Marker,
+  PROVIDER_GOOGLE,
+  Region,
+} from 'react-native-maps';
 import {useAtom} from 'jotai';
 import {cityAtom, currentTheme} from '../../constants/atoms';
 import AddPostButton from '../../components/AddPostButton';
-import Menu from '../../components/Menu';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {enableLatestRenderer} from 'react-native-maps';
 
@@ -59,6 +63,7 @@ const HomeScreen = () => {
     <Box flex={1} alignContent="center" justifyContent="center">
       <MapView
         initialRegion={region}
+        provider={PROVIDER_GOOGLE}
         style={StyleSheet.absoluteFill}
         customMapStyle={colors[currTheme].map}
         toolbarEnabled={false}
@@ -68,23 +73,22 @@ const HomeScreen = () => {
         {Markers.map(e => {
           return (
             <Marker
+              key={e.id}
               coordinate={e.coordinate}
               onPress={() => {
                 console.log('testing...');
               }}>
-              <Menu>
-                <Box
-                  borderRadius={10}
-                  borderColor={colors[currTheme].text}
-                  borderWidth={1}>
-                  <MaterialCommunityIcons
-                    name="roller-skate"
-                    size={24}
-                    color={colors[currTheme].text}
-                    style={styles.padding}
-                  />
-                </Box>
-              </Menu>
+              <Box
+                borderRadius={10}
+                borderColor={colors[currTheme].text}
+                borderWidth={1}>
+                <MaterialCommunityIcons
+                  name="roller-skate"
+                  size={24}
+                  color={colors[currTheme].text}
+                  style={styles.padding}
+                />
+              </Box>
             </Marker>
           );
         })}
