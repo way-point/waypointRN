@@ -35,6 +35,11 @@ const NativeBaseWrapper = ({children}: NativeBaseWrapperProps) => {
         color: `${currTheme}.text`,
       },
     },
+    Heading: {
+      defaultProps: {
+        color: `${currTheme}.text`,
+      },
+    },
     Box: {
       defaultProps: {
         backgroundColor: `${currTheme}.background`,

@@ -30,6 +30,9 @@ const BottomTabNavigator = () => {
   const [currTheme] = useAtom(currentTheme);
   const {colors} = useTheme();
 
+  const uri =
+    'https://media-exp1.licdn.com/dms/image/C5603AQEQZuyIujt9xA/profile-displayphoto-shrink_200_200/0/1640233246542?e=2147483647&v=beta&t=06q_FRXOtNMMPTnZmHt7CDL6g3C6tC_0erJ4JaWTNgo';
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -63,7 +66,7 @@ const BottomTabNavigator = () => {
           headerLeft: () => {
             return (
               <Box backgroundColor="transparent" pl={3}>
-                <ProfileImage />
+                <ProfileImage uri={uri} />
               </Box>
             );
           },
@@ -90,7 +93,7 @@ const BottomTabNavigator = () => {
           headerLeft: () => {
             return (
               <Box backgroundColor="transparent" pl={3}>
-                <ProfileImage />
+                <ProfileImage uri={uri} />
               </Box>
             );
           },
@@ -131,7 +134,7 @@ const BottomTabNavigator = () => {
           headerLeft: () => {
             return (
               <Box backgroundColor="transparent" pl={3}>
-                <ProfileImage />
+                <ProfileImage uri={uri} />
               </Box>
             );
           },
@@ -155,7 +158,7 @@ const BottomTabNavigator = () => {
           headerLeft: () => {
             return (
               <Box backgroundColor="transparent" pl={3}>
-                <ProfileImage />
+                <ProfileImage uri={uri} />
               </Box>
             );
           },

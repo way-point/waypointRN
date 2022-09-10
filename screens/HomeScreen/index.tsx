@@ -45,8 +45,6 @@ const HomeScreen = () => {
   const [, setCity] = useAtom(cityAtom);
   const bottomTabHeight = useBottomTabBarHeight();
 
-  console.log(bottomTabHeight);
-
   const getCurrentCity = async (latitude: number, longitude: number) => {
     const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`;
     const res = await fetch(url);
