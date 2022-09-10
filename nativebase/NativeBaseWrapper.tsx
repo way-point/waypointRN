@@ -50,6 +50,7 @@ const NativeBaseWrapper = ({children}: NativeBaseWrapperProps) => {
         color: `${currTheme}.text`,
         selectionColor: `${currTheme}.navigation.primary`,
         varient: 'filled',
+        placeholderTextColor: `${currTheme}.text`,
       },
     },
     Pressable: {

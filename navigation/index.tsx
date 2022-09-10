@@ -99,6 +99,16 @@ const BottomTabNavigator = () => {
               <Input
                 width={Layout.window.width - 100}
                 placeholder="What's on your mind?"
+                textAlign="center"
+                InputRightElement={
+                  <Box mr={5} bg="transparent">
+                    <Feather
+                      name="search"
+                      size={24}
+                      color={colors[currTheme].text}
+                    />
+                  </Box>
+                }
               />
             );
           },
