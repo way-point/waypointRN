@@ -10,19 +10,33 @@ import {
 import React from 'react';
 import AvatarGroup from '../../components/AvatarGroup';
 import Menu from '../../components/Menu';
-import {feedDataProps} from '../../constants/types';
+import {feedDataProps, menuOptionProps} from '../../constants/types';
 import feedData from '../../data/feedData';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {ContextMenuAction} from 'react-native-context-menu-view';
 
 interface feedDataItemProps {
   item: feedDataProps;
 }
 
-const menuActions: ContextMenuAction[] = [
-  {title: 'Copy Photo', systemIcon: 'doc.on.doc'},
-  {title: 'Save Photo', systemIcon: 'square.and.arrow.down'},
-  {title: 'Share With...', systemIcon: 'square.and.arrow.up'},
+const menuOptions: menuOptionProps[] = [
+  {
+    onPress: () => {
+      console.log('hello world');
+    },
+    menuAction: {title: 'Copy Photo', systemIcon: 'doc.on.doc'},
+  },
+  {
+    onPress: () => {
+      console.log('testing....');
+    },
+    menuAction: {title: 'Save Photo', systemIcon: 'square.and.arrow.down'},
+  },
+  {
+    onPress: () => {
+      console.log('testing 2...');
+    },
+    menuAction: {title: 'Share With...', systemIcon: 'square.and.arrow.up'},
+  },
 ];
 
 const ExploreScreen = () => {
@@ -51,7 +65,7 @@ const ExploreScreen = () => {
             <Text>Join Event</Text>
           </Pressable>
         </Box>
-        <Menu menuActions={menuActions}>
+        <Menu menuOptions={menuOptions}>
           <Image
             source={{uri: item.image}}
             alt={item.host.username + ' image'}

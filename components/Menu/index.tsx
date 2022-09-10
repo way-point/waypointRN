@@ -1,17 +1,17 @@
 import {Box} from 'native-base';
 import React from 'react';
 import {Platform} from 'react-native';
-import {ContextMenuAction} from 'react-native-context-menu-view';
+import {menuOptionProps} from '../../constants/types';
 import MenuIOS from './MenuIOS';
 
 interface MenuProps {
   children: React.ReactNode;
-  menuActions: ContextMenuAction[];
+  menuOptions: menuOptionProps[];
 }
 
-const Menu: React.FC<MenuProps> = ({children, menuActions}) => {
+const Menu = ({children, menuOptions}: MenuProps) => {
   if (Platform.OS === 'ios') {
-    return <MenuIOS menuActions={menuActions}>{children}</MenuIOS>;
+    return <MenuIOS menuOptions={menuOptions}>{children}</MenuIOS>;
   }
   return <Box>{children}</Box>;
 };

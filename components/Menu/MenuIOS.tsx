@@ -1,19 +1,24 @@
 import React from 'react';
-import ContextMenu, {ContextMenuAction} from 'react-native-context-menu-view';
+import ContextMenu from 'react-native-context-menu-view';
+import {menuOptionProps} from '../../constants/types';
 
 interface MenuIOSProps {
   children: React.ReactNode;
-  menuActions: ContextMenuAction[];
+  menuOptions: menuOptionProps[];
 }
 
-const MenuIOS = ({children, menuActions}: MenuIOSProps) => {
+const MenuIOS = ({children, menuOptions}: MenuIOSProps) => {
+  const menuActions = [];
+
+  for (let i = 0; i < menuOptions.length; i++) {
+    menuActions.push(menuOptions[i].menuAction);
+  }
+
   return (
     <ContextMenu
       actions={menuActions}
-      onPress={e => {
-        console.warn(
-          `Pressed ${e.nativeEvent.name} at index ${e.nativeEvent.index}`,
-        );
+      onPress={({nativeEvent}) => {
+        menuOptions[nativeEvent.index].onPress();
       }}>
       {children}
     </ContextMenu>
