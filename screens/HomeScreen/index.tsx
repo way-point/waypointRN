@@ -8,6 +8,10 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {ImageBackground, StyleSheet} from 'react-native';
 import ProfileImage from '../../components/ProfileImage';
 import AddPostButton from '../../components/AddPostButton';
+import {useAtom} from 'jotai';
+import {currentTheme} from '../../constants/atoms';
+import {useNavigation} from '@react-navigation/native';
+import {RootProp} from '../../navigation/types';
 
 interface feedDataItemProps {
   item: feedDataProps;
@@ -61,10 +65,24 @@ const menuOptionsBox: menuOptionProps[] = [
 
 const HomeScreen = () => {
   const {colors} = useTheme();
+  const [currTheme] = useAtom(currentTheme);
+  const navigation = useNavigation<RootProp>();
   const renderItem = ({item}: feedDataItemProps) => {
     return (
       <Menu menuOptions={menuOptionsBox}>
-        <Box alignSelf="center" mb={5} borderRadius={10} w="90%" p={3}>
+        <Pressable
+          bg={currTheme + '.background'}
+          alignSelf="center"
+          mb={5}
+          borderRadius={10}
+          w="90%"
+          p={3}
+          _pressed={{
+            opacity: 1,
+          }}
+          onPress={() => {
+            navigation.navigate('EventDetails');
+          }}>
           <Heading>{item.title}</Heading>
           <Box flexDirection="row">
             <Text mb={5} mr={1} color="constants.primary">
@@ -96,7 +114,7 @@ const HomeScreen = () => {
               </Box>
             </ImageBackground>
           </Menu>
-        </Box>
+        </Pressable>
       </Menu>
     );
   };

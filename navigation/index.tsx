@@ -24,6 +24,7 @@ import {BlurView} from '@react-native-community/blur';
 import ExploreScreen from '../screens/ExploreScreen';
 import Layout from '../constants/Layout';
 import CameraScreen from '../screens/CameraScreen';
+import EventDetailsScreen from '../screens/EventDetailsScreen';
 
 const BottomTabNavigator = () => {
   const Stack = createBottomTabNavigator<RootTabParamList>();
@@ -177,6 +178,7 @@ const RootNavigator = () => {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="Camera" component={CameraScreen} />
+      <Stack.Screen name="EventDetails" component={EventDetailsScreen} />
     </Stack.Navigator>
   );
 };
