@@ -16,5 +16,16 @@ export interface feedDataProps {
   title: string;
   description: string;
   image: string;
+  eventDetails: {
+    where: {
+      latitude: number;
+      longitude: number;
+      address: string;
+    };
+  };
   subscribers: userImageProps[];
+}
+
+export interface feedDataItemProps {
+  item: feedDataProps;
 }

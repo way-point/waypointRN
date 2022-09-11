@@ -1,5 +1,6 @@
 import {NavigatorScreenParams} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {feedDataProps} from '../constants/types';
 
 export type RootTabParamList = {
   Home: undefined;
@@ -11,7 +12,7 @@ export type RootTabParamList = {
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Camera: undefined;
-  EventDetails: undefined;
+  EventDetails: {event: feedDataProps};
 };
 
 export type SignInStackParamList = {

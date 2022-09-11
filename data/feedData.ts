@@ -11,6 +11,13 @@ const feedData: feedDataProps[] = [
       profileURL: url,
       id: '1',
     },
+    eventDetails: {
+      where: {
+        latitude: 120,
+        longitude: 120,
+        address: '5923 River Creek Rd.',
+      },
+    },
     image:
       'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.lifestyleasia.com%2Fwp-content%2Fuploads%2Fsites%2F2%2F2021%2F11%2F03175949%2FBored-Ape-1.jpg&f=1&nofb=1',
     title: 'NFT project (Monkey Apes the sequel)',
@@ -49,6 +56,13 @@ const feedData: feedDataProps[] = [
       username: 'Aankur02',
       profileURL: url,
       id: '4',
+    },
+    eventDetails: {
+      where: {
+        latitude: 120,
+        longitude: 120,
+        address: '5923 River Creek Rd.',
+      },
     },
     title: 'Skating ring near Dallas Park',
     image:
