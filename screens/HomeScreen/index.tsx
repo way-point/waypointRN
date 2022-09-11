@@ -1,112 +1,113 @@
-import {Box, useTheme} from 'native-base';
-import React, {useEffect} from 'react';
-import {StyleSheet} from 'react-native';
-import MapView, {
-  LatLng,
-  Marker,
-  PROVIDER_GOOGLE,
-  Region,
-} from 'react-native-maps';
-import {useAtom} from 'jotai';
-import {cityAtom, currentTheme} from '../../constants/atoms';
+import {Box, FlatList, Heading, Pressable, Text, useTheme} from 'native-base';
+import React from 'react';
+import AvatarGroup from '../../components/AvatarGroup';
+import Menu from '../../components/Menu';
+import {feedDataProps, menuOptionProps} from '../../constants/types';
+import feedData from '../../data/feedData';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {ImageBackground, StyleSheet} from 'react-native';
+import ProfileImage from '../../components/ProfileImage';
 import AddPostButton from '../../components/AddPostButton';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {enableLatestRenderer} from 'react-native-maps';
-import Layout from '../../constants/Layout';
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
-enableLatestRenderer();
-
-const region: Region = {
-  latitude: 37.78825,
-  longitude: -122.4324,
-  latitudeDelta: 0.0922,
-  longitudeDelta: 0.0421,
-};
-
-interface MarkerProps {
-  coordinate: LatLng;
-  id: number;
+interface feedDataItemProps {
+  item: feedDataProps;
 }
 
-const Markers: MarkerProps[] = [
+const styles = StyleSheet.create({
+  imageBackground: {
+    width: '100%',
+    borderRadius: 10,
+    overflow: 'hidden',
+    height: 200,
+    alignSelf: 'center',
+  },
+});
+
+const menuOptionsImage: menuOptionProps[] = [
   {
-    coordinate: {
-      latitude: 37.789,
-      longitude: -122.433,
+    onPress: () => {
+      console.log('testing....');
     },
-    id: 1,
+    menuAction: {title: 'Save Photo', systemIcon: 'square.and.arrow.down'},
+  },
+  {
+    onPress: () => {
+      console.log('testing 2...');
+    },
+    menuAction: {title: 'Share With...', systemIcon: 'square.and.arrow.up'},
+  },
+];
+
+const menuOptionsBox: menuOptionProps[] = [
+  {
+    onPress: () => {
+      console.log('let the party start....');
+    },
+    menuAction: {title: 'Join Event', systemIcon: 'person.3.sequence'},
+  },
+  {
+    onPress: () => {
+      console.log('testing 2...');
+    },
+    menuAction: {title: 'Share With...', systemIcon: 'square.and.arrow.up'},
+  },
+  {
+    onPress: () => {
+      console.log('testing 2...');
+    },
+    menuAction: {title: 'Report', systemIcon: 'flag.fill', destructive: true},
   },
 ];
 
 const HomeScreen = () => {
   const {colors} = useTheme();
-  const [currTheme] = useAtom(currentTheme);
-  const [, setCity] = useAtom(cityAtom);
-  const bottomTabHeight = useBottomTabBarHeight();
-
-  const getCurrentCity = async (latitude: number, longitude: number) => {
-    const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`;
-    const res = await fetch(url);
-    const data = await res.json();
-    let city = data.city || data.locality || '';
-
-    if (city.length > 30) {
-      city = city.substring(0, 30) + '...';
-    }
-    setCity(city);
+  const renderItem = ({item}: feedDataItemProps) => {
+    return (
+      <Menu menuOptions={menuOptionsBox}>
+        <Box alignSelf="center" mb={5} borderRadius={10} w="90%" p={3}>
+          <Heading>{item.title}</Heading>
+          <Box flexDirection="row">
+            <Text mb={5} mr={1} color="constants.primary">
+              Santa Cruz Broadwalk
+            </Text>
+            <FontAwesome5
+              name="map-marker-alt"
+              size={15}
+              color={colors.constants.primary}
+            />
+          </Box>
+          <Box
+            mb={3}
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center">
+            <AvatarGroup userImages={item.subscribers} />
+            <Pressable bg="constants.primary" px={2} py={2} borderRadius={10}>
+              <Text>Join Event</Text>
+            </Pressable>
+          </Box>
+          <Menu menuOptions={menuOptionsImage}>
+            <ImageBackground
+              source={{uri: item.image}}
+              style={styles.imageBackground}
+              resizeMode="cover">
+              <Box bg="transparent" mt="auto" pl={2} pb={2} flexDir="row">
+                <ProfileImage uri={item.host.profileURL} size={7} />
+              </Box>
+            </ImageBackground>
+          </Menu>
+        </Box>
+      </Menu>
+    );
   };
 
-  useEffect(() => {
-    getCurrentCity(region.latitude, region.longitude);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const styles = StyleSheet.create({
-    maps: {
-      width: Layout.window.width,
-      height: Layout.window.height,
-      top: -bottomTabHeight,
-    },
-    padding: {
-      padding: 3,
-    },
-  });
-
   return (
-    <Box flex={1} alignContent="center" justifyContent="center">
-      <MapView
-        initialRegion={region}
-        provider={PROVIDER_GOOGLE}
-        style={styles.maps}
-        customMapStyle={colors[currTheme].map}
-        toolbarEnabled={false}
-        onRegionChangeComplete={({latitude, longitude}) => {
-          getCurrentCity(latitude, longitude);
-        }}>
-        {Markers.map(e => {
-          return (
-            <Marker
-              key={e.id}
-              coordinate={e.coordinate}
-              onPress={() => {
-                console.log('testing...');
-              }}>
-              <Box
-                borderRadius={10}
-                borderColor={colors[currTheme].text}
-                borderWidth={1}>
-                <MaterialCommunityIcons
-                  name="roller-skate"
-                  size={24}
-                  color={colors[currTheme].text}
-                  style={styles.padding}
-                />
-              </Box>
-            </Marker>
-          );
-        })}
-      </MapView>
+    <Box bg="transparent">
+      <FlatList
+        data={feedData}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
       <AddPostButton />
     </Box>
   );

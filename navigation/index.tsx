@@ -9,9 +9,9 @@ import {cityAtom, currentTheme} from '../constants/atoms';
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/SignIn/LoginScreen';
 import RegisterScreen from '../screens/SignIn/RegisterScreen';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import {
   RootStackParamList,
@@ -57,35 +57,8 @@ const BottomTabNavigator = () => {
         options={{
           tabBarIcon: ({color, focused}) => {
             return (
-              <FontAwesome5
-                name="map-marker-alt"
-                size={24}
-                color={focused ? colors.constants.primary : color}
-              />
-            );
-          },
-          headerLeft: () => {
-            return (
-              <Box backgroundColor="transparent" pl={3}>
-                <ProfileImage uri={uri} />
-              </Box>
-            );
-          },
-          headerTitle: () => {
-            return city ? <Text fontSize={18}>{city}</Text> : <Spinner />;
-          },
-          headerTitleAlign: 'center',
-        }}
-      />
-
-      <Stack.Screen
-        name="Search"
-        component={ExploreScreen}
-        options={{
-          tabBarIcon: ({color, focused}) => {
-            return (
               <Feather
-                name="search"
+                name="home"
                 size={24}
                 color={focused ? colors.constants.primary : color}
               />
@@ -116,6 +89,33 @@ const BottomTabNavigator = () => {
               />
             );
           },
+        }}
+      />
+
+      <Stack.Screen
+        name="Search"
+        component={ExploreScreen}
+        options={{
+          tabBarIcon: ({color, focused}) => {
+            return (
+              <FontAwesome5
+                name="map-marker-alt"
+                size={24}
+                color={focused ? colors.constants.primary : color}
+              />
+            );
+          },
+          headerLeft: () => {
+            return (
+              <Box backgroundColor="transparent" pl={3}>
+                <ProfileImage uri={uri} />
+              </Box>
+            );
+          },
+          headerTitle: () => {
+            return city ? <Text fontSize={18}>{city}</Text> : <Spinner />;
+          },
+          headerTitleAlign: 'center',
         }}
       />
 
