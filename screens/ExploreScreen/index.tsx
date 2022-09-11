@@ -7,6 +7,7 @@ import feedData from '../../data/feedData';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {ImageBackground, StyleSheet} from 'react-native';
 import ProfileImage from '../../components/ProfileImage';
+import AddPostButton from '../../components/AddPostButton';
 
 interface feedDataItemProps {
   item: feedDataProps;
@@ -101,11 +102,14 @@ const ExploreScreen = () => {
   };
 
   return (
-    <FlatList
-      data={feedData}
-      renderItem={renderItem}
-      keyExtractor={item => item.id}
-    />
+    <Box bg="transparent">
+      <FlatList
+        data={feedData}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
+      <AddPostButton />
+    </Box>
   );
 };
 

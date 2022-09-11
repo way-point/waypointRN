@@ -23,6 +23,7 @@ import ProfileImage from '../components/ProfileImage';
 import {BlurView} from '@react-native-community/blur';
 import ExploreScreen from '../screens/ExploreScreen';
 import Layout from '../constants/Layout';
+import CameraScreen from '../screens/CameraScreen';
 
 const BottomTabNavigator = () => {
   const Stack = createBottomTabNavigator<RootTabParamList>();
@@ -175,6 +176,7 @@ const RootNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Root" component={BottomTabNavigator} />
+      <Stack.Screen name="Camera" component={CameraScreen} />
     </Stack.Navigator>
   );
 };

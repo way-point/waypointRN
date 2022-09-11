@@ -10,6 +10,7 @@ export type RootTabParamList = {
 
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
+  Camera: undefined;
 };
 
 export type SignInStackParamList = {
@@ -18,3 +19,4 @@ export type SignInStackParamList = {
 };
 
 export type SignInProp = StackNavigationProp<SignInStackParamList>;
+export type RootProp = StackNavigationProp<RootStackParamList>;
