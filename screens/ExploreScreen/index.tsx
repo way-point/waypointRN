@@ -21,12 +21,6 @@ interface feedDataItemProps {
 const menuOptions: menuOptionProps[] = [
   {
     onPress: () => {
-      console.log('hello world');
-    },
-    menuAction: {title: 'Copy Photo', systemIcon: 'doc.on.doc'},
-  },
-  {
-    onPress: () => {
       console.log('testing....');
     },
     menuAction: {title: 'Save Photo', systemIcon: 'square.and.arrow.down'},
