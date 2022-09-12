@@ -11,8 +11,9 @@ import {useNavigation} from '@react-navigation/native';
 import {RootProp} from '../../navigation/types';
 import JoinEvent from '../../components/JoinEvent';
 import WhereTitle from '../../components/WhereTitle';
-import {menuOptionsBox, menuOptionsImage} from './menuOptions';
-import Layout, {SAFE_AREA_PADDING} from '../../constants/Layout';
+import {CONTAINER_WIDTH} from '../../constants/Layout';
+import menuOptionsEvent from '../../constants/Menu/menuOptionsEvent';
+import menuOptionsImage from '../../constants/Menu/menuOptionsImage';
 
 const styles = StyleSheet.create({
   imageBackground: {
@@ -28,17 +29,13 @@ const Post = ({item}: feedDataItemProps) => {
   const [currTheme] = useAtom(currentTheme);
   const navigation = useNavigation<RootProp>();
   return (
-    <Menu menuOptions={menuOptionsBox}>
+    <Menu menuOptions={menuOptionsEvent}>
       <Pressable
         bg={currTheme + '.background'}
         alignSelf="center"
         mb={5}
         borderRadius={10}
-        w={
-          Layout.window.width -
-          SAFE_AREA_PADDING.paddingLeft -
-          SAFE_AREA_PADDING.paddingRight
-        }
+        w={CONTAINER_WIDTH}
         p={3}
         _pressed={{
           opacity: 1,

@@ -18,6 +18,9 @@ export const SAFE_AREA_PADDING = {
   paddingBottom: SAFE_BOTTOM + CONTENT_SPACING,
 };
 
+export const CONTAINER_WIDTH =
+  width - SAFE_AREA_PADDING.paddingLeft - SAFE_AREA_PADDING.paddingRight;
+
 export default {
   window: {
     width,

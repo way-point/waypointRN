@@ -1,21 +1,6 @@
-import {menuOptionProps} from '../../constants/types';
+import {menuOptionProps} from '../types';
 
-export const menuOptionsImage: menuOptionProps[] = [
-  {
-    onPress: () => {
-      console.log('testing....');
-    },
-    menuAction: {title: 'Save Photo', systemIcon: 'square.and.arrow.down'},
-  },
-  {
-    onPress: () => {
-      console.log('testing 2...');
-    },
-    menuAction: {title: 'Share With...', systemIcon: 'square.and.arrow.up'},
-  },
-];
-
-export const menuOptionsBox: menuOptionProps[] = [
+const menuOptionsEvent: menuOptionProps[] = [
   {
     onPress: () => {
       console.log('let the party start....');
@@ -35,3 +20,5 @@ export const menuOptionsBox: menuOptionProps[] = [
     menuAction: {title: 'Report', systemIcon: 'flag.fill', destructive: true},
   },
 ];
+
+export default menuOptionsEvent;
