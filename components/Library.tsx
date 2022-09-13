@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Box, FlatList, Pressable, Text, useTheme} from 'native-base';
-import {FlatList as FL} from 'react-native';
+import {FlatList as FL, TextInput} from 'react-native';
 import {StyleSheet, ImageBackground} from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
 import Layout, {CONTAINER_WIDTH} from '../constants/Layout';
@@ -8,6 +8,7 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useAtom} from 'jotai';
 import {currentTheme} from '../constants/atoms';
 import Feather from 'react-native-vector-icons/Feather';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import {
   launchImageLibraryAsync,
   MediaTypeOptions,
@@ -16,6 +17,8 @@ import {
 
 interface LibraryProps {
   albums: MediaLibrary.Album[];
+  setShowImagePicker: React.Dispatch<React.SetStateAction<boolean>>;
+  descriptionRef: React.MutableRefObject<TextInput | null>;
 }
 
 const pickImage = async () => {
@@ -34,7 +37,11 @@ const getPermissionAsync = async () => {
   return status === 'granted';
 };
 
-const Library: React.FC<LibraryProps> = ({albums}) => {
+const Library: React.FC<LibraryProps> = ({
+  albums,
+  setShowImagePicker,
+  descriptionRef,
+}) => {
   const [photos, setPhotos] = useState(
     undefined as MediaLibrary.PagedInfo<MediaLibrary.Asset> | undefined,
   );
@@ -44,7 +51,7 @@ const Library: React.FC<LibraryProps> = ({albums}) => {
 
   const styles = StyleSheet.create({
     paddingBottom: {
-      paddingBottom: 20,
+      paddingBottom: 60,
     },
     flatlistPadding: {
       padding: 1,
@@ -54,7 +61,14 @@ const Library: React.FC<LibraryProps> = ({albums}) => {
       paddingHorizontal: 1,
       paddingVertical: 1,
       borderRadius: 5,
+      overflow: 'hidden',
       color: colors[currTheme].text,
+    },
+    icon: {
+      alignSelf: 'center',
+      marginTop: 'auto',
+      marginBottom: 'auto',
+      padding: 5,
     },
   });
 
@@ -90,28 +104,47 @@ const Library: React.FC<LibraryProps> = ({albums}) => {
   }, [albums, index]);
 
   return (
-    <Box pb={60}>
-      <Pressable
-        onPress={async () => {
-          const granted = await getPermissionAsync();
-          if (granted) {
-            await pickImage();
-          }
-        }}
-        bg="constants.primary"
-        px={2}
-        py={1}
-        w={12}
-        mt={5}
-        alignItems="center"
-        mb={2}
-        borderRadius={10}>
-        <Feather name="image" size={30} color="white" />
-      </Pressable>
+    <Box pt={5}>
+      <Box flexDir="row" mb={2}>
+        <Pressable
+          bg={currTheme + '.textField'}
+          borderRadius={15}
+          mr={5}
+          onPress={() => {
+            setShowImagePicker(false);
+            if (descriptionRef.current) {
+              descriptionRef.current.focus();
+            }
+          }}>
+          <AntDesign
+            name="close"
+            size={30}
+            style={styles.icon}
+            color={colors[currTheme].text}
+          />
+        </Pressable>
+        <Pressable
+          bg={currTheme + '.textField'}
+          borderRadius={15}
+          mr={5}
+          onPress={async () => {
+            const granted = await getPermissionAsync();
+            if (granted) {
+              await pickImage();
+            }
+          }}>
+          <Feather
+            name="image"
+            size={30}
+            style={styles.icon}
+            color={colors[currTheme].text}
+          />
+        </Pressable>
+      </Box>
       <FlatList
         ref={flatListRef}
         style={{height: Layout.window.height / 3}}
-        nestedScrollEnabled
+        contentContainerStyle={styles.paddingBottom}
         data={photos?.assets}
         numColumns={3}
         renderItem={item => {
@@ -127,7 +160,7 @@ const Library: React.FC<LibraryProps> = ({albums}) => {
                   height: CONTAINER_WIDTH / 3 - 2,
                 }}>
                 {e.mediaType === 'video' && (
-                  <Box mt="auto" bg="transparent" alignItems="flex-end" p={5}>
+                  <Box mt="auto" bg="transparent" alignItems="flex-end" p={1}>
                     <Text style={styles.videoText}>
                       {new Date(Math.round(e.duration) * 1000)
                         .toISOString()

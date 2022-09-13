@@ -1,14 +1,16 @@
 import {
+  Actionsheet,
   Box,
   KeyboardAvoidingView,
   Pressable,
-  ScrollView,
   Text,
   TextArea,
+  useDisclose,
   useTheme,
+  Button,
 } from 'native-base';
 import React, {useEffect, useRef, useState} from 'react';
-import {Keyboard, Platform, StyleSheet} from 'react-native';
+import {Keyboard, Platform, StyleSheet, TextInput} from 'react-native';
 import ProfileImage from '../../../components/ProfileImage';
 import Layout, {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import {uri} from '../../../navigation';
@@ -76,6 +78,23 @@ const AddTitleScreen = () => {
 
   const [showImagePicker, setShowImagePicker] = useState(false);
 
+  function Example() {
+    const {isOpen, onOpen, onClose} = useDisclose();
+    return (
+      <>
+        <Button onPress={onOpen}>Actionsheet</Button>
+
+        <Actionsheet isOpen={isOpen} onClose={onClose}>
+          <Actionsheet.Content>
+            <Actionsheet.Item>Option 1</Actionsheet.Item>
+            <Actionsheet.Item>Option 2</Actionsheet.Item>
+            <Actionsheet.Item>Option 3</Actionsheet.Item>
+          </Actionsheet.Content>
+        </Actionsheet>
+      </>
+    );
+  }
+
   useEffect(() => {
     if (showImagePicker) {
       Keyboard.dismiss();
@@ -86,12 +105,13 @@ const AddTitleScreen = () => {
     }
   }, [height, showImagePicker]);
 
-  const descriptionRef = useRef(null);
+  const descriptionRef = useRef<TextInput>(null);
   return (
     <Box bg="transparent" flex={1}>
-      <ScrollView
-        scrollEnabled={!showImagePicker}
-        contentContainerStyle={styles.scrollView}>
+      <KeyboardAvoidingView
+        bg={currTheme + '.background'}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.scrollView}>
         <Box p={SAFE_AREA_PADDING.paddingLeft} borderRadius={10} h="100%">
           <Box flexDir="row">
             <ProfileImage uri={uri} />
@@ -114,6 +134,7 @@ const AddTitleScreen = () => {
             </Box>
           </Box>
           <TextArea
+            autoFocus
             ref={descriptionRef}
             onFocus={() => {
               setShowImagePicker(false);
@@ -128,11 +149,7 @@ const AddTitleScreen = () => {
             placeholder="Description"
             w="100%"
           />
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            keyboardVerticalOffset={80}
-            mt="auto"
-            mb={SAFE_AREA_PADDING.paddingBottom}>
+          <Box mt="auto">
             <Box
               flexDir="row"
               mb={showImagePicker && Platform.OS === 'ios' ? -10 : 0}>
@@ -143,10 +160,16 @@ const AddTitleScreen = () => {
                 onPress={async () => {
                   const loaded = await getPermissionAsync();
                   if (loaded) {
-                    let als = await getAlbumsAsync({
+                    getAlbumsAsync({
                       includeSmartAlbums: true,
+                    }).then(res => {
+                      setAlbums(res);
                     });
-                    setAlbums(als);
+                    if (showImagePicker) {
+                      if (descriptionRef.current) {
+                        descriptionRef.current.focus();
+                      }
+                    }
                     setShowImagePicker(!showImagePicker);
                   }
                 }}>
@@ -192,12 +215,16 @@ const AddTitleScreen = () => {
                 />
               </Box>
             </Box>
-          </KeyboardAvoidingView>
+          </Box>
           <Animated.View style={heightAnimatedStyle}>
-            <Library albums={albums} />
+            <Library
+              albums={albums}
+              setShowImagePicker={setShowImagePicker}
+              descriptionRef={descriptionRef}
+            />
           </Animated.View>
         </Box>
-      </ScrollView>
+      </KeyboardAvoidingView>
     </Box>
   );
 };
