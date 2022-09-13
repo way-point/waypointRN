@@ -1,12 +1,15 @@
+$RNFirebaseAsStaticFramework = true
+
 require File.join(File.dirname(`node --print "require.resolve('expo/package.json')"`), "scripts/autolinking")
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '13.0'
+platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
 
-target 'waypointRN' do
+target 'waypointapp' do
   use_expo_modules!
+  use_frameworks! :linkage => :static
   post_integrate do |installer|
     begin
       expo_patch_react_imports!(installer)
@@ -14,13 +17,7 @@ target 'waypointRN' do
       Pod::UI.warn e
     end
   end
-  rn_maps_path = '../node_modules/react-native-maps'
-  pod 'Google-Maps-iOS-Utils'
-  pod 'react-native-google-maps', :path => rn_maps_path
-
   config = use_native_modules!
-
-  pod 'GoogleSignIn'
 
   # Flags change depending on the env values.
   flags = get_default_flags()
@@ -36,12 +33,12 @@ target 'waypointRN' do
     #
     # Note that if you have use_frameworks! enabled, Flipper will not work and
     # you should disable the next line.
-    :flipper_configuration => FlipperConfiguration.enabled,
+    # :flipper_configuration => FlipperConfiguration.enabled,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'waypointRNTests' do
+  target 'waypointappTests' do
     inherit! :complete
     # Pods for testing
   end

@@ -8,6 +8,50 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:240891037955:android:5e005b3cd3a8c24b29c136",
+        "android_client_info": {
+          "package_name": "com.waypointapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "240891037955-lphgu6gj8lg627lkdf7pu6vahfn29aat.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waypointapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "240891037955-ae2ss81rvuurg7df2238rk4lves2famf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6LvLG1P8TGWoy4wi2N2sk3MTdPpBQBfE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "240891037955-ae2ss81rvuurg7df2238rk4lves2famf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "240891037955-159sh2sa94jf6l7o7lo56lefn5t2ka57.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.waypoint.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:240891037955:android:c6e11695c343394929c136",
         "android_client_info": {
           "package_name": "com.waypointrn"
@@ -40,10 +84,10 @@
               "client_type": 3
             },
             {
-              "client_id": "240891037955-95es5juil94c5l8edbi2ne4okdandmve.apps.googleusercontent.com",
+              "client_id": "240891037955-159sh2sa94jf6l7o7lo56lefn5t2ka57.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.waypoint"
+                "bundle_id": "org.reactjs.native.waypoint.ios"
               }
             }
           ]

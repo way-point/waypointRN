@@ -1,29 +1,27 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import {useAtom} from 'jotai';
 import {Box, Input, Spinner, Text, useTheme} from 'native-base';
 import {Platform, StyleSheet} from 'react-native';
 import React from 'react';
-import {cityAtom, currentTheme} from '../constants/atoms';
-import HomeScreen from '../screens/HomeScreen';
-import LoginScreen from '../screens/SignIn/LoginScreen';
-import RegisterScreen from '../screens/SignIn/RegisterScreen';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {
   RootStackParamList,
   RootTabParamList,
   SignInStackParamList,
 } from './types';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {cityAtom, currentTheme} from '../constants/atoms';
+import HomeScreen from '../screens/HomeScreen';
+import LoginScreen from '../screens/SignIn/LoginScreen';
+import RegisterScreen from '../screens/SignIn/RegisterScreen';
 import ProfileImage from '../components/ProfileImage';
 import {BlurView} from '@react-native-community/blur';
 import ExploreScreen from '../screens/ExploreScreen';
 import Layout from '../constants/Layout';
-import CameraScreen from '../screens/CreateEvent/CameraScreen';
 import AddTitleScreen from '../screens/CreateEvent/AddTitleScreen';
 
 export const uri =
@@ -177,17 +175,15 @@ const RootNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Root" component={BottomTabNavigator} />
-      <Stack.Screen name="Camera" component={CameraScreen} />
       <Stack.Group>
         <Stack.Screen name="CreateTitle" component={AddTitleScreen} />
-        <Stack.Screen name="EventDetails" component={CameraScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
 };
 
 const SignInNavigator = () => {
-  const Stack = createStackNavigator<SignInStackParamList>();
+  const Stack = createNativeStackNavigator<SignInStackParamList>();
 
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>

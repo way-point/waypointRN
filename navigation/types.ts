@@ -1,5 +1,5 @@
 import {NavigatorScreenParams} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {feedDataProps} from '../constants/types';
 
 export type RootTabParamList = {
@@ -21,5 +21,5 @@ export type SignInStackParamList = {
   Register: undefined;
 };
 
-export type SignInProp = StackNavigationProp<SignInStackParamList>;
-export type RootProp = StackNavigationProp<RootStackParamList>;
+export type SignInProp = NativeStackNavigationProp<SignInStackParamList>;
+export type RootProp = NativeStackNavigationProp<RootStackParamList>;
