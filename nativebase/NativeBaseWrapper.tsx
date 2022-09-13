@@ -57,7 +57,12 @@ const NativeBaseWrapper = ({children}: NativeBaseWrapperProps) => {
         color: `${currTheme}.text`,
         selectionColor: `${currTheme}.navigation.primary`,
         varient: 'filled',
-        placeholderTextColor: `${currTheme}.text`,
+        placeholderTextColor: '#ababab',
+      },
+    },
+    TextArea: {
+      defaultProps: {
+        placeholderTextColor: '#ababab',
       },
     },
     Pressable: {

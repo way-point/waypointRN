@@ -22,7 +22,7 @@ const AddPostButton = () => {
         width={60}
         height={60}
         onPress={() => {
-          navigation.navigate('Camera');
+          navigation.navigate('CreateTitle');
         }}
         backgroundColor="constants.primary">
         <Feather name="plus" size={30} color="white" style={styles.feather} />

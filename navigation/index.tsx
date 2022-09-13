@@ -23,17 +23,17 @@ import ProfileImage from '../components/ProfileImage';
 import {BlurView} from '@react-native-community/blur';
 import ExploreScreen from '../screens/ExploreScreen';
 import Layout from '../constants/Layout';
-import CameraScreen from '../screens/CameraScreen';
-import EventDetailsScreen from '../screens/EventDetailsScreen';
+import CameraScreen from '../screens/CreateEvent/CameraScreen';
+import AddTitleScreen from '../screens/CreateEvent/AddTitleScreen';
+
+export const uri =
+  'https://media-exp1.licdn.com/dms/image/C5603AQEQZuyIujt9xA/profile-displayphoto-shrink_200_200/0/1640233246542?e=2147483647&v=beta&t=06q_FRXOtNMMPTnZmHt7CDL6g3C6tC_0erJ4JaWTNgo';
 
 const BottomTabNavigator = () => {
   const Stack = createBottomTabNavigator<RootTabParamList>();
   const [city] = useAtom(cityAtom);
   const [currTheme] = useAtom(currentTheme);
   const {colors} = useTheme();
-
-  const uri =
-    'https://media-exp1.licdn.com/dms/image/C5603AQEQZuyIujt9xA/profile-displayphoto-shrink_200_200/0/1640233246542?e=2147483647&v=beta&t=06q_FRXOtNMMPTnZmHt7CDL6g3C6tC_0erJ4JaWTNgo';
 
   return (
     <Stack.Navigator
@@ -178,7 +178,10 @@ const RootNavigator = () => {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="Camera" component={CameraScreen} />
-      <Stack.Screen name="EventDetails" component={EventDetailsScreen} />
+      <Stack.Group>
+        <Stack.Screen name="CreateTitle" component={AddTitleScreen} />
+        <Stack.Screen name="EventDetails" component={CameraScreen} />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };

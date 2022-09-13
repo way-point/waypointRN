@@ -32,8 +32,10 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		3530C65B8D7F09D5E8B1CF5B /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4BC0539A42EC9188AA1088 /* ExpoModulesProvider.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		DDB879E798785B80A50302F1 /* libPods-waypointRN-waypointRNTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7966085B01B27AFC87537630 /* libPods-waypointRN-waypointRNTests.a */; };
+		E594305E8DF5BF328667A13E /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5217656ED5AB64C12816E566 /* ExpoModulesProvider.swift */; };
 		FA70816A78DBBD9DE75820F5 /* libPods-waypointRN.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2551E5AAC16D0CE815830B0C /* libPods-waypointRN.a */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +76,8 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = waypointRN/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = waypointRN/main.m; sourceTree = "<group>"; };
 		2551E5AAC16D0CE815830B0C /* libPods-waypointRN.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-waypointRN.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E4BC0539A42EC9188AA1088 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-waypointRN-waypointRNTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		5217656ED5AB64C12816E566 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-waypointRN/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		7966085B01B27AFC87537630 /* libPods-waypointRN-waypointRNTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-waypointRN-waypointRNTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = waypointRN/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		828A00C705C8D03031B74E4A /* Pods-waypointRN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-waypointRN.release.xcconfig"; path = "Target Support Files/Pods-waypointRN/Pods-waypointRN.release.xcconfig"; sourceTree = "<group>"; };
@@ -172,6 +176,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		67680791B2AB3454F9525F3D /* waypointRN */ = {
+			isa = PBXGroup;
+			children = (
+				5217656ED5AB64C12816E566 /* ExpoModulesProvider.swift */,
+			);
+			name = waypointRN;
+			sourceTree = "<group>";
+		};
+		73694FA9321FCF01C09D4851 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				67680791B2AB3454F9525F3D /* waypointRN */,
+				F041D4E8B6C3120F6CD50E28 /* waypointRNTests */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +209,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				73694FA9321FCF01C09D4851 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -212,6 +234,14 @@
 				FCD1391F9E0D47FDCCC6B8C4 /* Pods-waypointRN-waypointRNTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		F041D4E8B6C3120F6CD50E28 /* waypointRNTests */ = {
+			isa = PBXGroup;
+			children = (
+				3E4BC0539A42EC9188AA1088 /* ExpoModulesProvider.swift */,
+			);
+			name = waypointRNTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -497,6 +527,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* waypointRNTests.m in Sources */,
+				3530C65B8D7F09D5E8B1CF5B /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,6 +537,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				E594305E8DF5BF328667A13E /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +576,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/waypointRN.app/waypointRN";
@@ -571,6 +604,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/waypointRN.app/waypointRN";
@@ -605,6 +639,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = waypointRN;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -639,6 +674,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = waypointRN;
 				SWIFT_VERSION = 5.0;

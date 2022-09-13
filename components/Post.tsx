@@ -1,19 +1,19 @@
 import {Box, Heading, Pressable} from 'native-base';
 import React from 'react';
-import AvatarGroup from '../../components/AvatarGroup';
-import Menu from '../../components/Menu';
-import {feedDataItemProps} from '../../constants/types';
+import AvatarGroup from './AvatarGroup';
+import Menu from './Menu';
+import {feedDataItemProps} from '../constants/types';
 import {ImageBackground, StyleSheet} from 'react-native';
-import ProfileImage from '../../components/ProfileImage';
+import ProfileImage from './ProfileImage';
 import {useAtom} from 'jotai';
-import {currentTheme} from '../../constants/atoms';
+import {currentTheme} from '../constants/atoms';
 import {useNavigation} from '@react-navigation/native';
-import {RootProp} from '../../navigation/types';
-import JoinEvent from '../../components/JoinEvent';
-import WhereTitle from '../../components/WhereTitle';
-import {CONTAINER_WIDTH} from '../../constants/Layout';
-import menuOptionsEvent from '../../constants/Menu/menuOptionsEvent';
-import menuOptionsImage from '../../constants/Menu/menuOptionsImage';
+import {RootProp} from '../navigation/types';
+import JoinEvent from './JoinEvent';
+import WhereTitle from './WhereTitle';
+import {CONTAINER_WIDTH} from '../constants/Layout';
+import menuOptionsEvent from '../constants/Menu/menuOptionsEvent';
+import menuOptionsImage from '../constants/Menu/menuOptionsImage';
 
 const styles = StyleSheet.create({
   imageBackground: {

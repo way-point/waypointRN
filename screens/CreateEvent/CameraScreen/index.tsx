@@ -1,13 +1,13 @@
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {Box, Heading, Image, ScrollView, Text} from 'native-base';
 import React from 'react';
-import AvatarGroup from '../../components/AvatarGroup';
-import JoinEvent from '../../components/JoinEvent';
-import Menu from '../../components/Menu';
-import ProfileImage from '../../components/ProfileImage';
-import {CONTAINER_WIDTH, SAFE_AREA_PADDING} from '../../constants/Layout';
-import menuOptionsImage from '../../constants/Menu/menuOptionsImage';
-import {RootStackParamList} from '../../navigation/types';
+import AvatarGroup from '../../../components/AvatarGroup';
+import JoinEvent from '../../../components/JoinEvent';
+import Menu from '../../../components/Menu';
+import ProfileImage from '../../../components/ProfileImage';
+import {CONTAINER_WIDTH, SAFE_AREA_PADDING} from '../../../constants/Layout';
+import menuOptionsImage from '../../../constants/Menu/menuOptionsImage';
+import {RootStackParamList} from '../../../navigation/types';
 
 const EventDetailsScreen = () => {
   const {event} =

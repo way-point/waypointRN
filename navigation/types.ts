@@ -13,6 +13,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Camera: undefined;
   EventDetails: {event: feedDataProps};
+  CreateTitle: undefined;
 };
 
 export type SignInStackParamList = {
