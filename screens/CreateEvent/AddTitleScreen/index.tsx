@@ -1,13 +1,10 @@
 import {
-  Actionsheet,
   Box,
   KeyboardAvoidingView,
   Pressable,
   Text,
   TextArea,
-  useDisclose,
   useTheme,
-  Button,
 } from 'native-base';
 import React, {useEffect, useRef, useState} from 'react';
 import {Keyboard, Platform, StyleSheet, TextInput} from 'react-native';
@@ -78,23 +75,6 @@ const AddTitleScreen = () => {
 
   const [showImagePicker, setShowImagePicker] = useState(false);
 
-  function Example() {
-    const {isOpen, onOpen, onClose} = useDisclose();
-    return (
-      <>
-        <Button onPress={onOpen}>Actionsheet</Button>
-
-        <Actionsheet isOpen={isOpen} onClose={onClose}>
-          <Actionsheet.Content>
-            <Actionsheet.Item>Option 1</Actionsheet.Item>
-            <Actionsheet.Item>Option 2</Actionsheet.Item>
-            <Actionsheet.Item>Option 3</Actionsheet.Item>
-          </Actionsheet.Content>
-        </Actionsheet>
-      </>
-    );
-  }
-
   useEffect(() => {
     if (showImagePicker) {
       Keyboard.dismiss();
@@ -152,7 +132,8 @@ const AddTitleScreen = () => {
           <Box mt="auto">
             <Box
               flexDir="row"
-              mb={showImagePicker && Platform.OS === 'ios' ? -10 : 0}>
+              display={showImagePicker ? 'none' : 'flex'}
+              mb={showImagePicker && Platform.OS === 'ios' ? -10 : 5}>
               <Pressable
                 bg={currTheme + '.textField'}
                 borderRadius={15}
