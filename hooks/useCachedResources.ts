@@ -10,11 +10,11 @@ export default function useCachedResources() {
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-      } catch (e) {
         const data = await AsyncStorage.getItem(ASYNC_THEME_VAL);
         if (data === null) {
           await AsyncStorage.setItem(ASYNC_THEME_VAL, colorScheme);
         }
+      } catch (e) {
         console.warn(e);
       } finally {
         setLoadingComplete(true);
