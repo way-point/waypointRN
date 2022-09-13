@@ -92,6 +92,7 @@ const Library: React.FC<LibraryProps> = ({albums}) => {
     <Box>
       <FlatList
         ref={flatListRef}
+        nestedScrollEnabled
         data={photos?.assets}
         numColumns={3}
         contentContainerStyle={styles.paddingBottom}

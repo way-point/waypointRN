@@ -2,6 +2,7 @@ import {
   Box,
   KeyboardAvoidingView,
   Pressable,
+  ScrollView,
   Text,
   TextArea,
   useTheme,
@@ -74,7 +75,7 @@ const AddTitleScreen = () => {
   const descriptionRef = useRef(null);
   return (
     <Box bg="transparent" flex={1}>
-      <Box style={styles.scrollView}>
+      <ScrollView nestedScrollEnabled contentContainerStyle={styles.scrollView}>
         <Box p={SAFE_AREA_PADDING.paddingLeft} borderRadius={10} h="100%">
           <Box flexDir="row">
             <ProfileImage uri={uri} />
@@ -116,7 +117,9 @@ const AddTitleScreen = () => {
             keyboardVerticalOffset={80}
             mt="auto"
             mb={SAFE_AREA_PADDING.paddingBottom}>
-            <Box flexDir="row" mb={showImagePicker ? -10 : 0}>
+            <Box
+              flexDir="row"
+              mb={showImagePicker && Platform.OS === 'ios' ? -10 : 0}>
               <Pressable
                 bg={currTheme + '.textField'}
                 borderRadius={15}
@@ -169,7 +172,7 @@ const AddTitleScreen = () => {
             {showImagePicker && <Library albums={albums} />}
           </Animated.View>
         </Box>
-      </Box>
+      </ScrollView>
     </Box>
   );
 };
