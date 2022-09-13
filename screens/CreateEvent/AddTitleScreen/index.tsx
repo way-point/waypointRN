@@ -10,7 +10,7 @@ import {
 import React, {useEffect, useRef, useState} from 'react';
 import {Keyboard, Platform, StyleSheet} from 'react-native';
 import ProfileImage from '../../../components/ProfileImage';
-import {SAFE_AREA_PADDING} from '../../../constants/Layout';
+import Layout, {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import {uri} from '../../../navigation';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -22,7 +22,11 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import Library from '../../../components/Library';
-import {requestMediaLibraryPermissionsAsync} from 'expo-image-picker';
+import {
+  getCameraPermissionsAsync,
+  launchCameraAsync,
+  requestMediaLibraryPermissionsAsync,
+} from 'expo-image-picker';
 import {Album, getAlbumsAsync} from 'expo-media-library';
 
 const styles = StyleSheet.create({
@@ -48,6 +52,16 @@ const getPermissionAsync = async () => {
   return status === 'granted';
 };
 
+const getCameraPermsAsync = async () => {
+  const {status} = await getCameraPermissionsAsync();
+  return status === 'granted';
+};
+
+const openCamera = async () => {
+  let result = await launchCameraAsync({allowsEditing: true});
+  return result;
+};
+
 const AddTitleScreen = () => {
   const {colors} = useTheme();
   const [currTheme] = useAtom(currentTheme);
@@ -65,7 +79,7 @@ const AddTitleScreen = () => {
   useEffect(() => {
     if (showImagePicker) {
       Keyboard.dismiss();
-      height.value = withTiming(400);
+      height.value = withTiming(Layout.window.height / 3);
     }
     if (!showImagePicker) {
       height.value = withTiming(0);
@@ -75,7 +89,9 @@ const AddTitleScreen = () => {
   const descriptionRef = useRef(null);
   return (
     <Box bg="transparent" flex={1}>
-      <ScrollView nestedScrollEnabled contentContainerStyle={styles.scrollView}>
+      <ScrollView
+        scrollEnabled={!showImagePicker}
+        contentContainerStyle={styles.scrollView}>
         <Box p={SAFE_AREA_PADDING.paddingLeft} borderRadius={10} h="100%">
           <Box flexDir="row">
             <ProfileImage uri={uri} />
@@ -150,14 +166,23 @@ const AddTitleScreen = () => {
                   />
                 )}
               </Pressable>
-              <Box bg={currTheme + '.textField'} borderRadius={15} mr={5}>
+              <Pressable
+                onPress={async () => {
+                  const loaded = await getCameraPermsAsync();
+                  if (loaded) {
+                    await openCamera();
+                  }
+                }}
+                bg={currTheme + '.textField'}
+                borderRadius={15}
+                mr={5}>
                 <Feather
                   name="camera"
                   size={30}
                   style={styles.icon}
                   color={colors[currTheme].text}
                 />
-              </Box>
+              </Pressable>
               <Box bg={currTheme + '.textField'} borderRadius={15} mr={5}>
                 <Feather
                   name="link"
@@ -169,7 +194,7 @@ const AddTitleScreen = () => {
             </Box>
           </KeyboardAvoidingView>
           <Animated.View style={heightAnimatedStyle}>
-            {showImagePicker && <Library albums={albums} />}
+            <Library albums={albums} />
           </Animated.View>
         </Box>
       </ScrollView>

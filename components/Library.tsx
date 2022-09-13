@@ -1,16 +1,38 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Box, FlatList, Text, useTheme} from 'native-base';
+import {Box, FlatList, Pressable, Text, useTheme} from 'native-base';
 import {FlatList as FL} from 'react-native';
 import {StyleSheet, ImageBackground} from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
-import {CONTAINER_WIDTH} from '../constants/Layout';
+import Layout, {CONTAINER_WIDTH} from '../constants/Layout';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useAtom} from 'jotai';
 import {currentTheme} from '../constants/atoms';
+import Feather from 'react-native-vector-icons/Feather';
+import {
+  launchImageLibraryAsync,
+  MediaTypeOptions,
+  requestMediaLibraryPermissionsAsync,
+} from 'expo-image-picker';
 
 interface LibraryProps {
   albums: MediaLibrary.Album[];
 }
+
+const pickImage = async () => {
+  let result = await launchImageLibraryAsync({
+    mediaTypes: MediaTypeOptions.All,
+    allowsEditing: true,
+    aspect: [4, 3],
+    quality: 1,
+  });
+
+  return result;
+};
+
+const getPermissionAsync = async () => {
+  const {status} = await requestMediaLibraryPermissionsAsync();
+  return status === 'granted';
+};
 
 const Library: React.FC<LibraryProps> = ({albums}) => {
   const [photos, setPhotos] = useState(
@@ -22,15 +44,15 @@ const Library: React.FC<LibraryProps> = ({albums}) => {
 
   const styles = StyleSheet.create({
     paddingBottom: {
-      paddingBottom: 60,
+      paddingBottom: 20,
     },
     flatlistPadding: {
       padding: 1,
     },
     videoText: {
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      paddingHorizontal: 3,
-      paddingVertical: 2,
+      paddingHorizontal: 1,
+      paddingVertical: 1,
       borderRadius: 5,
       color: colors[currTheme].text,
     },
@@ -67,35 +89,31 @@ const Library: React.FC<LibraryProps> = ({albums}) => {
     flatListRef.current?.scrollToOffset({animated: false, offset: 0});
   }, [albums, index]);
 
-  useEffect(() => {
-    const adding = async () => {
-      if (photos && photos.hasNextPage) {
-        const getPhotos = await MediaLibrary.getAlbumAsync(albums[index].title);
-        const getAllPhotos = await MediaLibrary.getAssetsAsync({
-          first: 100,
-          after: photos.assets[photos.assets.length - 1],
-          album: getPhotos,
-          sortBy: 'creationTime',
-          mediaType: ['photo', 'video'],
-        });
-        let temp = JSON.parse(
-          JSON.stringify(photos),
-        ) as MediaLibrary.PagedInfo<MediaLibrary.Asset>;
-        temp.assets.push(...getAllPhotos.assets);
-        setPhotos(temp);
-      }
-    };
-    adding();
-  }, [albums, photos]);
-
   return (
-    <Box>
+    <Box pb={60}>
+      <Pressable
+        onPress={async () => {
+          const granted = await getPermissionAsync();
+          if (granted) {
+            await pickImage();
+          }
+        }}
+        bg="constants.primary"
+        px={2}
+        py={1}
+        w={12}
+        mt={5}
+        alignItems="center"
+        mb={2}
+        borderRadius={10}>
+        <Feather name="image" size={30} color="white" />
+      </Pressable>
       <FlatList
         ref={flatListRef}
+        style={{height: Layout.window.height / 3}}
         nestedScrollEnabled
         data={photos?.assets}
         numColumns={3}
-        contentContainerStyle={styles.paddingBottom}
         renderItem={item => {
           const e = item.item;
           const i = item.index;
