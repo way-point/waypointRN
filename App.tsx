@@ -9,11 +9,18 @@
  */
 
 import React from 'react';
-import {StatusBar} from 'react-native';
+import {StatusBar, StyleSheet} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import useCachedResources from './hooks/useCachedResources';
 import NativeBaseWrapper from './nativebase/NativeBaseWrapper';
 import Navigation from './navigation';
+
+const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
+});
 
 const App = () => {
   const isLoadingComplete = useCachedResources();
@@ -22,10 +29,12 @@ const App = () => {
   } else {
     return (
       <SafeAreaProvider>
-        <NativeBaseWrapper>
-          <Navigation />
-          <StatusBar />
-        </NativeBaseWrapper>
+        <GestureHandlerRootView style={styles.flex}>
+          <NativeBaseWrapper>
+            <Navigation />
+            <StatusBar />
+          </NativeBaseWrapper>
+        </GestureHandlerRootView>
       </SafeAreaProvider>
     );
   }

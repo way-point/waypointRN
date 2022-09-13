@@ -6,7 +6,7 @@ import {
   TextArea,
   useTheme,
 } from 'native-base';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Keyboard, Platform, StyleSheet, TextInput} from 'react-native';
 import ProfileImage from '../../../components/ProfileImage';
 import Layout, {SAFE_AREA_PADDING} from '../../../constants/Layout';
@@ -27,6 +27,8 @@ import {
   requestMediaLibraryPermissionsAsync,
 } from 'expo-image-picker';
 import {Album, getAlbumsAsync} from 'expo-media-library';
+import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import ChooseEvents from '../../../components/ChooseEvents';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -43,6 +45,19 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     marginBottom: 'auto',
     padding: 5,
+  },
+  container: {
+    flex: 1,
+    padding: 24,
+    justifyContent: 'center',
+    backgroundColor: 'grey',
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  radius: {
+    borderTopEndRadius: 10,
   },
 });
 
@@ -62,6 +77,22 @@ const AddTitleScreen = () => {
   const [currTheme] = useAtom(currentTheme);
   const height = useSharedValue(0);
   const [albums, setAlbums] = useState([] as Album[]);
+
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  // variables
+  const snapPoints = useMemo(() => ['25%', '50%'], []);
+
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log(index);
+    if (index === -1 && descriptionRef.current) {
+      descriptionRef.current.focus();
+    }
+  }, []);
+  // callbacks
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
 
   const heightAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -90,125 +121,155 @@ const AddTitleScreen = () => {
     return result;
   };
 
+  function Example() {
+    return (
+      <Box my="auto">
+        <Pressable
+          onPress={() => {
+            Keyboard.dismiss();
+            handlePresentModalPress();
+          }}
+          borderColor="constants.primary"
+          flexDir="row"
+          borderWidth={2}
+          borderRadius={10}
+          ml={3}
+          px={1}>
+          <Text color="constants.primary" px={1} my="auto">
+            Public
+          </Text>
+          <Feather
+            name="chevron-down"
+            size={24}
+            style={styles.carrot}
+            color={colors.constants.primary}
+          />
+        </Pressable>
+        <BottomSheetModal
+          stackBehavior="push"
+          handleStyle={[
+            {backgroundColor: colors[currTheme].textField},
+            styles.radius,
+          ]}
+          handleIndicatorStyle={{backgroundColor: colors[currTheme].text}}
+          ref={bottomSheetModalRef}
+          index={1}
+          snapPoints={snapPoints}
+          onChange={handleSheetChanges}>
+          <ChooseEvents />
+        </BottomSheetModal>
+      </Box>
+    );
+  }
+
   const descriptionRef = useRef<TextInput>(null);
   return (
     <Box bg="transparent" flex={1}>
-      <KeyboardAvoidingView
-        bg={currTheme + '.background'}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'android' ? 10 : 0}
-        style={styles.scrollView}>
-        <Box p={SAFE_AREA_PADDING.paddingLeft} borderRadius={10} h="100%">
-          <Box flexDir="row">
-            <ProfileImage uri={uri} />
-            <Box
-              borderColor="constants.primary"
-              flexDir="row"
-              borderWidth={2}
-              borderRadius={10}
-              ml={3}
-              px={1}>
-              <Text color="constants.primary" px={1} my="auto">
-                Public
-              </Text>
-              <Feather
-                name="chevron-down"
-                size={24}
-                style={styles.carrot}
-                color={colors.constants.primary}
-              />
+      <BottomSheetModalProvider>
+        <KeyboardAvoidingView
+          bg={currTheme + '.background'}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={Platform.OS === 'android' ? 10 : 0}
+          style={styles.scrollView}>
+          <Box p={SAFE_AREA_PADDING.paddingLeft} borderRadius={10} h="100%">
+            <Box flexDir="row">
+              <ProfileImage uri={uri} />
+              <Example />
             </Box>
-          </Box>
-          <TextArea
-            autoFocus
-            ref={descriptionRef}
-            onFocus={() => {
-              setShowImagePicker(false);
-            }}
-            autoCompleteType="off"
-            keyboardType="twitter"
-            fontSize={16}
-            color={currTheme + '.text'}
-            borderWidth={0}
-            borderRadius={10}
-            mt={5}
-            placeholder="Description"
-            w="100%"
-          />
-          <Box mt="auto">
-            <Box flexDir="row" display={showImagePicker ? 'none' : 'flex'}>
-              <Pressable
-                bg={currTheme + '.textField'}
-                borderRadius={15}
-                mr={5}
-                onPress={async () => {
-                  const loaded = await getPermissionAsync();
-                  if (loaded) {
-                    getAlbumsAsync({
-                      includeSmartAlbums: true,
-                    }).then(res => {
-                      setAlbums(res);
-                    });
-                    if (showImagePicker) {
-                      if (descriptionRef.current) {
-                        descriptionRef.current.focus();
+            <TextArea
+              autoFocus
+              ref={descriptionRef}
+              onFocus={() => {
+                setShowImagePicker(false);
+                if (bottomSheetModalRef.current) {
+                  bottomSheetModalRef.current.close();
+                }
+              }}
+              autoCompleteType="off"
+              keyboardType="twitter"
+              fontSize={16}
+              color={currTheme + '.text'}
+              borderWidth={0}
+              borderRadius={10}
+              mt={5}
+              placeholder="Description"
+              w="100%"
+            />
+            <Box mt="auto">
+              <Box flexDir="row" display={showImagePicker ? 'none' : 'flex'}>
+                <Pressable
+                  bg={currTheme + '.textField'}
+                  borderRadius={15}
+                  mr={5}
+                  onPress={async () => {
+                    const loaded = await getPermissionAsync();
+                    if (loaded) {
+                      getAlbumsAsync({
+                        includeSmartAlbums: true,
+                      }).then(res => {
+                        setAlbums(res);
+                      });
+                      if (showImagePicker) {
+                        if (descriptionRef.current) {
+                          descriptionRef.current.focus();
+                        }
                       }
+                      setShowImagePicker(!showImagePicker);
                     }
-                    setShowImagePicker(!showImagePicker);
-                  }
-                }}>
-                {showImagePicker ? (
-                  <AntDesign
-                    name="close"
-                    size={30}
-                    style={styles.icon}
-                    color={colors[currTheme].text}
-                  />
-                ) : (
+                  }}>
+                  {showImagePicker ? (
+                    <AntDesign
+                      name="close"
+                      size={30}
+                      style={styles.icon}
+                      color={colors[currTheme].text}
+                    />
+                  ) : (
+                    <Feather
+                      name="paperclip"
+                      size={30}
+                      style={styles.icon}
+                      color={colors[currTheme].text}
+                    />
+                  )}
+                </Pressable>
+                <Pressable
+                  onPress={async () => {
+                    const loaded = await getCameraPermsAsync();
+                    if (loaded) {
+                      await openCamera();
+                    }
+                  }}
+                  bg={currTheme + '.textField'}
+                  borderRadius={15}
+                  mr={5}>
                   <Feather
-                    name="paperclip"
+                    name="camera"
                     size={30}
                     style={styles.icon}
                     color={colors[currTheme].text}
                   />
-                )}
-              </Pressable>
-              <Pressable
-                onPress={async () => {
-                  const loaded = await getCameraPermsAsync();
-                  if (loaded) {
-                    await openCamera();
-                  }
-                }}
-                bg={currTheme + '.textField'}
-                borderRadius={15}
-                mr={5}>
-                <Feather
-                  name="camera"
-                  size={30}
-                  style={styles.icon}
-                  color={colors[currTheme].text}
-                />
-              </Pressable>
-              <Box bg={currTheme + '.textField'} borderRadius={15} mr={5}>
-                <Feather
-                  name="link"
-                  size={30}
-                  style={styles.icon}
-                  color={colors[currTheme].text}
-                />
+                </Pressable>
+                <Box bg={currTheme + '.textField'} borderRadius={15} mr={5}>
+                  <Feather
+                    name="link"
+                    size={30}
+                    style={styles.icon}
+                    color={colors[currTheme].text}
+                  />
+                </Box>
               </Box>
             </Box>
+            <Animated.View style={heightAnimatedStyle}>
+              <Library
+                albums={albums}
+                setShowImagePicker={setShowImagePicker}
+                descriptionRef={descriptionRef}
+              />
+            </Animated.View>
           </Box>
-          <Animated.View style={heightAnimatedStyle}>
-            <Library
-              albums={albums}
-              setShowImagePicker={setShowImagePicker}
-              descriptionRef={descriptionRef}
-            />
-          </Animated.View>
-        </Box>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </BottomSheetModalProvider>
     </Box>
   );
 };
