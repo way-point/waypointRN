@@ -5,7 +5,7 @@ import MapView, {LatLng, Marker, Region} from 'react-native-maps';
 import {useAtom} from 'jotai';
 import {cityAtom, currentTheme} from '../../constants/atoms';
 import AddPostButton from '../../components/AddPostButton';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {enableLatestRenderer} from 'react-native-maps';
 import Layout from '../../constants/Layout';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';

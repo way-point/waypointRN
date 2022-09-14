@@ -7,8 +7,7 @@ import Layout, {CONTAINER_WIDTH} from '../constants/Layout';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useAtom} from 'jotai';
 import {currentTheme} from '../constants/atoms';
-import Feather from 'react-native-vector-icons/Feather';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import {Feather, AntDesign} from '@expo/vector-icons';
 import {
   launchImageLibraryAsync,
   MediaTypeOptions,

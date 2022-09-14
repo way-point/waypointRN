@@ -2,7 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Box, Pressable} from 'native-base';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
+import {Feather} from '@expo/vector-icons';
 import {RootProp} from '../navigation/types';
 
 const styles = StyleSheet.create({

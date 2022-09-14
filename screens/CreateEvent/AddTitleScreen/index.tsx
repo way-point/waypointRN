@@ -17,8 +17,7 @@ import {
 import ProfileImage from '../../../components/ProfileImage';
 import Layout, {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import {uri} from '../../../navigation';
-import Feather from 'react-native-vector-icons/Feather';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import {Feather, AntDesign} from '@expo/vector-icons';
 import {useAtom} from 'jotai';
 import {currentTheme} from '../../../constants/atoms';
 import Animated, {

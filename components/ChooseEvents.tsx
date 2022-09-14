@@ -3,9 +3,7 @@ import {Box, Heading, useTheme} from 'native-base';
 import React from 'react';
 import {currentTheme} from '../constants/atoms';
 import {SAFE_AREA_PADDING} from '../constants/Layout';
-import Entypo from 'react-native-vector-icons/Entypo';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {Entypo, AntDesign, FontAwesome} from '@expo/vector-icons';
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({

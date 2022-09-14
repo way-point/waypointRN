@@ -1,6 +1,6 @@
 import {Box, Text, useTheme} from 'native-base';
 import React from 'react';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {FontAwesome5} from '@expo/vector-icons';
 import {feedDataItemProps} from '../constants/types';
 
 const WhereTitle = ({item}: feedDataItemProps) => {
