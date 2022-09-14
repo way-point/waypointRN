@@ -105,7 +105,7 @@ const Library: React.FC<LibraryProps> = ({
 
   return (
     <Box pt={5}>
-      <Box flexDir="row" mb={2}>
+      <Box flexDir="row" mb={5}>
         <Pressable
           bg={currTheme + '.textField'}
           borderRadius={15}
@@ -143,7 +143,7 @@ const Library: React.FC<LibraryProps> = ({
       </Box>
       <FlatList
         ref={flatListRef}
-        style={{height: Layout.window.height / 3}}
+        style={{height: Layout.window.height / 2}}
         contentContainerStyle={styles.paddingBottom}
         data={photos?.assets}
         numColumns={3}

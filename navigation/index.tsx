@@ -23,6 +23,7 @@ import {BlurView} from '@react-native-community/blur';
 import ExploreScreen from '../screens/ExploreScreen';
 import Layout from '../constants/Layout';
 import AddTitleScreen from '../screens/CreateEvent/AddTitleScreen';
+import EventDetailsScreen from '../screens/EventDetailScreen';
 
 export const uri =
   'https://media-exp1.licdn.com/dms/image/C5603AQEQZuyIujt9xA/profile-displayphoto-shrink_200_200/0/1640233246542?e=2147483647&v=beta&t=06q_FRXOtNMMPTnZmHt7CDL6g3C6tC_0erJ4JaWTNgo';
@@ -177,6 +178,7 @@ const RootNavigator = () => {
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Group>
         <Stack.Screen name="CreateTitle" component={AddTitleScreen} />
+        <Stack.Screen name="EventDetails" component={EventDetailsScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );

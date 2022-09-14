@@ -7,7 +7,13 @@ import {
   useTheme,
 } from 'native-base';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {Keyboard, Platform, StyleSheet, TextInput} from 'react-native';
+import {
+  ImageBackground,
+  Keyboard,
+  Platform,
+  StyleSheet,
+  TextInput,
+} from 'react-native';
 import ProfileImage from '../../../components/ProfileImage';
 import Layout, {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import {uri} from '../../../navigation';
@@ -59,6 +65,13 @@ const styles = StyleSheet.create({
   radius: {
     borderTopEndRadius: 10,
   },
+  iconX: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    overflow: 'hidden',
+    marginTop: 20,
+  },
 });
 
 const getPermissionAsync = async () => {
@@ -105,7 +118,7 @@ const AddTitleScreen = () => {
   useEffect(() => {
     if (showImagePicker) {
       Keyboard.dismiss();
-      height.value = withTiming(Layout.window.height / 3);
+      height.value = withTiming(Layout.window.height / 2);
     }
     if (!showImagePicker) {
       height.value = withTiming(0);
@@ -121,47 +134,6 @@ const AddTitleScreen = () => {
     return result;
   };
 
-  function Example() {
-    return (
-      <Box my="auto">
-        <Pressable
-          onPress={() => {
-            Keyboard.dismiss();
-            handlePresentModalPress();
-          }}
-          borderColor="constants.primary"
-          flexDir="row"
-          borderWidth={2}
-          borderRadius={10}
-          ml={3}
-          px={1}>
-          <Text color="constants.primary" px={1} my="auto">
-            Public
-          </Text>
-          <Feather
-            name="chevron-down"
-            size={24}
-            style={styles.carrot}
-            color={colors.constants.primary}
-          />
-        </Pressable>
-        <BottomSheetModal
-          stackBehavior="push"
-          handleStyle={[
-            {backgroundColor: colors[currTheme].textField},
-            styles.radius,
-          ]}
-          handleIndicatorStyle={{backgroundColor: colors[currTheme].text}}
-          ref={bottomSheetModalRef}
-          index={1}
-          snapPoints={snapPoints}
-          onChange={handleSheetChanges}>
-          <ChooseEvents />
-        </BottomSheetModal>
-      </Box>
-    );
-  }
-
   const descriptionRef = useRef<TextInput>(null);
   return (
     <Box bg="transparent" flex={1}>
@@ -174,7 +146,44 @@ const AddTitleScreen = () => {
           <Box p={SAFE_AREA_PADDING.paddingLeft} borderRadius={10} h="100%">
             <Box flexDir="row">
               <ProfileImage uri={uri} />
-              <Example />
+              <Box my="auto">
+                <Pressable
+                  onPress={() => {
+                    Keyboard.dismiss();
+                    handlePresentModalPress();
+                  }}
+                  borderColor="constants.primary"
+                  flexDir="row"
+                  borderWidth={2}
+                  borderRadius={10}
+                  ml={3}
+                  px={1}>
+                  <Text color="constants.primary" px={1} my="auto">
+                    Public
+                  </Text>
+                  <Feather
+                    name="chevron-down"
+                    size={24}
+                    style={styles.carrot}
+                    color={colors.constants.primary}
+                  />
+                </Pressable>
+                <BottomSheetModal
+                  stackBehavior="push"
+                  handleStyle={[
+                    {backgroundColor: colors[currTheme].textField},
+                    styles.radius,
+                  ]}
+                  handleIndicatorStyle={{
+                    backgroundColor: colors[currTheme].text,
+                  }}
+                  ref={bottomSheetModalRef}
+                  index={1}
+                  snapPoints={snapPoints}
+                  onChange={handleSheetChanges}>
+                  <ChooseEvents />
+                </BottomSheetModal>
+              </Box>
             </Box>
             <TextArea
               autoFocus
@@ -185,6 +194,7 @@ const AddTitleScreen = () => {
                   bottomSheetModalRef.current.close();
                 }
               }}
+              allowFontScaling
               autoCompleteType="off"
               keyboardType="twitter"
               fontSize={16}
@@ -192,9 +202,27 @@ const AddTitleScreen = () => {
               borderWidth={0}
               borderRadius={10}
               mt={5}
-              placeholder="Description"
+              placeholder="What's the occasion?"
               w="100%"
             />
+            <ImageBackground
+              source={{uri: uri}}
+              style={styles.iconX}
+              resizeMode="cover">
+              <Pressable
+                bg={currTheme + '.textField'}
+                borderRadius={15}
+                alignSelf="flex-end"
+                mr={2}
+                mt={2}>
+                <AntDesign
+                  name="close"
+                  size={30}
+                  style={styles.icon}
+                  color={colors[currTheme].text}
+                />
+              </Pressable>
+            </ImageBackground>
             <Box mt="auto">
               <Box flexDir="row" display={showImagePicker ? 'none' : 'flex'}>
                 <Pressable
