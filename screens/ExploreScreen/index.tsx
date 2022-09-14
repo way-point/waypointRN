@@ -61,7 +61,7 @@ const ExploreScreen = () => {
     maps: {
       width: Layout.window.width,
       height: Layout.window.height,
-      top: -bottomTabHeight,
+      top: -bottomTabHeight - 10,
     },
     padding: {
       padding: 3,
