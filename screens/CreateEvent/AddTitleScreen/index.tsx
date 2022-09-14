@@ -141,6 +141,12 @@ const AddTitleScreen = () => {
     if (descriptionRef.current) {
       descriptionRef.current.focus();
     }
+    if (!result.cancelled) {
+      send({
+        type: 'ENTER_ATTACHMENT',
+        value: {attachmentType: result.type || 'image', uri: result.uri},
+      });
+    }
     return result;
   };
 
@@ -154,46 +160,60 @@ const AddTitleScreen = () => {
           keyboardVerticalOffset={Platform.OS === 'android' ? 10 : 0}
           style={styles.scrollView}>
           <Box p={SAFE_AREA_PADDING.paddingLeft} borderRadius={10} h="100%">
-            <Box flexDir="row">
-              <ProfileImage uri={uri} />
-              <Box my="auto">
-                <Pressable
-                  onPress={() => {
-                    Keyboard.dismiss();
-                    handlePresentModalPress();
-                  }}
-                  borderColor="constants.primary"
-                  flexDir="row"
-                  borderWidth={2}
-                  borderRadius={10}
-                  ml={3}
-                  px={1}>
-                  <Text color="constants.primary" px={1} my="auto">
-                    Public
-                  </Text>
-                  <Feather
-                    name="chevron-down"
-                    size={24}
-                    style={styles.carrot}
-                    color={colors.constants.primary}
-                  />
-                </Pressable>
-                <BottomSheetModal
-                  stackBehavior="push"
-                  handleStyle={[
-                    {backgroundColor: colors[currTheme].textField},
-                    styles.radius,
-                  ]}
-                  handleIndicatorStyle={{
-                    backgroundColor: colors[currTheme].text,
-                  }}
-                  ref={bottomSheetModalRef}
-                  index={1}
-                  snapPoints={snapPoints}
-                  onChange={handleSheetChanges}>
-                  <ChooseEvents />
-                </BottomSheetModal>
+            <Box flexDir="row" justifyContent="space-between">
+              <Box flexDir="row">
+                <ProfileImage uri={uri} />
+                <Box my="auto">
+                  <Pressable
+                    onPress={() => {
+                      Keyboard.dismiss();
+                      handlePresentModalPress();
+                    }}
+                    borderColor="constants.primary"
+                    flexDir="row"
+                    borderWidth={2}
+                    borderRadius={10}
+                    ml={3}
+                    px={1}>
+                    <Text color="constants.primary" px={1} my="auto">
+                      Public
+                    </Text>
+                    <Feather
+                      name="chevron-down"
+                      size={24}
+                      style={styles.carrot}
+                      color={colors.constants.primary}
+                    />
+                  </Pressable>
+                  <BottomSheetModal
+                    stackBehavior="push"
+                    handleStyle={[
+                      {backgroundColor: colors[currTheme].textField},
+                      styles.radius,
+                    ]}
+                    handleIndicatorStyle={{
+                      backgroundColor: colors[currTheme].text,
+                    }}
+                    ref={bottomSheetModalRef}
+                    index={1}
+                    snapPoints={snapPoints}
+                    onChange={handleSheetChanges}>
+                    <ChooseEvents />
+                  </BottomSheetModal>
+                </Box>
               </Box>
+              <Pressable
+                bg="constants.primary"
+                _disabled={{
+                  opacity: 0.5,
+                }}
+                disabled={curr.context.message.length === 0}
+                px={2}
+                py={1}
+                my="auto"
+                borderRadius={10}>
+                <Text>Next</Text>
+              </Pressable>
             </Box>
             <TextArea
               autoFocus
@@ -312,14 +332,14 @@ const AddTitleScreen = () => {
                     color={colors[currTheme].text}
                   />
                 </Pressable>
-                <Box bg={currTheme + '.textField'} borderRadius={15} mr={5}>
+                {/* <Box bg={currTheme + '.textField'} borderRadius={15} mr={5}>
                   <Feather
                     name="link"
                     size={30}
                     style={styles.icon}
                     color={colors[currTheme].text}
                   />
-                </Box>
+                </Box> */}
               </Box>
             </Box>
             <Animated.View style={heightAnimatedStyle}>
