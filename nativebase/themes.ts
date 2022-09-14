@@ -20,6 +20,7 @@ export interface ThemeProps {
 
 const constants = {
   primary: '#1DA1F2',
+  transparentDark: 'rgba(0, 0, 0, 0.5)',
 };
 
 const LightTheme: ThemeProps = {

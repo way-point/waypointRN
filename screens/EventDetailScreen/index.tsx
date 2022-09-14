@@ -14,7 +14,7 @@ const EventDetailsScreen = () => {
     useRoute<RouteProp<RootStackParamList, 'EventDetails'>>().params;
 
   return (
-    <ScrollView bg="transparent">
+    <ScrollView bg="transparent" mt={SAFE_AREA_PADDING.paddingTop}>
       <Menu menuOptions={menuOptionsImage}>
         <Image
           alt="Event Image"

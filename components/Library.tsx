@@ -6,13 +6,14 @@ import * as MediaLibrary from 'expo-media-library';
 import Layout, {CONTAINER_WIDTH} from '../constants/Layout';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useAtom} from 'jotai';
-import {currentTheme} from '../constants/atoms';
+import {currentTheme, EventMachine} from '../constants/atoms';
 import {Feather, AntDesign} from '@expo/vector-icons';
 import {
   launchImageLibraryAsync,
   MediaTypeOptions,
   requestMediaLibraryPermissionsAsync,
 } from 'expo-image-picker';
+import TimeFormat from '../constants/timeFormat';
 
 interface LibraryProps {
   albums: MediaLibrary.Album[];
@@ -47,6 +48,7 @@ const Library: React.FC<LibraryProps> = ({
 
   const {colors} = useTheme();
   const [currTheme] = useAtom(currentTheme);
+  const [, send] = useAtom(EventMachine);
 
   const styles = StyleSheet.create({
     paddingBottom: {
@@ -56,12 +58,12 @@ const Library: React.FC<LibraryProps> = ({
       padding: 1,
     },
     videoText: {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      backgroundColor: colors.constants.transparentDark,
       paddingHorizontal: 1,
       paddingVertical: 1,
       borderRadius: 5,
       overflow: 'hidden',
-      color: colors[currTheme].text,
+      color: 'white',
     },
     icon: {
       alignSelf: 'center',
@@ -151,7 +153,19 @@ const Library: React.FC<LibraryProps> = ({
           const i = item.index;
 
           return (
-            <TouchableWithoutFeedback key={i} style={styles.flatlistPadding}>
+            <TouchableWithoutFeedback
+              key={i}
+              style={styles.flatlistPadding}
+              onPress={() => {
+                send({
+                  type: 'ENTER_ATTACHMENT',
+                  value: {
+                    uri: e.uri,
+                    attachmentType: e.mediaType,
+                    duration: e.duration,
+                  },
+                });
+              }}>
               <ImageBackground
                 source={{uri: e.uri}}
                 style={{
@@ -161,9 +175,7 @@ const Library: React.FC<LibraryProps> = ({
                 {e.mediaType === 'video' && (
                   <Box mt="auto" bg="transparent" alignItems="flex-end" p={1}>
                     <Text style={styles.videoText}>
-                      {new Date(Math.round(e.duration) * 1000)
-                        .toISOString()
-                        .substring(14, 19)}
+                      {TimeFormat(e.duration)}
                     </Text>
                   </Box>
                 )}

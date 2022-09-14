@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {atom} from 'jotai';
 import {atomWithMachine} from 'jotai/xstate';
 import {ThemeType} from '../nativebase/themes';
+import CreateEventMachine from './states/CreateEventState';
 import RegisterMachine from './states/RegisterState';
 
 export const ASYNC_THEME_VAL = 'theme';
@@ -32,4 +33,5 @@ export const currentTheme = atomWithAsyncStorage(
 );
 
 export const RegMachine = atomWithMachine(RegisterMachine);
+export const EventMachine = atomWithMachine(CreateEventMachine);
 export const cityAtom = atom('');

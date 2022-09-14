@@ -1,3 +1,4 @@
+// File is pretty tightly coupled. Might need to refactor later
 import {
   Box,
   KeyboardAvoidingView,
@@ -19,7 +20,7 @@ import Layout, {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import {uri} from '../../../navigation';
 import {Feather, AntDesign} from '@expo/vector-icons';
 import {useAtom} from 'jotai';
-import {currentTheme} from '../../../constants/atoms';
+import {currentTheme, EventMachine} from '../../../constants/atoms';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -34,6 +35,7 @@ import {
 import {Album, getAlbumsAsync} from 'expo-media-library';
 import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import ChooseEvents from '../../../components/ChooseEvents';
+import TimeFormat from '../../../constants/timeFormat';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -71,6 +73,14 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginTop: 20,
   },
+  // videoText: {
+  //   backgroundColor: colors.constants.transparentDark,
+  //   paddingHorizontal: 1,
+  //   paddingVertical: 1,
+  //   borderRadius: 5,
+  //   overflow: 'hidden',
+  //   color: 'white',
+  // },
 });
 
 const getPermissionAsync = async () => {
@@ -89,6 +99,7 @@ const AddTitleScreen = () => {
   const [currTheme] = useAtom(currentTheme);
   const height = useSharedValue(0);
   const [albums, setAlbums] = useState([] as Album[]);
+  const [curr, send] = useAtom(EventMachine);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -193,6 +204,10 @@ const AddTitleScreen = () => {
                   bottomSheetModalRef.current.close();
                 }
               }}
+              value={curr.context.message}
+              onChangeText={text => {
+                send({type: 'ENTER_MESSAGE', value: text});
+              }}
               allowFontScaling
               autoCompleteType="off"
               keyboardType="twitter"
@@ -204,24 +219,44 @@ const AddTitleScreen = () => {
               placeholder="What's the occasion?"
               w="100%"
             />
-            <ImageBackground
-              source={{uri: uri}}
-              style={styles.iconX}
-              resizeMode="cover">
-              <Pressable
-                bg={currTheme + '.textField'}
-                borderRadius={15}
-                alignSelf="flex-end"
-                mr={2}
-                mt={2}>
-                <AntDesign
-                  name="close"
-                  size={30}
-                  style={styles.icon}
-                  color={colors[currTheme].text}
-                />
-              </Pressable>
-            </ImageBackground>
+            {curr.context.attachment.uri && (
+              <ImageBackground
+                source={{uri: curr.context.attachment.uri}}
+                style={styles.iconX}
+                resizeMode="cover">
+                <Pressable
+                  onPress={() => {
+                    send({
+                      type: 'ENTER_ATTACHMENT',
+                      value: {attachmentType: '', uri: ''},
+                    });
+                  }}
+                  bg={currTheme + '.textField'}
+                  borderRadius={15}
+                  alignSelf="flex-end"
+                  mr={2}
+                  mt={2}>
+                  <AntDesign
+                    name="close"
+                    size={30}
+                    style={styles.icon}
+                    color={colors[currTheme].text}
+                  />
+                </Pressable>
+                {curr.context.attachment.type === 'video' && (
+                  <Box
+                    bg="constants.transparentDark"
+                    alignSelf="flex-end"
+                    mr={2}
+                    p={1}
+                    borderRadius={8}
+                    mt="auto"
+                    mb={3}>
+                    <Text>{TimeFormat(curr.context.attachment.duration)}</Text>
+                  </Box>
+                )}
+              </ImageBackground>
+            )}
             <Box mt="auto">
               <Box flexDir="row" display={showImagePicker ? 'none' : 'flex'}>
                 <Pressable
