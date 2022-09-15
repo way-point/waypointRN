@@ -36,6 +36,8 @@ import {Album, getAlbumsAsync} from 'expo-media-library';
 import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import ChooseEvents from '../../../components/ChooseEvents';
 import TimeFormat from '../../../constants/timeFormat';
+import {useNavigation} from '@react-navigation/native';
+import {RootProp} from '../../../navigation/types';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -124,6 +126,7 @@ const AddTitleScreen = () => {
   });
 
   const [showImagePicker, setShowImagePicker] = useState(false);
+  const navigation = useNavigation<RootProp>();
 
   useEffect(() => {
     if (showImagePicker) {
@@ -208,6 +211,9 @@ const AddTitleScreen = () => {
                   opacity: 0.5,
                 }}
                 disabled={curr.context.message.length === 0}
+                onPress={() => {
+                  navigation.navigate('AddDate');
+                }}
                 px={2}
                 py={1}
                 my="auto"

@@ -1,11 +1,28 @@
 import {actions, createMachine} from 'xstate';
 
-const initialContext = {
+interface contextProps {
+  message: string;
+  attachment: {
+    type: '' | 'photo' | 'video';
+    uri: string;
+    duration: number;
+  };
+  eventDate: {
+    startDate: Date | undefined;
+    endDate: Date | undefined;
+  };
+}
+
+const initialContext: contextProps = {
   message: '',
   attachment: {
-    type: '' as '' | 'photo' | 'video',
+    type: '',
     uri: '',
     duration: 0,
+  },
+  eventDate: {
+    startDate: undefined,
+    endDate: undefined,
   },
 };
 
@@ -26,6 +43,14 @@ const CreateEventMachine = createMachine(
             actions: 'cacheAttachment',
             target: 'dataEntry',
           },
+          ENTER_START_DATE: {
+            actions: 'cacheStartDate',
+            target: 'dataEntry',
+          },
+          ENTER_END_DATE: {
+            actions: 'cacheEndDate',
+            target: 'dataEntry',
+          },
         },
       },
     },
@@ -40,6 +65,18 @@ const CreateEventMachine = createMachine(
           uri: evt.value.uri,
           type: evt.value.attachmentType,
           duration: evt.value.duration || 0,
+        },
+      })),
+      cacheStartDate: actions.assign((ctx, evt: any) => ({
+        eventDate: {
+          startDate: evt.value.startDate,
+          endDate: ctx.eventDate.endDate,
+        },
+      })),
+      cacheEndDate: actions.assign((ctx, evt: any) => ({
+        eventDate: {
+          startDate: ctx.eventDate.startDate,
+          endDate: evt.value.endDate,
         },
       })),
     },

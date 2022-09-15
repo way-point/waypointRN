@@ -14,6 +14,7 @@ export type RootStackParamList = {
   Camera: undefined;
   EventDetails: {event: feedDataProps};
   CreateTitle: undefined;
+  AddDate: undefined;
 };
 
 export type SignInStackParamList = {
