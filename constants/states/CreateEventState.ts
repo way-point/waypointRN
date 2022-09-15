@@ -10,6 +10,7 @@ interface contextProps {
   eventDate: {
     startDate: Date | undefined;
     endDate: Date | undefined;
+    repeat: string[];
   };
 }
 
@@ -23,6 +24,7 @@ const initialContext: contextProps = {
   eventDate: {
     startDate: undefined,
     endDate: undefined,
+    repeat: [],
   },
 };
 
@@ -51,6 +53,10 @@ const CreateEventMachine = createMachine(
             actions: 'cacheEndDate',
             target: 'dataEntry',
           },
+          ENTER_REPEAT: {
+            actions: 'cacheRepeat',
+            target: 'dataEntry',
+          },
         },
       },
     },
@@ -71,12 +77,21 @@ const CreateEventMachine = createMachine(
         eventDate: {
           startDate: evt.value.startDate,
           endDate: ctx.eventDate.endDate,
+          repeat: ctx.eventDate.repeat,
         },
       })),
       cacheEndDate: actions.assign((ctx, evt: any) => ({
         eventDate: {
           startDate: ctx.eventDate.startDate,
           endDate: evt.value.endDate,
+          repeat: ctx.eventDate.repeat,
+        },
+      })),
+      cacheRepeat: actions.assign((ctx, evt: any) => ({
+        eventDate: {
+          startDate: ctx.eventDate.startDate,
+          endDate: ctx.eventDate.endDate,
+          repeat: evt.value.repeat,
         },
       })),
     },

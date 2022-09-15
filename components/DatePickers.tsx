@@ -30,6 +30,7 @@ export const StartDatePicker = ({showPicker, setShowPicker}: DatePicker) => {
     <DateTimePickerModal
       isVisible={showPicker}
       minimumDate={initialDate}
+      date={curr.context.eventDate.startDate}
       maximumDate={curr.context.eventDate.endDate}
       mode="datetime"
       onConfirm={handleConfirm}
@@ -86,6 +87,7 @@ export const EndDatePicker = ({showPicker, setShowPicker}: DatePicker) => {
   return (
     <DateTimePickerModal
       isVisible={showPicker}
+      date={curr.context.eventDate.endDate}
       minimumDate={curr.context.eventDate.startDate}
       mode="datetime"
       onConfirm={handleConfirm}
