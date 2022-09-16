@@ -16,7 +16,7 @@ import {TextInput} from 'react-native';
 import {currentTheme, RegMachine} from '../../../constants/atoms';
 import {SignInProp} from '../../../navigation/types';
 import AuthButtons from '../AuthButtons';
-import SubmitButton from '../SubmitButton';
+import SubmitButton from '../../../components/SubmitButton';
 
 const RegisterScreen = () => {
   const [currTheme] = useAtom(currentTheme);
@@ -84,7 +84,11 @@ const RegisterScreen = () => {
             }}
           />
 
-          <SubmitButton />
+          <SubmitButton
+            onPress={() => {
+              console.log('test');
+            }}
+          />
           <Flex direction="row" alignSelf="center">
             <Divider
               bg={currTheme + '.text'}

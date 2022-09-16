@@ -1,34 +1,15 @@
 import {useAtom} from 'jotai';
-import {Box, Checkbox} from 'native-base';
-import React, {useState} from 'react';
+import {Box, Checkbox, Text} from 'native-base';
+import React from 'react';
 import {EventMachine} from '../constants/atoms';
 
 const RepeatEvent = () => {
-  const [isChecked, setIsChecked] = useState(false);
   const [curr, send] = useAtom(EventMachine);
   return (
     <Box>
-      <Checkbox
-        colorScheme="info"
-        value="Repeat"
-        onChange={isSelected => {
-          setIsChecked(isSelected);
-
-          if (!isSelected) {
-            send({type: 'ENTER_REPEAT', value: {repeat: []}});
-          }
-        }}
-        mb={3}
-        isDisabled={
-          !curr.context.eventDate.startDate ||
-          !curr.context.eventDate.endDate ||
-          curr.context.eventDate.startDate >= curr.context.eventDate.endDate
-        }>
-        Repeat?
-      </Checkbox>
+      <Text mb={3}>Repeat Every: </Text>
       <Checkbox.Group
         colorScheme="info"
-        display={isChecked ? 'flex' : 'none'}
         onChange={values => {
           send({type: 'ENTER_REPEAT', value: {repeat: values}});
         }}

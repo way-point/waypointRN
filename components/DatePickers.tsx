@@ -15,8 +15,6 @@ export const StartDatePicker = ({showPicker, setShowPicker}: DatePicker) => {
   const {colors} = useTheme();
   const initialDate = new Date();
 
-  console.log(showPicker);
-
   const hideDatePicker = () => {
     setShowPicker(false);
   };

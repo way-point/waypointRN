@@ -15,6 +15,7 @@ export type RootStackParamList = {
   EventDetails: {event: feedDataProps};
   CreateTitle: undefined;
   AddDate: undefined;
+  Repeat: undefined;
 };
 
 export type SignInStackParamList = {

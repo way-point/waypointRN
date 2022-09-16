@@ -1,12 +1,14 @@
 import {Pressable, Text} from 'native-base';
 import React from 'react';
 
-const SubmitButton = () => {
+interface SubmitButtonProps {
+  onPress: () => void;
+}
+
+const SubmitButton = ({onPress}: SubmitButtonProps) => {
   return (
     <Pressable
-      onPress={() => {
-        console.log('test');
-      }}
+      onPress={onPress}
       backgroundColor="constants.primary"
       p={3}
       borderRadius={8}>

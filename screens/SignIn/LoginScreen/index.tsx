@@ -15,7 +15,7 @@ import {StyleSheet, TextInput} from 'react-native';
 import {currentTheme} from '../../../constants/atoms';
 import {SignInProp} from '../../../navigation/types';
 import AuthButtons from '../AuthButtons';
-import SubmitButton from '../SubmitButton';
+import SubmitButton from '../../../components/SubmitButton';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -53,7 +53,11 @@ const LoginScreen = () => {
             returnKeyType="done"
           />
 
-          <SubmitButton />
+          <SubmitButton
+            onPress={() => {
+              console.log('test');
+            }}
+          />
           <Flex direction="row" alignSelf="center">
             <Divider
               bg={currTheme + '.text'}
