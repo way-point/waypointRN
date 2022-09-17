@@ -1,5 +1,13 @@
 import React, {useState} from 'react';
-import {Box, Divider, FlatList, Input, Pressable, Text} from 'native-base';
+import {
+  Box,
+  Divider,
+  FlatList,
+  Input,
+  Pressable,
+  Text,
+  useTheme,
+} from 'native-base';
 import {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import AddressAutocomplete from 'react-native-address-autocomplete';
 import {useAtom} from 'jotai';
@@ -7,6 +15,7 @@ import {currentTheme, EventMachine} from '../../../constants/atoms';
 import {Platform, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {RootProp} from '../../../navigation/types';
+import {Feather} from '@expo/vector-icons';
 
 interface androidItem {
   address: string;
@@ -36,7 +45,7 @@ const SearchAddressScreen = () => {
   const [currTheme] = useAtom(currentTheme);
   const [, send] = useAtom(EventMachine);
   const navigation = useNavigation<RootProp>();
-
+  const {colors} = useTheme();
   const GEO_API_KEY = '6d67af95fb4f4763b8b1e00e21888d53';
 
   const renderItem = ({
@@ -99,6 +108,11 @@ const SearchAddressScreen = () => {
       flex={1}>
       <Input
         my={SAFE_AREA_PADDING.paddingLeft}
+        InputRightElement={
+          <Box mr={5} bg="transparent">
+            <Feather name="search" size={24} color={colors[currTheme].text} />
+          </Box>
+        }
         placeholder="Search by Address"
         onChangeText={async text => {
           if (text) {

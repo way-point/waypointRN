@@ -1,5 +1,14 @@
-import {Box, Divider, Flex, Heading, Input, Pressable, Text} from 'native-base';
-import React, {useState} from 'react';
+import {
+  Box,
+  Divider,
+  Flex,
+  Heading,
+  Input,
+  Pressable,
+  Text,
+  useTheme,
+} from 'native-base';
+import React, {useEffect, useState} from 'react';
 import {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import {useAtom} from 'jotai';
 import {currentTheme, EventMachine} from '../../../constants/atoms';
@@ -8,6 +17,10 @@ import ProfileImage from '../../../components/ProfileImage';
 import {uri} from '../../../navigation';
 import {useNavigation} from '@react-navigation/native';
 import {RootProp} from '../../../navigation/types';
+import {Feather} from '@expo/vector-icons';
+import Geolocation from '@react-native-community/geolocation';
+import AddressAutocomplete from 'react-native-address-autocomplete';
+import {Platform} from 'react-native';
 
 const formatAMPM = (date: Date) => {
   var hours = date.getHours();
@@ -44,12 +57,56 @@ const showDate = (date: Date | undefined): string => {
   return '--/--/--';
 };
 
+interface coordsProps {
+  latitude: number | undefined;
+  longitude: number | undefined;
+}
+
 const AddDateScreen = () => {
   const [showStartPicker, setShowStartPicker] = useState(false);
   const [showEndPicker, setShowEndPicker] = useState(false);
   const navigation = useNavigation<RootProp>();
   const [curr] = useAtom(EventMachine);
   const [currTheme] = useAtom(currentTheme);
+  const {colors} = useTheme();
+  const [, send] = useAtom(EventMachine);
+  const [coords, setCoords] = useState({
+    latitude: undefined,
+    longitude: undefined,
+  } as coordsProps);
+
+  const API_KEY = '6d67af95fb4f4763b8b1e00e21888d53';
+
+  useEffect(() => {
+    const get_address = async () => {
+      if (coords.latitude && coords.longitude) {
+        let address = undefined as string | undefined;
+        if (Platform.OS === 'ios') {
+          const data = await AddressAutocomplete.reverseGeocodeLocation(
+            coords.longitude,
+            coords.latitude,
+          );
+          address = `${data.house} ${data.street}, ${data.city}, ${data.country}`;
+        }
+        if (Platform.OS === 'android') {
+          const fet = await fetch(
+            `https://api.geoapify.com/v1/geocode/reverse?lat=${coords.latitude}&lon=${coords.longitude}&apiKey=${API_KEY}`,
+          );
+          const data = await fet.json();
+          address = data.features[0].properties.formatted;
+        }
+        send({
+          type: 'ENTER_LOCATION',
+          value: {
+            address: address,
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+          },
+        });
+      }
+    };
+    get_address();
+  }, [coords, send]);
 
   return (
     <Box flex={1} bg="transparent">
@@ -131,6 +188,11 @@ const AddDateScreen = () => {
         <Input
           placeholder="Search by address"
           value={curr.context.eventLocation.address}
+          InputRightElement={
+            <Box mr={5} bg="transparent">
+              <Feather name="search" size={24} color={colors[currTheme].text} />
+            </Box>
+          }
           onPressIn={() => {
             navigation.navigate('SearchAddress');
           }}
@@ -156,6 +218,14 @@ const AddDateScreen = () => {
         </Flex>
         <Pressable
           bg="constants.primary"
+          onPress={async () => {
+            Geolocation.getCurrentPosition(info => {
+              setCoords({
+                latitude: info.coords.latitude,
+                longitude: info.coords.longitude,
+              });
+            });
+          }}
           p={2}
           borderRadius={10}
           alignSelf="center">
