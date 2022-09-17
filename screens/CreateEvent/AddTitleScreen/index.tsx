@@ -158,15 +158,18 @@ const AddTitleScreen = () => {
     <Box bg="transparent" flex={1}>
       <BottomSheetModalProvider>
         <KeyboardAvoidingView
-          bg={currTheme + '.background'}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           keyboardVerticalOffset={Platform.OS === 'android' ? 10 : 0}
           style={styles.scrollView}>
-          <Box p={SAFE_AREA_PADDING.paddingLeft} borderRadius={10} h="100%">
-            <Box flexDir="row" justifyContent="space-between">
-              <Box flexDir="row">
+          <Box
+            bg="transparent"
+            p={SAFE_AREA_PADDING.paddingLeft}
+            borderRadius={10}
+            h="100%">
+            <Box bg="transparent" flexDir="row" justifyContent="space-between">
+              <Box bg="transparent" flexDir="row">
                 <ProfileImage uri={uri} />
-                <Box my="auto">
+                <Box my="auto" bg="transparent">
                   <Pressable
                     onPress={() => {
                       Keyboard.dismiss();
@@ -257,7 +260,7 @@ const AddTitleScreen = () => {
                       value: {attachmentType: '', uri: ''},
                     });
                   }}
-                  bg={currTheme + '.textField'}
+                  bg={currTheme + '.background'}
                   borderRadius={15}
                   alignSelf="flex-end"
                   mr={2}
@@ -283,10 +286,13 @@ const AddTitleScreen = () => {
                 )}
               </ImageBackground>
             )}
-            <Box mt="auto">
-              <Box flexDir="row" display={showImagePicker ? 'none' : 'flex'}>
+            <Box mt="auto" bg="transparent">
+              <Box
+                flexDir="row"
+                bg="transparent"
+                display={showImagePicker ? 'none' : 'flex'}>
                 <Pressable
-                  bg={currTheme + '.textField'}
+                  bg={currTheme + '.background'}
                   borderRadius={15}
                   mr={5}
                   onPress={async () => {
@@ -328,7 +334,7 @@ const AddTitleScreen = () => {
                       await openCamera();
                     }
                   }}
-                  bg={currTheme + '.textField'}
+                  bg={currTheme + '.background'}
                   borderRadius={15}
                   mr={5}>
                   <Feather
@@ -348,7 +354,8 @@ const AddTitleScreen = () => {
                 </Box> */}
               </Box>
             </Box>
-            <Animated.View style={heightAnimatedStyle}>
+            <Animated.View
+              style={[heightAnimatedStyle, {backgroundColor: 'transparent'}]}>
               <Library
                 albums={albums}
                 setShowImagePicker={setShowImagePicker}

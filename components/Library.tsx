@@ -105,10 +105,10 @@ const Library: React.FC<LibraryProps> = ({
   }, [albums, index]);
 
   return (
-    <Box pt={5}>
-      <Box flexDir="row" mb={5}>
+    <Box pt={5} bg="transparent">
+      <Box flexDir="row" mb={5} bg="transparent">
         <Pressable
-          bg={currTheme + '.textField'}
+          bg={currTheme + '.background'}
           borderRadius={15}
           mr={5}
           onPress={() => {
@@ -125,7 +125,7 @@ const Library: React.FC<LibraryProps> = ({
           />
         </Pressable>
         <Pressable
-          bg={currTheme + '.textField'}
+          bg={currTheme + '.background'}
           borderRadius={15}
           mr={5}
           onPress={async () => {

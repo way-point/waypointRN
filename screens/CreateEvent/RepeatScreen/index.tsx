@@ -23,10 +23,12 @@ const RepeatScreen = () => {
 
   return (
     <Box
+      bg="transparent"
       mt={SAFE_AREA_PADDING.paddingTop}
       p={SAFE_AREA_PADDING.paddingLeft}
       flex={1}>
       <Checkbox.Group
+        bg="transparent"
         colorScheme="info"
         onChange={values => {
           //
@@ -56,7 +58,7 @@ const RepeatScreen = () => {
           Sunday
         </Checkbox>
       </Checkbox.Group>
-      <Box mt="auto">
+      <Box mt="auto" bg="transparent">
         <SubmitButton
           onPress={() => {
             send({type: 'ENTER_REPEAT', value: {repeat: group}});

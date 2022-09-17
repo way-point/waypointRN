@@ -1,4 +1,4 @@
-import {Box, Heading, Pressable} from 'native-base';
+import {Box, Pressable, Text} from 'native-base';
 import React from 'react';
 import AvatarGroup from './AvatarGroup';
 import Menu from './Menu';
@@ -14,6 +14,7 @@ import WhereTitle from './WhereTitle';
 import {CONTAINER_WIDTH} from '../constants/Layout';
 import menuOptionsEvent from '../constants/Menu/menuOptionsEvent';
 import menuOptionsImage from '../constants/Menu/menuOptionsImage';
+import TimeFormat from '../constants/timeFormat';
 
 const styles = StyleSheet.create({
   imageBackground: {
@@ -45,26 +46,51 @@ const Post = ({item}: feedDataItemProps) => {
             event: item,
           });
         }}>
-        <Heading>{item.title}</Heading>
+        <Text fontSize={20} mb={5}>
+          {item.description}
+        </Text>
         <WhereTitle item={item} />
         <Box
           mb={3}
           flexDirection="row"
           justifyContent="space-between"
           alignItems="center">
-          <AvatarGroup userImages={item.subscribers} />
+          {item.subscribers.length > 0 && (
+            <AvatarGroup userImages={item.subscribers} />
+          )}
           <JoinEvent />
         </Box>
-        <Menu menuOptions={menuOptionsImage}>
-          <ImageBackground
-            source={{uri: item.image}}
-            style={styles.imageBackground}
-            resizeMode="cover">
-            <Box bg="transparent" mt="auto" pl={2} pb={2} flexDir="row">
-              <ProfileImage uri={item.host.profileURL} size={7} />
-            </Box>
-          </ImageBackground>
-        </Menu>
+        {(item.image || item.video) && (
+          <Menu menuOptions={menuOptionsImage}>
+            <ImageBackground
+              source={{
+                uri: item.type === 'photo' ? item.image : item.video?.uri,
+              }}
+              style={styles.imageBackground}
+              resizeMode="cover">
+              <Box
+                bg="transparent"
+                mt="auto"
+                justifyContent="space-between"
+                pl={2}
+                flexDir="row">
+                <ProfileImage uri={item.host.profileURL} size={7} />
+                {item.type === 'video' && (
+                  <Box
+                    bg="constants.transparentDark"
+                    alignSelf="flex-end"
+                    mr={2}
+                    p={1}
+                    borderRadius={8}
+                    mt="auto"
+                    mb={3}>
+                    <Text>{TimeFormat(item.video?.duration || 0)}</Text>
+                  </Box>
+                )}
+              </Box>
+            </ImageBackground>
+          </Menu>
+        )}
       </Pressable>
     </Menu>
   );

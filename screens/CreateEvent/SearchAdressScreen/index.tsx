@@ -99,7 +99,7 @@ const SearchAddressScreen = () => {
     index,
   }: iOSrenderItemsProps | androidRenderItemProps) => {
     return (
-      <Box>
+      <Box bg="transparent">
         {index !== 0 && <Divider h={0.3} />}
         <Pressable
           bg={currTheme + '.textField'}
@@ -151,6 +151,7 @@ const SearchAddressScreen = () => {
     <Box
       mt={SAFE_AREA_PADDING.paddingTop}
       px={SAFE_AREA_PADDING.paddingLeft}
+      bg="transparent"
       flex={1}>
       <Input
         mt={SAFE_AREA_PADDING.paddingLeft}

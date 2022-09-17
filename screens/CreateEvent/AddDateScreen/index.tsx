@@ -113,15 +113,17 @@ const AddDateScreen = () => {
   return (
     <Box flex={1} bg="transparent">
       <Box
+        bg="transparent"
         mt={SAFE_AREA_PADDING.paddingTop}
         px={SAFE_AREA_PADDING.paddingLeft}
         h="100%">
         <Box
           flexDir="row"
+          bg="transparent"
           justifyContent="space-between"
           mb={5}
           mt={SAFE_AREA_PADDING.paddingLeft}>
-          <Box flexDir="row">
+          <Box bg="transparent" flexDir="row">
             <ProfileImage uri={uri} />
           </Box>
           <Pressable
@@ -138,7 +140,7 @@ const AddDateScreen = () => {
               curr.context.eventDate.startDate >= curr.context.eventDate.endDate
             }
             onPress={() => {
-              // navigation.navigate('AddDate');
+              navigation.navigate('Review');
             }}
             px={2}
             py={1}
@@ -148,8 +150,8 @@ const AddDateScreen = () => {
           </Pressable>
         </Box>
         <Heading mb={5}>When</Heading>
-        <Box flexDir="row" justifyContent="space-around">
-          <Box alignItems="center" px={2} py={1} borderRadius={10}>
+        <Box bg="transparent" flexDir="row" justifyContent="space-around">
+          <Box alignItems="center" bg="transparent" px={2} py={1}>
             <Text>Start Time</Text>
             <Text opacity={0.5} fontSize={18}>
               {showDate(curr.context.eventDate.startDate)}
@@ -162,7 +164,7 @@ const AddDateScreen = () => {
               <Text color="constants.primary">Edit Start</Text>
             </Pressable>
           </Box>
-          <Box alignItems="center" px={2} py={1} borderRadius={10}>
+          <Box alignItems="center" bg="transparent" px={2} py={1}>
             <Text>End Time</Text>
             <Text opacity={0.5} fontSize={18}>
               {showDate(curr.context.eventDate.endDate)}

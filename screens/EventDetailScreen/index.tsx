@@ -1,11 +1,11 @@
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {Box, Heading, Image, ScrollView, Text} from 'native-base';
+import {Box, ScrollView, Text} from 'native-base';
 import React from 'react';
+import {ImageBackground} from 'react-native';
 import AvatarGroup from '../../components/AvatarGroup';
 import JoinEvent from '../../components/JoinEvent';
 import Menu from '../../components/Menu';
-import ProfileImage from '../../components/ProfileImage';
-import {CONTAINER_WIDTH, SAFE_AREA_PADDING} from '../../constants/Layout';
+import {SAFE_AREA_PADDING} from '../../constants/Layout';
 import menuOptionsImage from '../../constants/Menu/menuOptionsImage';
 import {RootStackParamList} from '../../navigation/types';
 
@@ -16,18 +16,20 @@ const EventDetailsScreen = () => {
   return (
     <ScrollView bg="transparent" mt={SAFE_AREA_PADDING.paddingTop}>
       <Menu menuOptions={menuOptionsImage}>
-        <Image
-          alt="Event Image"
-          source={{uri: event.image}}
-          w="100%"
-          h={200}
+        <ImageBackground
+          source={{
+            uri: event.type === 'photo' ? event.image : event.video?.uri,
+          }}
+          style={{
+            width: '100%',
+            height: 200,
+          }}
           resizeMode="cover"
         />
       </Menu>
       <Box
         pr={SAFE_AREA_PADDING.paddingRight}
         pl={SAFE_AREA_PADDING.paddingLeft}>
-        <Heading>{event.title}</Heading>
         <Box flexDir="row" mt={5} justifyContent="space-between">
           <AvatarGroup userImages={event.subscribers} />
           <JoinEvent />
@@ -37,7 +39,7 @@ const EventDetailsScreen = () => {
         </Text>
       </Box>
 
-      <Box
+      {/* <Box
         my={10}
         borderRadius={10}
         alignSelf="center"
@@ -60,7 +62,7 @@ const EventDetailsScreen = () => {
             </Menu>
           </Box>
         </Box>
-      </Box>
+      </Box> */}
     </ScrollView>
   );
 };

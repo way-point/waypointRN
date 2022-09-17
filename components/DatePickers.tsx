@@ -35,7 +35,7 @@ export const StartDatePicker = ({showPicker, setShowPicker}: DatePicker) => {
       onCancel={hideDatePicker}
       customConfirmButtonIOS={({onPress}) => {
         return (
-          <Box h={50} bg={currTheme + '.textField'} alignItems="center">
+          <Box h={50} bg={currTheme + '.background'} alignItems="center">
             <Pressable my="auto" onPress={onPress}>
               <Text fontSize={20} color="constants.primary">
                 Confirm
@@ -50,7 +50,7 @@ export const StartDatePicker = ({showPicker, setShowPicker}: DatePicker) => {
             h={50}
             borderRadius={15}
             mb={5}
-            bg={currTheme + '.textField'}
+            bg={currTheme + '.background'}
             alignItems="center">
             <Pressable my="auto" onPress={onPress}>
               <Text fontSize={20} color="constants.primary">
@@ -60,9 +60,9 @@ export const StartDatePicker = ({showPicker, setShowPicker}: DatePicker) => {
           </Box>
         );
       }}
-      pickerStyleIOS={{backgroundColor: colors[currTheme].textField}}
+      pickerStyleIOS={{backgroundColor: colors[currTheme].background}}
       pickerContainerStyleIOS={{
-        backgroundColor: colors[currTheme].textField,
+        backgroundColor: colors[currTheme].background,
       }}
     />
   );
@@ -92,7 +92,7 @@ export const EndDatePicker = ({showPicker, setShowPicker}: DatePicker) => {
       onCancel={hideDatePicker}
       customConfirmButtonIOS={({onPress}) => {
         return (
-          <Box h={50} bg={currTheme + '.textField'} alignItems="center">
+          <Box h={50} bg={currTheme + '.background'} alignItems="center">
             <Pressable my="auto" onPress={onPress}>
               <Text fontSize={20} color="constants.primary">
                 Confirm
@@ -107,7 +107,7 @@ export const EndDatePicker = ({showPicker, setShowPicker}: DatePicker) => {
             h={50}
             borderRadius={15}
             mb={5}
-            bg={currTheme + '.textField'}
+            bg={currTheme + '.background'}
             alignItems="center">
             <Pressable my="auto" onPress={onPress}>
               <Text fontSize={20} color="constants.primary">
@@ -117,9 +117,9 @@ export const EndDatePicker = ({showPicker, setShowPicker}: DatePicker) => {
           </Box>
         );
       }}
-      pickerStyleIOS={{backgroundColor: colors[currTheme].textField}}
+      pickerStyleIOS={{backgroundColor: colors[currTheme].background}}
       pickerContainerStyleIOS={{
-        backgroundColor: colors[currTheme].textField,
+        backgroundColor: colors[currTheme].background,
       }}
     />
   );

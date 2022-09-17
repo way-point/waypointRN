@@ -7,6 +7,9 @@ interface AvatarGroupProps {
 }
 
 const AvatarGroup = ({userImages}: AvatarGroupProps) => {
+  if (userImages.length === 0) {
+    return null;
+  }
   return (
     <Box alignItems="flex-start">
       <Avatar.Group

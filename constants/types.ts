@@ -13,9 +13,13 @@ export interface menuOptionProps {
 export interface feedDataProps {
   id: string;
   host: userImageProps;
-  title: string;
   description: string;
-  image: string;
+  image?: string;
+  video?: {
+    uri: string;
+    duration: number;
+  };
+  type: 'photo' | 'video';
   eventDetails: {
     where: {
       latitude: number;

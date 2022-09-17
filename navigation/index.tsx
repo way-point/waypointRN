@@ -25,6 +25,7 @@ import EventDetailsScreen from '../screens/EventDetailScreen';
 import AddDateScreen from '../screens/CreateEvent/AddDateScreen';
 import RepeatScreen from '../screens/CreateEvent/RepeatScreen';
 import SearchAddressScreen from '../screens/CreateEvent/SearchAdressScreen';
+import ReviewScreen from '../screens/CreateEvent/ReviewScreen';
 
 export const uri =
   'https://media-exp1.licdn.com/dms/image/C5603AQEQZuyIujt9xA/profile-displayphoto-shrink_200_200/0/1640233246542?e=2147483647&v=beta&t=06q_FRXOtNMMPTnZmHt7CDL6g3C6tC_0erJ4JaWTNgo';
@@ -183,6 +184,7 @@ const RootNavigator = () => {
         <Stack.Screen name="AddDate" component={AddDateScreen} />
         <Stack.Screen name="Repeat" component={RepeatScreen} />
         <Stack.Screen name="SearchAddress" component={SearchAddressScreen} />
+        <Stack.Screen name="Review" component={ReviewScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );

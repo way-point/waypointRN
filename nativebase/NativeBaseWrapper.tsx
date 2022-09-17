@@ -55,7 +55,6 @@ const NativeBaseWrapper = ({children}: NativeBaseWrapperProps) => {
         fontSize: 16,
         invalidOutlineColor: `${currTheme}.error`,
         color: `${currTheme}.text`,
-        selectionColor: `${currTheme}.navigation.primary`,
         varient: 'filled',
         placeholderTextColor: '#ababab',
       },
@@ -63,6 +62,12 @@ const NativeBaseWrapper = ({children}: NativeBaseWrapperProps) => {
     TextArea: {
       defaultProps: {
         placeholderTextColor: '#ababab',
+        bg: `${currTheme}.textField`,
+        borderColor: `${currTheme}.textField`,
+        borderRadius: 10,
+        fontSize: 16,
+        invalidOutlineColor: `${currTheme}.error`,
+        color: `${currTheme}.text`,
       },
     },
     Pressable: {

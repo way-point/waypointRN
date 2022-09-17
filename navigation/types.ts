@@ -17,6 +17,7 @@ export type RootStackParamList = {
   AddDate: undefined;
   Repeat: undefined;
   SearchAddress: undefined;
+  Review: undefined;
 };
 
 export type SignInStackParamList = {

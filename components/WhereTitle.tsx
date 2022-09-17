@@ -6,7 +6,7 @@ import {feedDataItemProps} from '../constants/types';
 const WhereTitle = ({item}: feedDataItemProps) => {
   const {colors} = useTheme();
   return (
-    <Box flexDirection="row">
+    <Box flexDirection="row" bg="transparent">
       <Text mb={5} mr={1} color="constants.primary">
         {item.eventDetails.where.address}
       </Text>
