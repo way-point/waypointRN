@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Box,
   Divider,
   FlatList,
   Input,
   Pressable,
+  Spinner,
   Text,
   useTheme,
 } from 'native-base';
@@ -16,6 +17,13 @@ import {Platform, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {RootProp} from '../../../navigation/types';
 import {Feather} from '@expo/vector-icons';
+import Geolocation from '@react-native-community/geolocation';
+import {AUTOCOMPLETE_API_KEY, GEOCODE_API_KEY} from '../../../secrets';
+
+interface coordsProps {
+  latitude: number | undefined;
+  longitude: number | undefined;
+}
 
 interface androidItem {
   address: string;
@@ -46,7 +54,45 @@ const SearchAddressScreen = () => {
   const [, send] = useAtom(EventMachine);
   const navigation = useNavigation<RootProp>();
   const {colors} = useTheme();
-  const GEO_API_KEY = '6d67af95fb4f4763b8b1e00e21888d53';
+  const [loading, setLoading] = useState(false);
+  const [coords, setCoords] = useState({
+    latitude: undefined,
+    longitude: undefined,
+  } as coordsProps);
+
+  useEffect(() => {
+    const get_address = async () => {
+      if (coords.latitude && coords.longitude) {
+        let address = undefined as string | undefined;
+        if (Platform.OS === 'ios') {
+          const data = await AddressAutocomplete.reverseGeocodeLocation(
+            coords.longitude,
+            coords.latitude,
+          );
+          address = `${data.house} ${data.street}, ${data.city}, ${data.country}`;
+        }
+        if (Platform.OS === 'android') {
+          const fet = await fetch(
+            `https://api.geoapify.com/v1/geocode/reverse?lat=${coords.latitude}&lon=${coords.longitude}&apiKey=${GEOCODE_API_KEY}`,
+          );
+          const data = await fet.json();
+          address = data.features[0].properties.formatted;
+        }
+
+        setLoading(false);
+        send({
+          type: 'ENTER_LOCATION',
+          value: {
+            address: address,
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+          },
+        });
+        navigation.goBack();
+      }
+    };
+    get_address();
+  }, [coords, navigation, send]);
 
   const renderItem = ({
     item,
@@ -107,15 +153,21 @@ const SearchAddressScreen = () => {
       px={SAFE_AREA_PADDING.paddingLeft}
       flex={1}>
       <Input
-        my={SAFE_AREA_PADDING.paddingLeft}
+        mt={SAFE_AREA_PADDING.paddingLeft}
         InputRightElement={
           <Box mr={5} bg="transparent">
-            <Feather name="search" size={24} color={colors[currTheme].text} />
+            {loading ? (
+              <Spinner />
+            ) : (
+              <Feather name="search" size={24} color={colors[currTheme].text} />
+            )}
           </Box>
         }
+        autoFocus
         placeholder="Search by Address"
         onChangeText={async text => {
           if (text) {
+            setLoading(true);
             if (Platform.OS === 'ios') {
               const addresses = await AddressAutocomplete.getAddressSuggestions(
                 text,
@@ -125,7 +177,7 @@ const SearchAddressScreen = () => {
 
             if (Platform.OS === 'android') {
               const GeoSuggestions = await fetch(
-                `https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&format=json&apiKey=${GEO_API_KEY}`,
+                `https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&format=json&apiKey=${AUTOCOMPLETE_API_KEY}`,
                 {method: 'GET'},
               );
               const {results} = await GeoSuggestions.json();
@@ -141,9 +193,27 @@ const SearchAddressScreen = () => {
 
               setSuggestions(adds);
             }
+            setLoading(false);
           }
         }}
       />
+      <Pressable
+        mb={SAFE_AREA_PADDING.paddingLeft}
+        bg="transparent"
+        onPress={async () => {
+          Geolocation.getCurrentPosition(info => {
+            setLoading(true);
+            setCoords({
+              latitude: info.coords.latitude,
+              longitude: info.coords.longitude,
+            });
+          });
+        }}
+        p={2}
+        borderRadius={10}
+        alignSelf="flex-start">
+        <Text color="constants.primary">Use current location</Text>
+      </Pressable>
       <FlatList
         contentContainerStyle={styles.paddingBottom}
         // @ts-ignore

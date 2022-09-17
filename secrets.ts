@@ -1,0 +1,2 @@
+export const AUTOCOMPLETE_API_KEY = '6d67af95fb4f4763b8b1e00e21888d53';
+export const GEOCODE_API_KEY = '6d67af95fb4f4763b8b1e00e21888d53';

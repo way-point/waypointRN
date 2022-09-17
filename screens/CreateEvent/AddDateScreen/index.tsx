@@ -1,10 +1,10 @@
 import {
   Box,
   Divider,
-  Flex,
   Heading,
   Input,
   Pressable,
+  Spinner,
   Text,
   useTheme,
 } from 'native-base';
@@ -21,6 +21,7 @@ import {Feather} from '@expo/vector-icons';
 import Geolocation from '@react-native-community/geolocation';
 import AddressAutocomplete from 'react-native-address-autocomplete';
 import {Platform} from 'react-native';
+import {GEOCODE_API_KEY} from '../../../secrets';
 
 const formatAMPM = (date: Date) => {
   var hours = date.getHours();
@@ -70,12 +71,11 @@ const AddDateScreen = () => {
   const [currTheme] = useAtom(currentTheme);
   const {colors} = useTheme();
   const [, send] = useAtom(EventMachine);
+  const [loading, setLoading] = useState(false);
   const [coords, setCoords] = useState({
     latitude: undefined,
     longitude: undefined,
   } as coordsProps);
-
-  const API_KEY = '6d67af95fb4f4763b8b1e00e21888d53';
 
   useEffect(() => {
     const get_address = async () => {
@@ -90,11 +90,13 @@ const AddDateScreen = () => {
         }
         if (Platform.OS === 'android') {
           const fet = await fetch(
-            `https://api.geoapify.com/v1/geocode/reverse?lat=${coords.latitude}&lon=${coords.longitude}&apiKey=${API_KEY}`,
+            `https://api.geoapify.com/v1/geocode/reverse?lat=${coords.latitude}&lon=${coords.longitude}&apiKey=${GEOCODE_API_KEY}`,
           );
           const data = await fet.json();
           address = data.features[0].properties.formatted;
         }
+
+        setLoading(false);
         send({
           type: 'ENTER_LOCATION',
           value: {
@@ -130,6 +132,9 @@ const AddDateScreen = () => {
             disabled={
               !curr.context.eventDate.startDate ||
               !curr.context.eventDate.endDate ||
+              !curr.context.eventLocation.address ||
+              !curr.context.eventLocation.coordinate.latitude ||
+              !curr.context.eventLocation.coordinate.longitude ||
               curr.context.eventDate.startDate >= curr.context.eventDate.endDate
             }
             onPress={() => {
@@ -190,36 +195,26 @@ const AddDateScreen = () => {
           value={curr.context.eventLocation.address}
           InputRightElement={
             <Box mr={5} bg="transparent">
-              <Feather name="search" size={24} color={colors[currTheme].text} />
+              {loading ? (
+                <Spinner />
+              ) : (
+                <Feather
+                  name="search"
+                  size={24}
+                  color={colors[currTheme].text}
+                />
+              )}
             </Box>
           }
           onPressIn={() => {
             navigation.navigate('SearchAddress');
           }}
         />
-        <Flex my={3} direction="row" alignSelf="center">
-          <Divider
-            bg={currTheme + '.text'}
-            thickness="1"
-            my="auto"
-            mx="2"
-            w={100}
-            orientation="horizontal"
-          />
-          <Text>Or</Text>
-          <Divider
-            bg={currTheme + '.text'}
-            thickness="1"
-            my="auto"
-            mx="2"
-            w={100}
-            orientation="horizontal"
-          />
-        </Flex>
         <Pressable
-          bg="constants.primary"
+          bg="transparent"
           onPress={async () => {
             Geolocation.getCurrentPosition(info => {
+              setLoading(true);
               setCoords({
                 latitude: info.coords.latitude,
                 longitude: info.coords.longitude,
@@ -228,8 +223,8 @@ const AddDateScreen = () => {
           }}
           p={2}
           borderRadius={10}
-          alignSelf="center">
-          <Text>Use current location</Text>
+          alignSelf="flex-start">
+          <Text color="constants.primary">Use current location</Text>
         </Pressable>
         <StartDatePicker
           showPicker={showStartPicker}
