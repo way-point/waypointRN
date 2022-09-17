@@ -4,11 +4,21 @@ import {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import AddressAutocomplete from 'react-native-address-autocomplete';
 import {useAtom} from 'jotai';
 import {currentTheme, EventMachine} from '../../../constants/atoms';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {RootProp} from '../../../navigation/types';
 
-interface renderItemsProps {
+interface androidItem {
+  address: string;
+  latitude: number;
+  longitude: number;
+}
+interface androidRenderItemProps {
+  item: androidItem;
+  index: number;
+}
+
+interface iOSrenderItemsProps {
   item: string;
   index: number;
 }
@@ -20,30 +30,49 @@ const styles = StyleSheet.create({
 });
 
 const SearchAddressScreen = () => {
-  const [suggestions, setSuggestions] = useState([] as string[]);
+  const [suggestions, setSuggestions] = useState(
+    [] as string[] | androidItem[],
+  );
   const [currTheme] = useAtom(currentTheme);
-  const [curr, send] = useAtom(EventMachine);
+  const [, send] = useAtom(EventMachine);
   const navigation = useNavigation<RootProp>();
 
-  const renderItem = ({item, index}: renderItemsProps) => {
+  const GEO_API_KEY = '6d67af95fb4f4763b8b1e00e21888d53';
+
+  const renderItem = ({
+    item,
+    index,
+  }: iOSrenderItemsProps | androidRenderItemProps) => {
     return (
       <Box>
         {index !== 0 && <Divider h={0.3} />}
         <Pressable
           bg={currTheme + '.textField'}
           onPress={async () => {
-            const {coordinate} = await AddressAutocomplete.getAddressDetails(
-              item,
-            );
+            if (Platform.OS === 'ios') {
+              const {coordinate} = await AddressAutocomplete.getAddressDetails(
+                item as string,
+              );
+              send({
+                type: 'ENTER_LOCATION',
+                value: {
+                  address: item,
+                  latitude: coordinate.latitude,
+                  longitude: coordinate.longitude,
+                },
+              });
+            }
 
-            send({
-              type: 'ENTER_LOCATION',
-              value: {
-                address: item,
-                latitude: coordinate.latitude,
-                longitude: coordinate.longitude,
-              },
-            });
+            if (Platform.OS === 'android') {
+              send({
+                type: 'ENTER_LOCATION',
+                value: {
+                  address: (item as androidItem).address,
+                  latitude: (item as androidItem).latitude,
+                  longitude: (item as androidItem).longitude,
+                },
+              });
+            }
 
             navigation.goBack();
           }}
@@ -53,7 +82,9 @@ const SearchAddressScreen = () => {
           borderTopRadius={index === 0 ? 10 : 0}
           borderBottomRadius={index === suggestions.length - 1 ? 10 : 0}>
           <Text fontSize={15} fontWeight={500}>
-            {item}
+            {Platform.OS === 'android'
+              ? (item as androidItem).address
+              : (item as string)}
           </Text>
         </Pressable>
         {index !== suggestions.length - 1 && <Divider h={0.3} />}
@@ -71,15 +102,37 @@ const SearchAddressScreen = () => {
         placeholder="Search by Address"
         onChangeText={async text => {
           if (text) {
-            const addresses = await AddressAutocomplete.getAddressSuggestions(
-              text,
-            );
-            setSuggestions(addresses);
+            if (Platform.OS === 'ios') {
+              const addresses = await AddressAutocomplete.getAddressSuggestions(
+                text,
+              );
+              setSuggestions(addresses);
+            }
+
+            if (Platform.OS === 'android') {
+              const GeoSuggestions = await fetch(
+                `https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&format=json&apiKey=${GEO_API_KEY}`,
+                {method: 'GET'},
+              );
+              const {results} = await GeoSuggestions.json();
+
+              const adds: androidItem[] = [];
+              for (let i = 0; i < results.length; i++) {
+                adds.push({
+                  address: results[i].formatted,
+                  latitude: results[i].lat,
+                  longitude: results[i].lng,
+                });
+              }
+
+              setSuggestions(adds);
+            }
           }
         }}
       />
       <FlatList
         contentContainerStyle={styles.paddingBottom}
+        // @ts-ignore
         data={suggestions}
         renderItem={renderItem}
       />
