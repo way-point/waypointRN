@@ -2420,6 +2420,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-plugin/-/eslint-plugin-1.2.0.tgz#7d6d789ae8edf73dc9bed1246cd48277edea8066"
   integrity sha512-o6aam+0Ug1xGK3ABYmBm0B1YuEKfM/5kaoZO0eHbZwSpw9UzDX4G5y4Nx/K20FHqUmJHkZmLvOUFYwN4N+HqKA==
 
+"@react-native-community/geolocation@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/geolocation/-/geolocation-3.0.1.tgz#64cae2bf402f9b9fa1b51816c96e3daef0422f50"
+  integrity sha512-RKoiO2YzEB54GtkmQpr5ywyrlOmf6lkAvCZyvMwJJwqBYeIXRZEDVowHsUBWWaF60lvCzj0ZFXAowKQmKIGX2A==
+
 "@react-native-firebase/app@^15.4.0":
   version "15.4.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-15.4.0.tgz#616a6d13956fbed1ee010ca05b9e62969d19b5c5"
@@ -8722,6 +8727,11 @@ react-is@^17.0.1:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
+
+react-native-address-autocomplete@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-address-autocomplete/-/react-native-address-autocomplete-0.4.1.tgz#f661f067bd2efd299daab2cfe340ab899083c6e6"
+  integrity sha512-tbW1hIyCl5DrlJQ5d3lvVON73tZ7coNvNL7yqPcHLrbjNNgtgGlKf1RqYDjJeRuLaDvH92jiBNbM5pu0DTD9mQ==
 
 react-native-codegen@^0.70.4:
   version "0.70.4"

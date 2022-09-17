@@ -128,7 +128,13 @@ const AddDateScreen = () => {
         </Pressable>
         <Divider my={5} />
         <Heading mb={5}>Where</Heading>
-        <Input placeholder="Search by address" />
+        <Input
+          placeholder="Search by address"
+          value={curr.context.eventLocation.address}
+          onPressIn={() => {
+            navigation.navigate('SearchAddress');
+          }}
+        />
         <Flex my={3} direction="row" alignSelf="center">
           <Divider
             bg={currTheme + '.text'}

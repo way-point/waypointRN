@@ -12,6 +12,13 @@ interface contextProps {
     endDate: Date | undefined;
     repeat: string[];
   };
+  eventLocation: {
+    coordinate: {
+      latitude: number | undefined;
+      longitude: number | undefined;
+    };
+    address: string | undefined;
+  };
 }
 
 const initialContext: contextProps = {
@@ -25,6 +32,13 @@ const initialContext: contextProps = {
     startDate: undefined,
     endDate: undefined,
     repeat: [],
+  },
+  eventLocation: {
+    coordinate: {
+      latitude: undefined,
+      longitude: undefined,
+    },
+    address: undefined,
   },
 };
 
@@ -55,6 +69,10 @@ const CreateEventMachine = createMachine(
           },
           ENTER_REPEAT: {
             actions: 'cacheRepeat',
+            target: 'dataEntry',
+          },
+          ENTER_LOCATION: {
+            actions: 'cacheLocation',
             target: 'dataEntry',
           },
         },
@@ -92,6 +110,15 @@ const CreateEventMachine = createMachine(
           startDate: ctx.eventDate.startDate,
           endDate: ctx.eventDate.endDate,
           repeat: evt.value.repeat,
+        },
+      })),
+      cacheLocation: actions.assign((ctx, evt: any) => ({
+        eventLocation: {
+          coordinate: {
+            latitude: evt.value.latitude,
+            longitude: evt.value.longitude,
+          },
+          address: evt.value.address,
         },
       })),
     },

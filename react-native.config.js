@@ -2,6 +2,12 @@ module.exports = {
   project: {
     ios: {},
     android: {},
-    dependencies: {},
+    dependencies: {
+      'react-native-address-autocomplete': {
+        platforms: {
+          android: null,
+        },
+      },
+    },
   },
 };
