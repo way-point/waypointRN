@@ -38,6 +38,7 @@ import ChooseEvents from '../../../components/ChooseEvents';
 import TimeFormat from '../../../constants/timeFormat';
 import {useNavigation} from '@react-navigation/native';
 import {RootProp} from '../../../navigation/types';
+import Video from 'react-native-video';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -248,44 +249,79 @@ const AddTitleScreen = () => {
               placeholder="What's the occasion?"
               w="100%"
             />
-            {curr.context.attachment.uri && (
-              <ImageBackground
-                source={{uri: curr.context.attachment.uri}}
-                style={styles.iconX}
-                resizeMode="cover">
-                <Pressable
-                  onPress={() => {
-                    send({
-                      type: 'ENTER_ATTACHMENT',
-                      value: {attachmentType: '', uri: ''},
-                    });
-                  }}
-                  bg={currTheme + '.background'}
-                  borderRadius={15}
-                  alignSelf="flex-end"
-                  mr={2}
-                  mt={2}>
-                  <AntDesign
-                    name="close"
-                    size={30}
-                    style={styles.icon}
-                    color={colors[currTheme].text}
-                  />
-                </Pressable>
-                {curr.context.attachment.type === 'video' && (
-                  <Box
-                    bg="constants.transparentDark"
+            {curr.context.attachment.type === 'photo' &&
+              curr.context.attachment.uri && (
+                <ImageBackground
+                  source={{uri: curr.context.attachment.uri}}
+                  style={styles.iconX}
+                  resizeMode="cover">
+                  <Pressable
+                    onPress={() => {
+                      send({
+                        type: 'ENTER_ATTACHMENT',
+                        value: {attachmentType: '', uri: ''},
+                      });
+                    }}
+                    bg={currTheme + '.background'}
+                    borderRadius={15}
                     alignSelf="flex-end"
                     mr={2}
+                    mt={2}>
+                    <AntDesign
+                      name="close"
+                      size={20}
+                      style={styles.icon}
+                      color={colors[currTheme].text}
+                    />
+                  </Pressable>
+                </ImageBackground>
+              )}
+
+            {curr.context.attachment.type === 'video' &&
+              curr.context.attachment.uri && (
+                <Box>
+                  <Video
+                    source={{uri: curr.context.attachment.uri}}
+                    style={styles.iconX}
+                    paused
+                    controls={false}
+                    poster={curr.context.attachment.uri}
+                    resizeMode="cover"
+                  />
+                  <Pressable
+                    position="absolute"
+                    onPress={() => {
+                      send({
+                        type: 'ENTER_ATTACHMENT',
+                        value: {attachmentType: '', uri: ''},
+                      });
+                    }}
+                    bg={currTheme + '.background'}
+                    borderRadius={15}
+                    alignSelf="flex-end"
+                    top={30}
+                    right={1}>
+                    <AntDesign
+                      name="close"
+                      size={20}
+                      style={styles.icon}
+                      color={colors[currTheme].text}
+                    />
+                  </Pressable>
+
+                  <Box
+                    position="absolute"
+                    bg="constants.transparentDark"
+                    alignSelf="flex-end"
+                    bottom={0}
+                    right={3}
                     p={1}
                     borderRadius={8}
-                    mt="auto"
                     mb={3}>
                     <Text>{TimeFormat(curr.context.attachment.duration)}</Text>
                   </Box>
-                )}
-              </ImageBackground>
-            )}
+                </Box>
+              )}
             <Box mt="auto" bg="transparent">
               <Box
                 flexDir="row"

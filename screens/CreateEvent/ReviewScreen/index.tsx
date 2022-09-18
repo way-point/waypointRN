@@ -7,7 +7,6 @@ import {EventMachine} from '../../../constants/atoms';
 import {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import {feedDataProps} from '../../../constants/types';
 import {uri} from '../../../navigation';
-import Video from 'react-native-video';
 
 const ReviewScreen = () => {
   const [curr] = useAtom(EventMachine);

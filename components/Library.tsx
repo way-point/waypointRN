@@ -8,6 +8,8 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useAtom} from 'jotai';
 import {currentTheme, EventMachine} from '../constants/atoms';
 import {Feather, AntDesign} from '@expo/vector-icons';
+// @ts-ignore
+import RNConvertPhAsset from 'react-native-convert-ph-asset';
 import {
   launchImageLibraryAsync,
   MediaTypeOptions,
@@ -156,11 +158,20 @@ const Library: React.FC<LibraryProps> = ({
             <TouchableWithoutFeedback
               key={i}
               style={styles.flatlistPadding}
-              onPress={() => {
+              onPress={async () => {
+                let uri = e.uri;
+                if (uri.startsWith('ph://') && e.mediaType === 'video') {
+                  const data = await RNConvertPhAsset.convertVideoFromUrl({
+                    url: uri,
+                    convertTo: 'mov',
+                    quality: 'medium',
+                  });
+                  uri = data.path;
+                }
                 send({
                   type: 'ENTER_ATTACHMENT',
                   value: {
-                    uri: e.uri,
+                    uri: uri,
                     attachmentType: e.mediaType,
                     duration: e.duration,
                   },
