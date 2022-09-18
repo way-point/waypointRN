@@ -10,6 +10,7 @@ install! 'cocoapods', :deterministic_uuids => false
 target 'waypointapp' do
   use_expo_modules!
   use_frameworks! :linkage => :static
+  pod 'react-native-video', :path => '../node_modules/react-native-video/react-native-video.podspec'
   post_integrate do |installer|
     begin
       expo_patch_react_imports!(installer)

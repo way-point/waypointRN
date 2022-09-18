@@ -21,7 +21,7 @@
     "@react-navigation/native": "^6.0.12",
     "@react-navigation/native-stack": "^6.8.0",
     "@xstate/react": "^3.0.1",
-    "expo": "^46.0.0",
+    "expo": "^46.0.10",
     "expo-image-picker": "^13.3.1",
     "expo-media-library": "^14.2.0",
     "jotai": "^1.8.3",
@@ -38,6 +38,7 @@
     "react-native-screens": "^3.17.0",
     "react-native-static-safe-area-insets": "^2.2.0",
     "react-native-svg": "^13.1.0",
+    "react-native-video": "^5.2.1",
     "xstate": "^4.33.6"
   },
   "devDependencies": {
@@ -47,6 +48,7 @@
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^26.0.23",
     "@types/react-native": "^0.69.6",
+    "@types/react-native-video": "^5.0.14",
     "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
