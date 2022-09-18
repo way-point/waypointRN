@@ -279,7 +279,7 @@ const AddTitleScreen = () => {
 
             {curr.context.attachment.type === 'video' &&
               curr.context.attachment.uri && (
-                <Box>
+                <Box bg="transparent">
                   <Video
                     source={{uri: curr.context.attachment.uri}}
                     style={styles.iconX}
@@ -380,18 +380,9 @@ const AddTitleScreen = () => {
                     color={colors[currTheme].text}
                   />
                 </Pressable>
-                {/* <Box bg={currTheme + '.textField'} borderRadius={15} mr={5}>
-                  <Feather
-                    name="link"
-                    size={30}
-                    style={styles.icon}
-                    color={colors[currTheme].text}
-                  />
-                </Box> */}
               </Box>
             </Box>
-            <Animated.View
-              style={[heightAnimatedStyle, {backgroundColor: 'transparent'}]}>
+            <Animated.View style={heightAnimatedStyle}>
               <Library
                 albums={albums}
                 setShowImagePicker={setShowImagePicker}

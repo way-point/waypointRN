@@ -13,7 +13,7 @@ const Menu = ({children, menuOptions}: MenuProps) => {
   if (Platform.OS === 'ios') {
     return <MenuIOS menuOptions={menuOptions}>{children}</MenuIOS>;
   }
-  return <Box>{children}</Box>;
+  return <Box bg="transparent">{children}</Box>;
 };
 
 export default Menu;

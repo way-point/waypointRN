@@ -7,7 +7,12 @@ const WhereTitle = ({item}: feedDataItemProps) => {
   const {colors} = useTheme();
   return (
     <Box flexDirection="row" bg="transparent">
-      <Text mb={5} mr={1} color="constants.primary">
+      <Text
+        mb={5}
+        mr={1}
+        color="constants.primary"
+        maxWidth="90%"
+        numberOfLines={1}>
         {item.eventDetails.where.address}
       </Text>
       <FontAwesome5
