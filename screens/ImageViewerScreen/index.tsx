@@ -58,9 +58,11 @@ interface HeaderProps {
 
 const Header = ({animatedStyle}: HeaderProps) => {
   const AnimatedBox = Animated.createAnimatedComponent(Box);
+  const navigation = useNavigation();
 
   return (
     <AnimatedBox
+      zIndex={2}
       style={animatedStyle}
       position="absolute"
       width={Layout.window.width}
@@ -74,7 +76,10 @@ const Header = ({animatedStyle}: HeaderProps) => {
         flexDir="row"
         px={SAFE_AREA_PADDING.paddingLeft}
         justifyContent="space-between">
-        <Pressable>
+        <Pressable
+          onPress={() => {
+            navigation.goBack();
+          }}>
           <AntDesign name="close" size={20} color="white" />
         </Pressable>
         <Pressable>
@@ -97,7 +102,7 @@ const SwipeToLeave = ({children}: SwipeToLeaveProps) => {
       onActive: event => {
         y.value = event.translationY;
         opacity.value =
-          100 / Math.abs(event.translationY === 0 ? 100 : event.translationY);
+          50 / Math.abs(event.translationY === 0 ? 100 : event.translationY);
       },
       onEnd: event => {
         console.log(event.translationY);

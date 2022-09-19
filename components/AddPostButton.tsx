@@ -11,12 +11,23 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     marginBottom: 'auto',
   },
+  shadow: {
+    shadowColor: 'black',
+    shadowOpacity: 0.8,
+    elevation: 2,
+  },
 });
 
 const AddPostButton = () => {
   const navigation = useNavigation<RootProp>();
   return (
-    <Box position="absolute" bg="transparent" zIndex={1} bottom={3} right={3}>
+    <Box
+      position="absolute"
+      bg="transparent"
+      zIndex={1}
+      bottom={3}
+      right={3}
+      style={styles.shadow}>
       <Pressable
         borderRadius={30}
         width={60}
