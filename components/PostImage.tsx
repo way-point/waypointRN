@@ -81,6 +81,7 @@ const PostImage = ({item}: PostImageProps) => {
               mt="auto"
               justifyContent="space-between"
               pl={2}
+              pb={2}
               flexDir="row">
               <ProfileImage uri={item.host.profileURL} size={7} />
             </Box>

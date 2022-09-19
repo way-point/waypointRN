@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {FontAwesome5} from '@expo/vector-icons';
 import {feedDataItemProps} from '../constants/types';
 import {intervalToDuration} from 'date-fns';
-import Lottie from 'lottie-react-native';
 
 interface timeLeftProps {
   days: number;
@@ -38,6 +37,16 @@ const TimeState = ({item}: feedDataItemProps) => {
       return () => clearInterval(intervalID);
     }
   }, [item.eventDetails.when.startDate]);
+
+  if (new Date(Date.now()) >= item.eventDetails.when.endDate) {
+    return (
+      <Box>
+        <Text fontWeight={600} fontSize={20}>
+          Expired
+        </Text>
+      </Box>
+    );
+  }
 
   if (new Date(Date.now()) >= item.eventDetails.when.startDate) {
     return (
