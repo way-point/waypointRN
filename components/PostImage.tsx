@@ -1,10 +1,12 @@
-import {Box, Text} from 'native-base';
+import {useNavigation} from '@react-navigation/native';
+import {Box, Pressable, Text} from 'native-base';
 import React, {useState} from 'react';
 import {ImageBackground, StyleSheet} from 'react-native';
 import Video from 'react-native-video';
 import menuOptionsImage from '../constants/Menu/menuOptionsImage';
 import TimeFormat from '../constants/timeFormat';
 import {feedDataProps} from '../constants/types';
+import {RootProp} from '../navigation/types';
 import Menu from './Menu';
 import ProfileImage from './ProfileImage';
 
@@ -24,11 +26,15 @@ const styles = StyleSheet.create({
 
 const PostImage = ({item}: PostImageProps) => {
   const [duration, setDuration] = useState(item.video?.duration);
+  const navigation = useNavigation<RootProp>();
   return (
     <Box>
       {item.type === 'video' && item.video && (
         <Menu menuOptions={menuOptionsImage}>
-          <Box>
+          <Pressable
+            onPress={() => {
+              navigation.navigate('ImageView', {item: item});
+            }}>
             <Video
               source={{
                 uri: item.video.uri,
@@ -65,27 +71,32 @@ const PostImage = ({item}: PostImageProps) => {
               borderRadius={8}>
               <Text>{TimeFormat(duration)}</Text>
             </Box>
-          </Box>
+          </Pressable>
         </Menu>
       )}
       {item.type === 'photo' && item.image && (
         <Menu menuOptions={menuOptionsImage}>
-          <ImageBackground
-            source={{
-              uri: item.image,
-            }}
-            style={styles.imageBackground}
-            resizeMode="cover">
-            <Box
-              bg="transparent"
-              mt="auto"
-              justifyContent="space-between"
-              pl={2}
-              pb={2}
-              flexDir="row">
-              <ProfileImage uri={item.host.profileURL} size={7} />
-            </Box>
-          </ImageBackground>
+          <Pressable
+            onPress={() => {
+              navigation.navigate('ImageView', {item: item});
+            }}>
+            <ImageBackground
+              source={{
+                uri: item.image,
+              }}
+              style={styles.imageBackground}
+              resizeMode="cover">
+              <Box
+                bg="transparent"
+                mt="auto"
+                justifyContent="space-between"
+                pl={2}
+                pb={2}
+                flexDir="row">
+                <ProfileImage uri={item.host.profileURL} size={7} />
+              </Box>
+            </ImageBackground>
+          </Pressable>
         </Menu>
       )}
     </Box>

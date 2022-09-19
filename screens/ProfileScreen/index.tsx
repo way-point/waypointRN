@@ -4,7 +4,7 @@ import ProfileImage from '../../components/ProfileImage';
 import {uri} from '../../navigation';
 import Layout, {SAFE_AREA_PADDING} from '../../constants/Layout';
 import {ImageBackground} from 'react-native';
-import {TimeState} from '../../components/WhereTitle';
+import TimeState from '../../components/WhenTitle';
 import feedData from '../../data/feedData';
 
 const Images = [

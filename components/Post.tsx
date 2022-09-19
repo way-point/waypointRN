@@ -12,6 +12,7 @@ import WhereTitle from './WhereTitle';
 import {CONTAINER_WIDTH} from '../constants/Layout';
 import menuOptionsEvent from '../constants/Menu/menuOptionsEvent';
 import PostImage from './PostImage';
+import TimeState from './WhenTitle';
 
 const Post = ({item}: feedDataItemProps) => {
   const [currTheme] = useAtom(currentTheme);
@@ -46,6 +47,9 @@ const Post = ({item}: feedDataItemProps) => {
             <AvatarGroup userImages={item.subscribers} />
           )}
           <JoinEvent />
+        </Box>
+        <Box bg="transparent" alignSelf="flex-start" mb={5}>
+          <TimeState item={item} />
         </Box>
         <PostImage item={item} />
       </Pressable>

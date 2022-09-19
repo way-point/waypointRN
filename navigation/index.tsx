@@ -27,6 +27,7 @@ import RepeatScreen from '../screens/CreateEvent/RepeatScreen';
 import SearchAddressScreen from '../screens/CreateEvent/SearchAdressScreen';
 import ReviewScreen from '../screens/CreateEvent/ReviewScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import ImageViewerScreen from '../screens/ImageViewerScreen';
 
 export const uri =
   'https://media-exp1.licdn.com/dms/image/C5603AQEQZuyIujt9xA/profile-displayphoto-shrink_200_200/0/1640233246542?e=2147483647&v=beta&t=06q_FRXOtNMMPTnZmHt7CDL6g3C6tC_0erJ4JaWTNgo';
@@ -172,6 +173,7 @@ const RootNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Root" component={BottomTabNavigator} />
+      <Stack.Screen name="ImageView" component={ImageViewerScreen} />
       <Stack.Group>
         <Stack.Screen name="CreateTitle" component={AddTitleScreen} />
         <Stack.Screen name="EventDetails" component={EventDetailsScreen} />
