@@ -93,7 +93,6 @@ const getPermissionAsync = async () => {
 
 const getCameraPermsAsync = async () => {
   const {status} = await requestCameraPermissionsAsync();
-  console.log(status);
   return status === 'granted';
 };
 
@@ -326,11 +325,12 @@ const AddTitleScreen = () => {
               <Box
                 flexDir="row"
                 bg="transparent"
+                mb={3}
                 display={showImagePicker ? 'none' : 'flex'}>
                 <Pressable
+                  mr={5}
                   bg={currTheme + '.background'}
                   borderRadius={15}
-                  mr={5}
                   onPress={async () => {
                     const loaded = await getPermissionAsync();
                     if (loaded) {
@@ -350,34 +350,34 @@ const AddTitleScreen = () => {
                   {showImagePicker ? (
                     <AntDesign
                       name="close"
-                      size={30}
+                      size={20}
                       style={styles.icon}
-                      color={colors[currTheme].text}
+                      color={colors.constants.primary}
                     />
                   ) : (
                     <Feather
                       name="paperclip"
-                      size={30}
+                      size={20}
                       style={styles.icon}
-                      color={colors[currTheme].text}
+                      color={colors.constants.primary}
                     />
                   )}
                 </Pressable>
                 <Pressable
+                  bg={currTheme + '.background'}
+                  borderRadius={15}
                   onPress={async () => {
                     const loaded = await getCameraPermsAsync();
                     if (loaded) {
                       await openCamera();
                     }
                   }}
-                  bg={currTheme + '.background'}
-                  borderRadius={15}
                   mr={5}>
                   <Feather
                     name="camera"
-                    size={30}
+                    size={20}
                     style={styles.icon}
-                    color={colors[currTheme].text}
+                    color={colors.constants.primary}
                   />
                 </Pressable>
               </Box>

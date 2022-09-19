@@ -26,6 +26,7 @@ import AddDateScreen from '../screens/CreateEvent/AddDateScreen';
 import RepeatScreen from '../screens/CreateEvent/RepeatScreen';
 import SearchAddressScreen from '../screens/CreateEvent/SearchAdressScreen';
 import ReviewScreen from '../screens/CreateEvent/ReviewScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 export const uri =
   'https://media-exp1.licdn.com/dms/image/C5603AQEQZuyIujt9xA/profile-displayphoto-shrink_200_200/0/1640233246542?e=2147483647&v=beta&t=06q_FRXOtNMMPTnZmHt7CDL6g3C6tC_0erJ4JaWTNgo';
@@ -147,7 +148,7 @@ const BottomTabNavigator = () => {
 
       <Stack.Screen
         name="Account"
-        component={HomeScreen}
+        component={ProfileScreen}
         options={{
           tabBarIcon: ({color, focused}) => {
             return (
@@ -158,14 +159,7 @@ const BottomTabNavigator = () => {
               />
             );
           },
-          headerLeft: () => {
-            return (
-              <Box backgroundColor="transparent" pl={3}>
-                <ProfileImage uri={uri} />
-              </Box>
-            );
-          },
-          title: 'Santa Cruz',
+          title: 'Account',
         }}
       />
     </Stack.Navigator>

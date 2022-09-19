@@ -11,7 +11,7 @@ interface timeLeftProps {
   seconds: number;
 }
 
-const TimeState = ({item}: feedDataItemProps) => {
+export const TimeState = ({item}: feedDataItemProps) => {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -40,21 +40,17 @@ const TimeState = ({item}: feedDataItemProps) => {
 
   if (new Date(Date.now()) >= item.eventDetails.when.endDate) {
     return (
-      <Box>
-        <Text fontWeight={600} fontSize={20}>
-          Expired
-        </Text>
-      </Box>
+      <Text fontWeight={600} fontSize={20}>
+        Expired
+      </Text>
     );
   }
 
   if (new Date(Date.now()) >= item.eventDetails.when.startDate) {
     return (
-      <Box>
-        <Text fontWeight={600} fontSize={20}>
-          Live
-        </Text>
-      </Box>
+      <Text fontWeight={600} fontSize={20}>
+        Live
+      </Text>
     );
   }
 

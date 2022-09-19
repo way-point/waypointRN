@@ -108,7 +108,7 @@ const Library: React.FC<LibraryProps> = ({
 
   return (
     <Box pt={5} bg="transparent">
-      <Box flexDir="row" mb={5} bg="transparent">
+      <Box flexDir="row" mb={3} bg="transparent">
         <Pressable
           bg={currTheme + '.background'}
           borderRadius={15}
@@ -121,15 +121,15 @@ const Library: React.FC<LibraryProps> = ({
           }}>
           <AntDesign
             name="close"
-            size={30}
+            size={20}
             style={styles.icon}
-            color={colors[currTheme].text}
+            color={colors.constants.primary}
           />
         </Pressable>
         <Pressable
+          mr={5}
           bg={currTheme + '.background'}
           borderRadius={15}
-          mr={5}
           onPress={async () => {
             const granted = await getPermissionAsync();
             if (granted) {
@@ -138,9 +138,9 @@ const Library: React.FC<LibraryProps> = ({
           }}>
           <Feather
             name="image"
-            size={30}
+            size={20}
             style={styles.icon}
-            color={colors[currTheme].text}
+            color={colors.constants.primary}
           />
         </Pressable>
       </Box>
