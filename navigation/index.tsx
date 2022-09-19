@@ -173,7 +173,11 @@ const RootNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Root" component={BottomTabNavigator} />
-      <Stack.Screen name="ImageView" component={ImageViewerScreen} />
+      <Stack.Screen
+        name="ImageView"
+        component={ImageViewerScreen}
+        options={{presentation: 'containedTransparentModal'}}
+      />
       <Stack.Group>
         <Stack.Screen name="CreateTitle" component={AddTitleScreen} />
         <Stack.Screen name="EventDetails" component={EventDetailsScreen} />

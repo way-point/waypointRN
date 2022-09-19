@@ -1,8 +1,9 @@
 import React from 'react';
 import {Box, Image} from 'native-base';
-import {RouteProp, useRoute} from '@react-navigation/native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {RootStackParamList} from '../../navigation/types';
 import Animated, {
+  runOnJS,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
@@ -10,6 +11,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import {
   GestureHandlerRootView,
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
   PinchGestureHandler,
   PinchGestureHandlerGestureEvent,
 } from 'react-native-gesture-handler';
@@ -39,6 +42,62 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+interface SwipeToLeaveProps {
+  children: React.ReactNode;
+}
+
+const SwipeToLeave = ({children}: SwipeToLeaveProps) => {
+  const y = useSharedValue(0);
+  const opacity = useSharedValue(1);
+  const AnimatedBox = Animated.createAnimatedComponent(Box);
+
+  const navigation = useNavigation();
+
+  const gestureHandler =
+    useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
+      onActive: event => {
+        y.value = event.translationY;
+        opacity.value =
+          100 / Math.abs(event.translationY === 0 ? 100 : event.translationY);
+      },
+      onEnd: event => {
+        console.log(event.translationY);
+        if (Math.abs(event.translationY) > 10) {
+          runOnJS(navigation.goBack)();
+        } else {
+          y.value = withTiming(0);
+          opacity.value = withTiming(1);
+        }
+      },
+    });
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateY: y.value,
+        },
+      ],
+    };
+  });
+
+  const opacityStyle = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value,
+    };
+  });
+
+  return (
+    <AnimatedBox style={[styles.flex, opacityStyle]}>
+      <PanGestureHandler onGestureEvent={gestureHandler}>
+        <Animated.View style={[styles.flex, animatedStyle]}>
+          {children}
+        </Animated.View>
+      </PanGestureHandler>
+    </AnimatedBox>
+  );
+};
 
 const Pinchable = ({item}: feedDataItemProps) => {
   const scale = useSharedValue(1);
@@ -111,9 +170,9 @@ const Pinchable = ({item}: feedDataItemProps) => {
 const ImageViewerScreen = () => {
   const {item} = useRoute<RouteProp<RootStackParamList, 'ImageView'>>().params;
   return (
-    <Box flex={1}>
+    <SwipeToLeave>
       <Pinchable item={item} />
-    </Box>
+    </SwipeToLeave>
   );
 };
 
