@@ -35,6 +35,11 @@ const ReviewScreen = () => {
         latitude: curr.context.eventLocation.coordinate.latitude || 0,
         address: curr.context.eventLocation.address || '',
       },
+      when: {
+        startDate: curr.context.eventDate.startDate || new Date(Date.now()),
+        endDate: curr.context.eventDate.endDate || new Date(Date.now()),
+        repeat: curr.context.eventDate.repeat,
+      },
     },
     subscribers: [],
     description: curr.context.message,

@@ -26,6 +26,11 @@ export interface feedDataProps {
       longitude: number;
       address: string;
     };
+    when: {
+      startDate: Date;
+      endDate: Date;
+      repeat: string[];
+    };
   };
   subscribers: userImageProps[];
 }

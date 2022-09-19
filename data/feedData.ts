@@ -17,6 +17,11 @@ const feedData: feedDataProps[] = [
         longitude: 120,
         address: '5923 River Creek Rd.',
       },
+      when: {
+        startDate: new Date(Date.now()),
+        endDate: new Date(new Date().getFullYear() + 1, 0, 1),
+        repeat: ['Monday'],
+      },
     },
     image:
       'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.lifestyleasia.com%2Fwp-content%2Fuploads%2Fsites%2F2%2F2021%2F11%2F03175949%2FBored-Ape-1.jpg&f=1&nofb=1',
@@ -62,6 +67,11 @@ const feedData: feedDataProps[] = [
         latitude: 120,
         longitude: 120,
         address: '5923 River Creek Rd.',
+      },
+      when: {
+        startDate: new Date(Date.now()),
+        endDate: new Date(new Date().getFullYear() + 1, 0, 1),
+        repeat: [],
       },
     },
     image:

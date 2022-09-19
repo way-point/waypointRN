@@ -5,6 +5,7 @@ import {ImageBackground} from 'react-native';
 import AvatarGroup from '../../components/AvatarGroup';
 import JoinEvent from '../../components/JoinEvent';
 import Menu from '../../components/Menu';
+import WhereTitle from '../../components/WhereTitle';
 import {SAFE_AREA_PADDING} from '../../constants/Layout';
 import menuOptionsImage from '../../constants/Menu/menuOptionsImage';
 import {RootStackParamList} from '../../navigation/types';
@@ -29,7 +30,9 @@ const EventDetailsScreen = () => {
       </Menu>
       <Box
         pr={SAFE_AREA_PADDING.paddingRight}
-        pl={SAFE_AREA_PADDING.paddingLeft}>
+        pl={SAFE_AREA_PADDING.paddingLeft}
+        pt={SAFE_AREA_PADDING.paddingLeft}>
+        <WhereTitle item={event} />
         <Box flexDir="row" mt={5} justifyContent="space-between">
           <AvatarGroup userImages={event.subscribers} />
           <JoinEvent />
