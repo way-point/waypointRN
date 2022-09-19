@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Image} from 'native-base';
+import {Box, Image, Pressable} from 'native-base';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {RootStackParamList} from '../../navigation/types';
 import Animated, {
@@ -16,10 +16,11 @@ import {
   PinchGestureHandler,
   PinchGestureHandlerGestureEvent,
 } from 'react-native-gesture-handler';
-import Layout from '../../constants/Layout';
+import Layout, {SAFE_AREA_PADDING} from '../../constants/Layout';
 import {StyleSheet} from 'react-native';
 import {feedDataItemProps} from '../../constants/types';
 import Video from 'react-native-video';
+import {AntDesign, Feather} from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
   image: {
@@ -47,6 +48,43 @@ interface SwipeToLeaveProps {
   children: React.ReactNode;
 }
 
+interface HeaderProps {
+  animatedStyle: {
+    transform: {
+      translateY: number;
+    }[];
+  };
+}
+
+const Header = ({animatedStyle}: HeaderProps) => {
+  const AnimatedBox = Animated.createAnimatedComponent(Box);
+
+  return (
+    <AnimatedBox
+      style={animatedStyle}
+      position="absolute"
+      width={Layout.window.width}
+      height={SAFE_AREA_PADDING.paddingTop + 20}
+      bg="constants.transparentDark">
+      <Box
+        position="absolute"
+        bg="transparent"
+        width={Layout.window.width}
+        bottom={2}
+        flexDir="row"
+        px={SAFE_AREA_PADDING.paddingLeft}
+        justifyContent="space-between">
+        <Pressable>
+          <AntDesign name="close" size={20} color="white" />
+        </Pressable>
+        <Pressable>
+          <Feather name="share" size={20} color="white" />
+        </Pressable>
+      </Box>
+    </AnimatedBox>
+  );
+};
+
 const SwipeToLeave = ({children}: SwipeToLeaveProps) => {
   const y = useSharedValue(0);
   const opacity = useSharedValue(1);
@@ -63,7 +101,7 @@ const SwipeToLeave = ({children}: SwipeToLeaveProps) => {
       },
       onEnd: event => {
         console.log(event.translationY);
-        if (Math.abs(event.translationY) > 10) {
+        if (Math.abs(event.translationY) > 150) {
           runOnJS(navigation.goBack)();
         } else {
           y.value = withTiming(0);
@@ -82,6 +120,16 @@ const SwipeToLeave = ({children}: SwipeToLeaveProps) => {
     };
   });
 
+  const animatedHeaderStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateY: -Math.abs(y.value),
+        },
+      ],
+    };
+  });
+
   const opacityStyle = useAnimatedStyle(() => {
     return {
       opacity: opacity.value,
@@ -90,6 +138,7 @@ const SwipeToLeave = ({children}: SwipeToLeaveProps) => {
 
   return (
     <AnimatedBox style={[styles.flex, opacityStyle]}>
+      <Header animatedStyle={animatedHeaderStyle} />
       <PanGestureHandler onGestureEvent={gestureHandler}>
         <Animated.View style={[styles.flex, animatedStyle]}>
           {children}
