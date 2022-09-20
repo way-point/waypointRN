@@ -3,7 +3,12 @@ import {Box, Pressable, Text} from 'native-base';
 import React, {useState} from 'react';
 import {ImageBackground, StyleSheet} from 'react-native';
 import Video from 'react-native-video';
-import menuOptionsImage from '../constants/Menu/menuOptionsImage';
+import menuConfigImage from '../constants/Menu/menuConfigImage';
+import menuConfigUser from '../constants/Menu/menuConfigUser';
+import {
+  menuUserPreviewConfig,
+  menuUserRenderItem,
+} from '../constants/Menu/menuUserPreview';
 import TimeFormat from '../constants/timeFormat';
 import {feedDataProps} from '../constants/types';
 import {RootProp} from '../navigation/types';
@@ -30,7 +35,7 @@ const PostImage = ({item}: PostImageProps) => {
   return (
     <Box>
       {item.type === 'video' && item.video && (
-        <Menu menuOptions={menuOptionsImage}>
+        <Menu menuConfig={menuConfigImage}>
           <Pressable
             onPress={() => {
               navigation.navigate('ImageView', {item: item});
@@ -59,7 +64,14 @@ const PostImage = ({item}: PostImageProps) => {
               left={2}
               bg="transparent"
               flexDir="row">
-              <ProfileImage uri={item.host.profileURL} size={7} />
+              <Menu
+                preview={{
+                  previewConfig: menuUserPreviewConfig,
+                  previewRenderItem: menuUserRenderItem,
+                }}
+                menuConfig={menuConfigUser}>
+                <ProfileImage uri={item.host.profileURL} size={7} />
+              </Menu>
             </Box>
             <Box
               position="absolute"
@@ -75,7 +87,7 @@ const PostImage = ({item}: PostImageProps) => {
         </Menu>
       )}
       {item.type === 'photo' && item.image && (
-        <Menu menuOptions={menuOptionsImage}>
+        <Menu menuConfig={menuConfigImage}>
           <Pressable
             onPress={() => {
               navigation.navigate('ImageView', {item: item});
@@ -93,7 +105,14 @@ const PostImage = ({item}: PostImageProps) => {
                 pl={2}
                 pb={2}
                 flexDir="row">
-                <ProfileImage uri={item.host.profileURL} size={7} />
+                <Menu
+                  preview={{
+                    previewConfig: menuUserPreviewConfig,
+                    previewRenderItem: menuUserRenderItem,
+                  }}
+                  menuConfig={menuConfigUser}>
+                  <ProfileImage uri={item.host.profileURL} size={10} />
+                </Menu>
               </Box>
             </ImageBackground>
           </Pressable>

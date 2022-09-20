@@ -325,7 +325,6 @@ const AddTitleScreen = () => {
               <Box
                 flexDir="row"
                 bg="transparent"
-                mb={3}
                 display={showImagePicker ? 'none' : 'flex'}>
                 <Pressable
                   mr={5}

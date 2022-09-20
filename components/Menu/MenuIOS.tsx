@@ -1,27 +1,35 @@
 import React from 'react';
-import ContextMenu from 'react-native-context-menu-view';
-import {menuOptionProps} from '../../constants/types';
+import {Alert} from 'react-native';
+import {
+  ContextMenuView,
+  MenuConfig,
+  MenuPreviewConfig,
+  RenderItem,
+} from 'react-native-ios-context-menu';
 
 interface MenuIOSProps {
   children: React.ReactNode;
-  menuOptions: menuOptionProps[];
+  menuConfig?: MenuConfig;
+  preview?: {
+    previewConfig: MenuPreviewConfig;
+    previewRenderItem: RenderItem;
+  };
 }
 
-const MenuIOS = ({children, menuOptions}: MenuIOSProps) => {
-  const menuActions = [];
-
-  for (let i = 0; i < menuOptions.length; i++) {
-    menuActions.push(menuOptions[i].menuAction);
-  }
-
+const MenuIOS = ({children, menuConfig, preview}: MenuIOSProps) => {
   return (
-    <ContextMenu
-      actions={menuActions}
-      onPress={({nativeEvent}) => {
-        menuOptions[nativeEvent.index].onPress();
+    <ContextMenuView
+      menuConfig={menuConfig}
+      previewConfig={preview?.previewConfig}
+      renderPreview={preview?.previewRenderItem}
+      onPressMenuItem={({nativeEvent}) => {
+        Alert.alert(
+          'onPressMenuItem Event',
+          `actionKey: ${nativeEvent.actionKey} - actionTitle: ${nativeEvent.actionTitle}`,
+        );
       }}>
       {children}
-    </ContextMenu>
+    </ContextMenuView>
   );
 };
 

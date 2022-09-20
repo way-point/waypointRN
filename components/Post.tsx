@@ -10,15 +10,15 @@ import {RootProp} from '../navigation/types';
 import JoinEvent from './JoinEvent';
 import WhereTitle from './WhereTitle';
 import {CONTAINER_WIDTH} from '../constants/Layout';
-import menuOptionsEvent from '../constants/Menu/menuOptionsEvent';
 import PostImage from './PostImage';
 import TimeState from './WhenTitle';
+import menuConfigEvent from '../constants/Menu/menuConfigEvent';
 
 const Post = ({item}: feedDataItemProps) => {
   const [currTheme] = useAtom(currentTheme);
   const navigation = useNavigation<RootProp>();
   return (
-    <Menu menuOptions={menuOptionsEvent}>
+    <Menu menuConfig={menuConfigEvent}>
       <Pressable
         bg={currTheme + '.background'}
         alignSelf="center"

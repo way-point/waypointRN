@@ -9,7 +9,7 @@ module.exports = {
         android: null,
       },
     },
-    'react-native-context-menu-view': {
+    'react-native-ios-context-menu': {
       platforms: {
         android: null,
       },
