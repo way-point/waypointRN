@@ -1,7 +1,8 @@
 import {setImageAsync} from 'expo-clipboard';
 import {MenuConfig} from 'react-native-ios-context-menu';
 import RNFetchBlob from 'rn-fetch-blob';
-import {COPY} from './menuOptionConstants';
+import {COPY, SHARE} from './menuOptionConstants';
+import Share from 'react-native-share';
 
 const menuConfigImage: MenuConfig = {
   menuTitle: '',
@@ -27,8 +28,8 @@ const menuConfigImage: MenuConfig = {
       },
     },
     {
-      actionKey: 'key-03',
-      actionTitle: 'Share With...',
+      actionKey: SHARE,
+      actionTitle: SHARE,
       icon: {
         type: 'IMAGE_SYSTEM',
         imageValue: {
@@ -56,5 +57,15 @@ export const copy_image = async (url: string) => {
     .then(base64Data => {
       setImageAsync(base64Data);
       return fs.unlink(imagePath || '');
+    });
+};
+
+export const share_image = async (url: string) => {
+  Share.open({url: url})
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      err && console.log(err);
     });
 };

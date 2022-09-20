@@ -63,5 +63,14 @@
 	<string>Give $(PRODUCT_NAME) permission to save your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Give $(PRODUCT_NAME) permission to save your location</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>whatsapp</string>
+		<string>mailto</string>
+		<string>instagram</string>
+		<string>instagram-stories</string>
+		<string>fb</string>
+		<string>facebook-stories</string>
+	</array>
 </dict>
 </plist>

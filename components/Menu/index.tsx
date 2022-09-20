@@ -7,8 +7,8 @@ import {
   MenuPreviewConfig,
   RenderItem,
 } from 'react-native-ios-context-menu';
-import {copy_image} from '../../constants/Menu/menuConfigImage';
-import {COPY} from '../../constants/Menu/menuOptionConstants';
+import {copy_image, share_image} from '../../constants/Menu/menuConfigImage';
+import {COPY, SHARE} from '../../constants/Menu/menuOptionConstants';
 
 interface MenuProps {
   children: React.ReactNode;
@@ -34,6 +34,8 @@ const Menu = ({children, menuConfig, preview, metaData}: MenuProps) => {
             case COPY:
               copy_image(metaData?.imageURL || '');
               break;
+            case SHARE:
+              share_image(metaData?.imageURL || '');
           }
         }}>
         {children}
