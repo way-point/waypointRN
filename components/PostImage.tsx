@@ -87,7 +87,7 @@ const PostImage = ({item}: PostImageProps) => {
         </Menu>
       )}
       {item.type === 'photo' && item.image && (
-        <Menu menuConfig={menuConfigImage}>
+        <Menu menuConfig={menuConfigImage} metaData={{imageURL: item.image}}>
           <Pressable
             onPress={() => {
               navigation.navigate('ImageView', {item: item});
