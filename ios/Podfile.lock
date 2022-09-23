@@ -1,4 +1,10 @@
 PODS:
+  - AppAuth (1.6.0):
+    - AppAuth/Core (= 1.6.0)
+    - AppAuth/ExternalUserAgent (= 1.6.0)
+  - AppAuth/Core (1.6.0)
+  - AppAuth/ExternalUserAgent (1.6.0):
+    - AppAuth/Core
   - boost (1.76.0)
   - DoubleConversion (1.1.6)
   - EXApplication (4.2.2):
@@ -19,6 +25,10 @@ PODS:
     - React-Core
   - Expo (46.0.10):
     - ExpoModulesCore
+  - ExpoAdapterGoogleSignIn (8.0.0):
+    - ExpoModulesCore
+    - GoogleSignIn
+    - React-Core
   - ExpoClipboard (3.1.0):
     - ExpoModulesCore
   - ExpoImagePicker (13.3.1):
@@ -36,8 +46,16 @@ PODS:
     - React-Core (= 0.70.0)
     - React-jsi (= 0.70.0)
     - ReactCommon/turbomodule/core (= 0.70.0)
+  - Firebase/Auth (9.5.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 9.5.0)
   - Firebase/CoreOnly (9.5.0):
     - FirebaseCore (= 9.5.0)
+  - FirebaseAuth (9.5.0):
+    - FirebaseCore (~> 9.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GTMSessionFetcher/Core (< 3.0, >= 1.7)
   - FirebaseCore (9.5.0):
     - FirebaseCoreDiagnostics (~> 9.0)
     - FirebaseCoreInternal (~> 9.0)
@@ -56,11 +74,29 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleSignIn (6.2.4):
+    - AppAuth (~> 1.5)
+    - GTMAppAuth (~> 1.3)
+    - GTMSessionFetcher/Core (< 3.0, >= 1.1)
+  - GoogleUtilities/AppDelegateSwizzler (7.8.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
   - GoogleUtilities/Environment (7.8.0):
     - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/Logger (7.8.0):
     - GoogleUtilities/Environment
+  - GoogleUtilities/Network (7.8.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
   - "GoogleUtilities/NSData+zlib (7.8.0)"
+  - GoogleUtilities/Reachability (7.8.0):
+    - GoogleUtilities/Logger
+  - GTMAppAuth (1.3.1):
+    - AppAuth/Core (~> 1.6)
+    - GTMSessionFetcher/Core (< 3.0, >= 1.5)
+  - GTMSessionFetcher/Core (2.1.0)
   - hermes-engine (0.70.0)
   - libevent (2.1.12)
   - nanopb (2.30909.0):
@@ -384,6 +420,8 @@ PODS:
     - React-perflogger (= 0.70.0)
   - rn-fetch-blob (0.12.0):
     - React-Core
+  - RNAppleAuthentication (2.2.2):
+    - React-Core
   - RNCAsyncStorage (1.17.10):
     - React-Core
   - RNConvertPhAsset (1.0.3):
@@ -393,7 +431,14 @@ PODS:
   - RNFBApp (15.4.0):
     - Firebase/CoreOnly (= 9.5.0)
     - React-Core
+  - RNFBAuth (15.6.0):
+    - Firebase/Auth (= 9.5.0)
+    - React-Core
+    - RNFBApp
   - RNGestureHandler (2.6.0):
+    - React-Core
+  - RNGoogleSignin (8.0.0):
+    - GoogleSignIn (~> 6.2.2)
     - React-Core
   - RNReanimated (2.10.0):
     - DoubleConversion
@@ -444,6 +489,7 @@ DEPENDENCIES:
   - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
   - EXMediaLibrary (from `../node_modules/expo-media-library/ios`)
   - Expo (from `../node_modules/expo`)
+  - "ExpoAdapterGoogleSignIn (from `../node_modules/@react-native-google-signin/google-signin/ios`)"
   - ExpoClipboard (from `../node_modules/expo-clipboard/ios`)
   - ExpoImagePicker (from `../node_modules/expo-image-picker/ios`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
@@ -489,11 +535,14 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
+  - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - RNConvertPhAsset (from `../node_modules/react-native-convert-ph-asset`)
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
+  - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNShare (from `../node_modules/react-native-share`)
@@ -503,13 +552,18 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AppAuth
     - Firebase
+    - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseCoreInternal
     - fmt
     - GoogleDataTransport
+    - GoogleSignIn
     - GoogleUtilities
+    - GTMAppAuth
+    - GTMSessionFetcher
     - libevent
     - nanopb
     - PromisesObjC
@@ -535,6 +589,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-media-library/ios"
   Expo:
     :path: "../node_modules/expo"
+  ExpoAdapterGoogleSignIn:
+    :path: "../node_modules/@react-native-google-signin/google-signin/ios"
   ExpoClipboard:
     :path: "../node_modules/expo-clipboard/ios"
   ExpoImagePicker:
@@ -621,6 +677,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   rn-fetch-blob:
     :path: "../node_modules/rn-fetch-blob"
+  RNAppleAuthentication:
+    :path: "../node_modules/@invertase/react-native-apple-authentication"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNConvertPhAsset:
@@ -629,8 +687,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
+  RNFBAuth:
+    :path: "../node_modules/@react-native-firebase/auth"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNGoogleSignin:
+    :path: "../node_modules/@react-native-google-signin/google-signin"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -645,6 +707,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  AppAuth: 8fca6b5563a5baef2c04bee27538025e4ceb2add
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   EXApplication: e418d737a036e788510f2c4ad6c10a7d54d18586
@@ -655,6 +718,7 @@ SPEC CHECKSUMS:
   EXImageLoader: b88e053d760f85a82405b1db2de4abf11978fc9f
   EXMediaLibrary: e8c8a365701629b7b21dd29769b86e8320610f18
   Expo: fcdb32274e2ca9c7638d3b21b30fb665c6869219
+  ExpoAdapterGoogleSignIn: a3ff2197e97501d6b12d7c459f060ff8a6dc8317
   ExpoClipboard: 7a5a26a3119bd1d0337ee065db3bf5d8a40e23a1
   ExpoImagePicker: ca4207f2952a78e6dac2d7852d7e170dd2eaf1d0
   ExpoKeepAwake: 0e8f18142e71bbf2c7f6aa66ebed249ba1420320
@@ -662,13 +726,17 @@ SPEC CHECKSUMS:
   FBLazyVector: 6c76fe46345039d5cf0549e9ddaf5aa169630a4a
   FBReactNativeSpec: 1a270246542f5c52248cb26a96db119cfe3cb760
   Firebase: 800f16f07af493d98d017446a315c27af0552f41
+  FirebaseAuth: 741918f1fa62ed23246a509279f91d42d79a713f
   FirebaseCore: 25c0400b670fd1e2f2104349cd3b5dcce8d9418f
   FirebaseCoreDiagnostics: 99a495094b10a57eeb3ae8efa1665700ad0bdaa6
   FirebaseCoreInternal: bca76517fe1ed381e989f5e7d8abb0da8d85bed3
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
+  GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
   GoogleUtilities: 1d20a6ad97ef46f67bbdec158ce00563a671ebb7
+  GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
+  GTMSessionFetcher: ffbb25ec00ebcb5201adab0a56d808f6f1902d9f
   hermes-engine: 8e84f1284180801c1a1b241f443ba64f931ff561
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
@@ -708,11 +776,14 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 80c195ffcafb190f531fdc849dc2d19cb4bb2b34
   ReactCommon: de55f940495d7bf87b5d7bf55b5b15cdd50d7d7b
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
+  RNAppleAuthentication: 0571c08da8c327ae2afc0261b48b4a515b0286a6
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
   RNDateTimePicker: 4f1fc917f5af9d9ae4c5fc0c63a4474d61338693
   RNFBApp: a6fca2cd8f392b5efc1f2ab7bd4b3b64a6039abf
+  RNFBAuth: 8aa12ab8530e7ab79ea944d6031802e9dffcfc0f
   RNGestureHandler: 920eb17f5b1e15dae6e5ed1904045f8f90e0b11e
+  RNGoogleSignin: b2179ba653c759b936404a7746fc5302f9de6a5a
   RNReanimated: 60e291d42c77752a0f6d6f358387bdf225a87c6e
   RNScreens: 0df01424e9e0ed7827200d6ed1087ddd06c493f9
   RNShare: be91a5c149585affb02c25b351bd07ba927c7006

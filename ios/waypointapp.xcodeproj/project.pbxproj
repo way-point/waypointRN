@@ -33,6 +33,7 @@
 		00E356EE1AD99517003FC87E /* waypointappTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = waypointappTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* waypointappTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = waypointappTests.m; sourceTree = "<group>"; };
+		024098B728DD7AFE0038A3FE /* waypointapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = waypointapp.entitlements; path = waypointapp/waypointapp.entitlements; sourceTree = "<group>"; };
 		02C1567E28D10E630026E415 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		04A74DA6849B5D4881A46ED8 /* Pods_waypointapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_waypointapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0958CA91432E66A957755C2E /* Pods-waypointapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-waypointapp.release.xcconfig"; path = "Target Support Files/Pods-waypointapp/Pods-waypointapp.release.xcconfig"; sourceTree = "<group>"; };
@@ -99,6 +100,7 @@
 		13B07FAE1A68108700A75B9A /* waypointapp */ = {
 			isa = PBXGroup;
 			children = (
+				024098B728DD7AFE0038A3FE /* waypointapp.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -545,6 +547,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = waypointapp/waypointapp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q8RK5RZ36Q;
 				ENABLE_BITCODE = NO;
@@ -577,6 +580,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = waypointapp/waypointapp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q8RK5RZ36Q;
 				INFOPLIST_FILE = waypointapp/Info.plist;

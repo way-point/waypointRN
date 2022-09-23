@@ -201,7 +201,7 @@ const SignInNavigator = () => {
   );
 };
 
-const ifSignIn = false;
+const ifSignIn = true;
 
 const Navigation = () => {
   const [currTheme] = useAtom(currentTheme);
