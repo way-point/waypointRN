@@ -5168,6 +5168,13 @@ expo-asset@~8.6.1:
     path-browserify "^1.0.0"
     url-parse "^1.5.9"
 
+expo-calendar@~10.3.0:
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/expo-calendar/-/expo-calendar-10.3.0.tgz#b5e6fdf01ae90a449846efa3dae333d363e39c6e"
+  integrity sha512-cb85VLjxxTNp3x7DKxohZ9Z6LGzTMBllzAylyp2X0f7nTkQeOnHIdfv5Kkr3PeGOmjt8FJeL4ZzoZDO4KfJarA==
+  dependencies:
+    "@expo/config-plugins" "~5.0.0"
+
 expo-clipboard@~3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/expo-clipboard/-/expo-clipboard-3.1.0.tgz#ff4b7a2a796488d3784ca8a40229a37bbcb7b65e"

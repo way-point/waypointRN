@@ -16,6 +16,7 @@ import {currentTheme} from '../../../constants/atoms';
 import {SignInProp} from '../../../navigation/types';
 import AuthButtons from '../AuthButtons';
 import SubmitButton from '../../../components/SubmitButton';
+import {SAFE_AREA_PADDING} from '../../../constants/Layout';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -33,7 +34,7 @@ const LoginScreen = () => {
   return (
     <Box flex={1}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <Stack space={4} w="75%" maxW="450px" mx="auto">
+        <Stack space={4} px={SAFE_AREA_PADDING.paddingLeft} maxW="450px">
           <Text fontSize={25} fontWeight={500}>
             SignIn
           </Text>
@@ -55,7 +56,7 @@ const LoginScreen = () => {
 
           <SubmitButton
             onPress={() => {
-              console.log('test');
+              navigation.navigate('CalendarSync');
             }}
           />
           <Flex direction="row" alignSelf="center">

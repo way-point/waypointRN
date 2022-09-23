@@ -23,6 +23,7 @@ export type RootStackParamList = {
 export type SignInStackParamList = {
   Login: undefined;
   Register: undefined;
+  CalendarSync: undefined;
 };
 
 export type SignInProp = NativeStackNavigationProp<SignInStackParamList>;

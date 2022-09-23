@@ -12,11 +12,19 @@ import {
   Text,
 } from 'native-base';
 import React, {useRef} from 'react';
-import {TextInput} from 'react-native';
+import {StyleSheet, TextInput} from 'react-native';
 import {currentTheme, RegMachine} from '../../../constants/atoms';
 import {SignInProp} from '../../../navigation/types';
 import AuthButtons from '../AuthButtons';
 import SubmitButton from '../../../components/SubmitButton';
+import {SAFE_AREA_PADDING} from '../../../constants/Layout';
+
+const styles = StyleSheet.create({
+  scrollView: {
+    justifyContent: 'center',
+    flexGrow: 1,
+  },
+});
 
 const RegisterScreen = () => {
   const [currTheme] = useAtom(currentTheme);
@@ -29,9 +37,8 @@ const RegisterScreen = () => {
 
   return (
     <Box flex={1}>
-      <ScrollView
-        contentContainerStyle={{justifyContent: 'center', flexGrow: 1}}>
-        <Stack space={4} w="75%" maxW="450px" mx="auto">
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <Stack space={4} px={SAFE_AREA_PADDING.paddingLeft} maxW="450px">
           <Text fontSize={25} fontWeight={500}>
             SignUp
           </Text>
