@@ -7,7 +7,7 @@ import {
   appleAuth,
 } from '@invertase/react-native-apple-authentication';
 import React, {useEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import Google from '../../../assets/images/SignIn/Google';
 import {currentTheme} from '../../../constants/atoms';
 import {WEB_CLIENT_ID} from '../../../secrets';
@@ -85,16 +85,18 @@ const AuthButtons = () => {
           Continue with Google
         </Text>
       </Pressable>
-      <AppleButton
-        buttonStyle={AppleButton.Style.BLACK}
-        buttonType={AppleButton.Type.CONTINUE}
-        style={styles.apple}
-        onPress={() =>
-          onAppleButtonPress().then(() =>
-            console.log('Apple sign-in complete!'),
-          )
-        }
-      />
+      {Platform.OS === 'ios' && (
+        <AppleButton
+          buttonStyle={AppleButton.Style.BLACK}
+          buttonType={AppleButton.Type.CONTINUE}
+          style={styles.apple}
+          onPress={() =>
+            onAppleButtonPress().then(() =>
+              console.log('Apple sign-in complete!'),
+            )
+          }
+        />
+      )}
     </Stack>
   );
 };
