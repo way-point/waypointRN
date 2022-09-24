@@ -12,7 +12,7 @@ import {
   RootTabParamList,
   SignInStackParamList,
 } from './types';
-import {cityAtom, currentTheme} from '../constants/atoms';
+import {cityAtom, currentTheme, ifSignedIn} from '../constants/atoms';
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/SignIn/LoginScreen';
 import RegisterScreen from '../screens/SignIn/RegisterScreen';
@@ -203,11 +203,11 @@ const SignInNavigator = () => {
   );
 };
 
-const ifSignIn = true;
-
 const Navigation = () => {
   const [currTheme] = useAtom(currentTheme);
   const {colors} = useTheme();
+
+  const [ifSignIn] = useAtom(ifSignedIn);
 
   const theme = {
     ...DefaultTheme,

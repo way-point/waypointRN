@@ -118,13 +118,13 @@ const RegisterScreen = () => {
           <AuthButtons />
 
           <Box flexDir="row" alignSelf="center">
-            <Text>Don't have an account? </Text>
+            <Text>Already have an account? </Text>
             <Pressable
               onPress={() => {
                 navigation.navigate('Login');
               }}>
               <Text color="constants.primary" fontWeight={600}>
-                Sign Up
+                Sign In
               </Text>
             </Pressable>
           </Box>
