@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Image, Pressable} from 'native-base';
+import {Box, Image, Pressable, useTheme} from 'native-base';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {RootStackParamList} from '../../navigation/types';
 import Animated, {
@@ -21,6 +21,8 @@ import {StyleSheet} from 'react-native';
 import {feedDataItemProps} from '../../constants/types';
 import Video from 'react-native-video';
 import {AntDesign, Feather} from '@expo/vector-icons';
+import {useAtom} from 'jotai';
+import {currentTheme} from '../../constants/atoms';
 
 const styles = StyleSheet.create({
   image: {
@@ -54,16 +56,19 @@ interface HeaderProps {
       translateY: number;
     }[];
   };
+  opStyle: {
+    opacity: number;
+  };
 }
 
-const Header = ({animatedStyle}: HeaderProps) => {
+const Header = ({animatedStyle, opStyle}: HeaderProps) => {
   const AnimatedBox = Animated.createAnimatedComponent(Box);
   const navigation = useNavigation();
 
   return (
     <AnimatedBox
       zIndex={2}
-      style={animatedStyle}
+      style={[animatedStyle, opStyle]}
       position="absolute"
       width={Layout.window.width}
       height={SAFE_AREA_PADDING.paddingTop + 20}
@@ -97,6 +102,13 @@ const SwipeToLeave = ({children}: SwipeToLeaveProps) => {
 
   const navigation = useNavigation();
 
+  const back = () => {
+    setTimeout(() => {
+      navigation.goBack();
+    }, 20);
+    opacity.value = withTiming(0, {duration: 20});
+  };
+
   const gestureHandler =
     useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
       onActive: event => {
@@ -107,7 +119,7 @@ const SwipeToLeave = ({children}: SwipeToLeaveProps) => {
       onEnd: event => {
         console.log(event.translationY);
         if (Math.abs(event.translationY) > 150) {
-          runOnJS(navigation.goBack)();
+          runOnJS(back)();
         } else {
           y.value = withTiming(0);
           opacity.value = withTiming(1);
@@ -135,7 +147,26 @@ const SwipeToLeave = ({children}: SwipeToLeaveProps) => {
     };
   });
 
+  const {colors} = useTheme();
+  const [currTheme] = useAtom(currentTheme);
+
+  const opacity_color = (color: string, op: number) => {
+    'worklet';
+    let pre = color.split(')')[0];
+    let new_pre = pre.slice(0, -1) + op + ')';
+    return new_pre;
+  };
+
   const opacityStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: opacity_color(
+        colors[currTheme].background,
+        opacity.value,
+      ),
+    };
+  });
+
+  const opStyle = useAnimatedStyle(() => {
     return {
       opacity: opacity.value,
     };
@@ -143,7 +174,7 @@ const SwipeToLeave = ({children}: SwipeToLeaveProps) => {
 
   return (
     <AnimatedBox style={[styles.flex, opacityStyle]}>
-      <Header animatedStyle={animatedHeaderStyle} />
+      <Header animatedStyle={animatedHeaderStyle} opStyle={opStyle} />
       <PanGestureHandler onGestureEvent={gestureHandler}>
         <Animated.View style={[styles.flex, animatedStyle]}>
           {children}
