@@ -1,4 +1,5 @@
 import {NavigatorScreenParams} from '@react-navigation/native';
+import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {feedDataProps} from '../constants/types';
 
@@ -9,8 +10,12 @@ export type RootTabParamList = {
   Account: undefined;
 };
 
+export type DrawerTabParamList = {
+  Home: NavigatorScreenParams<RootTabParamList> | undefined;
+};
+
 export type RootStackParamList = {
-  Root: NavigatorScreenParams<RootTabParamList> | undefined;
+  Root: NavigatorScreenParams<DrawerTabParamList> | undefined;
   EventDetails: {event: feedDataProps};
   CreateTitle: undefined;
   AddDate: undefined;
@@ -27,4 +32,4 @@ export type SignInStackParamList = {
 };
 
 export type SignInProp = NativeStackNavigationProp<SignInStackParamList>;
-export type RootProp = NativeStackNavigationProp<RootStackParamList>;
+export type RootProp = DrawerNavigationProp<RootStackParamList>;
