@@ -86,7 +86,9 @@ const AddDateScreen = () => {
             coords.longitude,
             coords.latitude,
           );
-          address = `${data.house} ${data.street}, ${data.city}, ${data.country}`;
+          address = `${data.house || ''} ${data.street || ''}, ${
+            data.city || ''
+          }, ${data.country || ''}`;
         }
         if (Platform.OS === 'android') {
           const fet = await fetch(

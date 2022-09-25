@@ -23,6 +23,7 @@ import Video from 'react-native-video';
 import {AntDesign, Feather} from '@expo/vector-icons';
 import {useAtom} from 'jotai';
 import {currentTheme} from '../../constants/atoms';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 const styles = StyleSheet.create({
   image: {
@@ -193,6 +194,15 @@ const Pinchable = ({item}: feedDataItemProps) => {
   const AnimatedImage = Animated.createAnimatedComponent(Image);
   const AnimatedVideo = Animated.createAnimatedComponent(Video);
 
+  const options = {
+    enableVibrateFallback: true,
+    ignoreAndroidSystemSettings: false,
+  };
+
+  const Haptic = () => {
+    ReactNativeHapticFeedback.trigger('impactLight', options);
+  };
+
   const pinchHandler =
     useAnimatedGestureHandler<PinchGestureHandlerGestureEvent>({
       onActive: event => {
@@ -202,6 +212,7 @@ const Pinchable = ({item}: feedDataItemProps) => {
       },
       onEnd: () => {
         scale.value = withTiming(1);
+        runOnJS(Haptic)();
       },
     });
 

@@ -8866,6 +8866,11 @@ react-native-gradle-plugin@^0.70.2:
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.2.tgz#b5130f2c196e27c4c5912706503d69b8790f1937"
   integrity sha512-k7d+CVh0fs/VntA2WaKD58cFB2rtiSLBHYlciH18ncaT4N/B3A4qOGv9pSCEHfQikELm6vAf98KMbE3c8KnH1A==
 
+react-native-haptic-feedback@^1.14.0:
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/react-native-haptic-feedback/-/react-native-haptic-feedback-1.14.0.tgz#b50f49dedda4980b3c37c5780823f753cf3ee717"
+  integrity sha512-dSXZ6gAzl+W/L7BPjOpnT0bx0cgQiSr0sB3DjyDJbGIdVr4ISaktZC6gC9xYFTv2kMq0+KtbKi+dpd0WtxYZMw==
+
 react-native-ios-context-menu@^1.12.1:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/react-native-ios-context-menu/-/react-native-ios-context-menu-1.12.1.tgz#28474cf9adf633082294e19a2e58f7747ae88547"

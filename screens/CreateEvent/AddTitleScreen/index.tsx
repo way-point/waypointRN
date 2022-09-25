@@ -39,6 +39,7 @@ import TimeFormat from '../../../constants/timeFormat';
 import {useNavigation} from '@react-navigation/native';
 import {RootProp} from '../../../navigation/types';
 import Video from 'react-native-video';
+import {feedDataProps} from '../../../constants/types';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -67,7 +68,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   radius: {
-    borderTopEndRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   iconX: {
     width: '100%',
@@ -76,14 +78,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginTop: 20,
   },
-  // videoText: {
-  //   backgroundColor: colors.constants.transparentDark,
-  //   paddingHorizontal: 1,
-  //   paddingVertical: 1,
-  //   borderRadius: 5,
-  //   overflow: 'hidden',
-  //   color: 'white',
-  // },
+  transparent: {backgroundColor: 'transparent'},
 });
 
 const getPermissionAsync = async () => {
@@ -153,6 +148,41 @@ const AddTitleScreen = () => {
     return result;
   };
 
+  const postData: feedDataProps = {
+    id: '1',
+    host: {
+      id: '2',
+      username: 'Aankur01',
+      profileURL: uri,
+    },
+    image:
+      curr.context.attachment.type === 'photo'
+        ? curr.context.attachment.uri
+        : undefined,
+    video:
+      curr.context.attachment.type === 'video'
+        ? {
+            uri: curr.context.attachment.uri,
+            duration: curr.context.attachment.duration,
+          }
+        : undefined,
+    type: curr.context.attachment.type || 'photo',
+    eventDetails: {
+      where: {
+        longitude: curr.context.eventLocation.coordinate.longitude || 0,
+        latitude: curr.context.eventLocation.coordinate.latitude || 0,
+        address: curr.context.eventLocation.address || '',
+      },
+      when: {
+        startDate: curr.context.eventDate.startDate || new Date(Date.now()),
+        endDate: curr.context.eventDate.endDate || new Date(Date.now()),
+        repeat: curr.context.eventDate.repeat,
+      },
+    },
+    subscribers: [],
+    description: curr.context.message,
+  };
+
   const descriptionRef = useRef<TextInput>(null);
   return (
     <Box bg="transparent" flex={1}>
@@ -192,6 +222,10 @@ const AddTitleScreen = () => {
                     />
                   </Pressable>
                   <BottomSheetModal
+                    containerStyle={{
+                      backgroundColor: colors.constants.transparentDark,
+                    }}
+                    style={styles.transparent}
                     stackBehavior="push"
                     handleStyle={[
                       {backgroundColor: colors[currTheme].textField},
@@ -250,30 +284,35 @@ const AddTitleScreen = () => {
             />
             {curr.context.attachment.type === 'photo' &&
               curr.context.attachment.uri && (
-                <ImageBackground
-                  source={{uri: curr.context.attachment.uri}}
-                  style={styles.iconX}
-                  resizeMode="cover">
-                  <Pressable
-                    onPress={() => {
-                      send({
-                        type: 'ENTER_ATTACHMENT',
-                        value: {attachmentType: '', uri: ''},
-                      });
-                    }}
-                    bg={currTheme + '.background'}
-                    borderRadius={15}
-                    alignSelf="flex-end"
-                    mr={2}
-                    mt={2}>
-                    <AntDesign
-                      name="close"
-                      size={20}
-                      style={styles.icon}
-                      color={colors[currTheme].text}
-                    />
-                  </Pressable>
-                </ImageBackground>
+                <Pressable
+                  onPress={() => {
+                    navigation.navigate('ImageView', {item: postData});
+                  }}>
+                  <ImageBackground
+                    source={{uri: curr.context.attachment.uri}}
+                    style={styles.iconX}
+                    resizeMode="cover">
+                    <Pressable
+                      onPress={() => {
+                        send({
+                          type: 'ENTER_ATTACHMENT',
+                          value: {attachmentType: '', uri: ''},
+                        });
+                      }}
+                      bg={currTheme + '.background'}
+                      borderRadius={15}
+                      alignSelf="flex-end"
+                      mr={2}
+                      mt={2}>
+                      <AntDesign
+                        name="close"
+                        size={20}
+                        style={styles.icon}
+                        color={colors[currTheme].text}
+                      />
+                    </Pressable>
+                  </ImageBackground>
+                </Pressable>
               )}
 
             {curr.context.attachment.type === 'video' &&

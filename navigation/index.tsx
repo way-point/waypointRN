@@ -5,20 +5,9 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import {useAtom} from 'jotai';
-import {
-  Box,
-  Heading,
-  Input,
-  Pressable,
-  Spinner,
-  Switch,
-  Text,
-  useTheme,
-  useThemeProps,
-  VStack,
-} from 'native-base';
+import {Box, Input, Pressable, Spinner, Text, useTheme} from 'native-base';
 import {Platform, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {Feather, Ionicons, FontAwesome5} from '@expo/vector-icons';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
@@ -35,12 +24,7 @@ import {
   RootTabParamList,
   SignInStackParamList,
 } from './types';
-import {
-  ASYNC_THEME_VAL,
-  cityAtom,
-  currentTheme,
-  ifSignedIn,
-} from '../constants/atoms';
+import {cityAtom, currentTheme, ifSignedIn} from '../constants/atoms';
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/SignIn/LoginScreen';
 import RegisterScreen from '../screens/SignIn/RegisterScreen';
@@ -57,9 +41,6 @@ import ReviewScreen from '../screens/CreateEvent/ReviewScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ImageViewerScreen from '../screens/ImageViewerScreen';
 import CalendarSyncScreen from '../screens/SignIn/CalendarSyncScreen';
-import useColorScheme from '../hooks/useColorScheme';
-import {ThemeType} from '../nativebase/themes';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const uri =
   'https://media-exp1.licdn.com/dms/image/C5603AQEQZuyIujt9xA/profile-displayphoto-shrink_200_200/0/1640233246542?e=2147483647&v=beta&t=06q_FRXOtNMMPTnZmHt7CDL6g3C6tC_0erJ4JaWTNgo';
@@ -203,10 +184,6 @@ const BottomTabNavigator = () => {
       />
     </Stack.Navigator>
   );
-};
-
-const store_theme = async (theme: ThemeType) => {
-  await AsyncStorage.setItem(ASYNC_THEME_VAL, theme);
 };
 
 function CustomDrawerContent(props: DrawerContentComponentProps) {
