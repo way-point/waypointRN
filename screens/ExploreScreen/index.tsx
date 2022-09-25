@@ -1,5 +1,5 @@
 import {Box, useTheme} from 'native-base';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import MapView, {LatLng, Marker, Region} from 'react-native-maps';
 import {useAtom} from 'jotai';
@@ -9,15 +9,9 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {enableLatestRenderer} from 'react-native-maps';
 import Layout from '../../constants/Layout';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import Geolocation from '@react-native-community/geolocation';
 
 enableLatestRenderer();
-
-const region: Region = {
-  latitude: 37.78825,
-  longitude: -122.4324,
-  latitudeDelta: 0.0922,
-  longitudeDelta: 0.0421,
-};
 
 interface MarkerProps {
   coordinate: LatLng;
@@ -40,6 +34,20 @@ const ExploreScreen = () => {
   const [, setCity] = useAtom(cityAtom);
   const bottomTabHeight = useBottomTabBarHeight();
 
+  const [region, setRegion] = useState(null as Region | null);
+
+  useEffect(() => {
+    Geolocation.getCurrentPosition(success => {
+      const coords = {
+        latitude: success.coords.latitude,
+        longitude: success.coords.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      };
+      setRegion(coords);
+    });
+  }, []);
+
   const getCurrentCity = async (latitude: number, longitude: number) => {
     const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`;
     const res = await fetch(url);
@@ -51,11 +59,6 @@ const ExploreScreen = () => {
     }
     setCity(city);
   };
-
-  useEffect(() => {
-    getCurrentCity(region.latitude, region.longitude);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const styles = StyleSheet.create({
     maps: {
@@ -70,37 +73,39 @@ const ExploreScreen = () => {
 
   return (
     <Box flex={1} alignContent="center" justifyContent="center">
-      <MapView
-        initialRegion={region}
-        style={styles.maps}
-        customMapStyle={colors[currTheme].map}
-        toolbarEnabled={false}
-        onRegionChangeComplete={({latitude, longitude}) => {
-          getCurrentCity(latitude, longitude);
-        }}>
-        {Markers.map(e => {
-          return (
-            <Marker
-              key={e.id}
-              coordinate={e.coordinate}
-              onPress={() => {
-                console.log('testing...');
-              }}>
-              <Box
-                borderRadius={10}
-                borderColor={colors[currTheme].text}
-                borderWidth={1}>
-                <MaterialCommunityIcons
-                  name="roller-skate"
-                  size={24}
-                  color={colors[currTheme].text}
-                  style={styles.padding}
-                />
-              </Box>
-            </Marker>
-          );
-        })}
-      </MapView>
+      {region && (
+        <MapView
+          initialRegion={region}
+          style={styles.maps}
+          customMapStyle={colors[currTheme].map}
+          toolbarEnabled={false}
+          onRegionChangeComplete={({latitude, longitude}) => {
+            getCurrentCity(latitude, longitude);
+          }}>
+          {Markers.map(e => {
+            return (
+              <Marker
+                key={e.id}
+                coordinate={e.coordinate}
+                onPress={() => {
+                  console.log('testing...');
+                }}>
+                <Box
+                  borderRadius={10}
+                  borderColor={colors[currTheme].text}
+                  borderWidth={1}>
+                  <MaterialCommunityIcons
+                    name="roller-skate"
+                    size={24}
+                    color={colors[currTheme].text}
+                    style={styles.padding}
+                  />
+                </Box>
+              </Marker>
+            );
+          })}
+        </MapView>
+      )}
       <AddPostButton />
     </Box>
   );

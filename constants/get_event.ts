@@ -25,6 +25,10 @@ const get_events = async () => {
       ids.push(calendars[i].id as string);
     }
 
+    if (ids.length === 0) {
+      return null;
+    }
+
     const dates = await Calendar.getEventsAsync(
       ids,
       getLastWeeksDate(),
