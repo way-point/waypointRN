@@ -24,13 +24,16 @@ const EventDetailsScreen = () => {
   return (
     <ScrollView bg="transparent" mt={SAFE_AREA_PADDING.paddingTop}>
       <Menu menuConfig={menuConfigImage} metaData={{imageURL: event.image}}>
-        <ImageBackground
-          source={{
-            uri: event.type === 'photo' ? event.image : event.video?.uri,
-          }}
-          style={styles.image}
-          resizeMode="cover"
-        />
+        {event.image ||
+          (event.video?.uri && (
+            <ImageBackground
+              source={{
+                uri: event.type === 'photo' ? event.image : event.video?.uri,
+              }}
+              style={styles.image}
+              resizeMode="cover"
+            />
+          ))}
       </Menu>
       <Box
         pr={SAFE_AREA_PADDING.paddingRight}
