@@ -146,7 +146,7 @@ const AddDateScreen = () => {
             py={1}
             my="auto"
             borderRadius={10}>
-            <Text>Review</Text>
+            <Text color="white">Review</Text>
           </Pressable>
         </Box>
         <Heading mb={5}>When</Heading>

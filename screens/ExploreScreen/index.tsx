@@ -5,11 +5,13 @@ import MapView, {LatLng, Marker, Region} from 'react-native-maps';
 import {useAtom} from 'jotai';
 import {cityAtom, currentTheme} from '../../constants/atoms';
 import AddPostButton from '../../components/AddPostButton';
-import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {enableLatestRenderer} from 'react-native-maps';
 import Layout from '../../constants/Layout';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import Geolocation from '@react-native-community/geolocation';
+import feedData from '../../data/feedData';
+import {feedDataItemProps} from '../../constants/types';
+import ProfileImage from '../../components/ProfileImage';
 
 enableLatestRenderer();
 
@@ -27,6 +29,35 @@ const Markers: MarkerProps[] = [
     id: 1,
   },
 ];
+
+const calc_size = (subscribers: number) => {
+  const min_size = 10;
+  const max_size = 50;
+
+  if (min_size >= subscribers) {
+    return min_size;
+  }
+  if (max_size <= subscribers) {
+    return max_size;
+  }
+  return subscribers;
+};
+
+const RenderMaker = ({item}: feedDataItemProps) => {
+  const {colors} = useTheme();
+  const [currTheme] = useAtom(currentTheme);
+  return (
+    <Box
+      borderRadius={30}
+      borderColor={colors[currTheme].background}
+      borderWidth={3}>
+      <ProfileImage
+        uri={item.host.profileURL}
+        size={calc_size(item.subscribers.length)}
+      />
+    </Box>
+  );
+};
 
 const ExploreScreen = () => {
   const {colors} = useTheme();
@@ -66,9 +97,6 @@ const ExploreScreen = () => {
       height: Layout.window.height,
       bottom: bottomTabHeight + 5,
     },
-    padding: {
-      padding: 3,
-    },
   });
 
   return (
@@ -82,7 +110,7 @@ const ExploreScreen = () => {
           onRegionChangeComplete={({latitude, longitude}) => {
             getCurrentCity(latitude, longitude);
           }}>
-          {Markers.map(e => {
+          {Markers.map((e, i) => {
             return (
               <Marker
                 key={e.id}
@@ -90,17 +118,7 @@ const ExploreScreen = () => {
                 onPress={() => {
                   console.log('testing...');
                 }}>
-                <Box
-                  borderRadius={10}
-                  borderColor={colors[currTheme].text}
-                  borderWidth={1}>
-                  <MaterialCommunityIcons
-                    name="roller-skate"
-                    size={24}
-                    color={colors[currTheme].text}
-                    style={styles.padding}
-                  />
-                </Box>
+                <RenderMaker item={feedData[i]} />
               </Marker>
             );
           })}

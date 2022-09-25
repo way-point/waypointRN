@@ -221,7 +221,7 @@ const AddTitleScreen = () => {
                 py={1}
                 my="auto"
                 borderRadius={10}>
-                <Text>Next</Text>
+                <Text color="white">Next</Text>
               </Pressable>
             </Box>
             <TextArea

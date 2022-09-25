@@ -69,7 +69,7 @@ const ReviewScreen = () => {
             py={1}
             my="auto"
             borderRadius={10}>
-            <Text>Post</Text>
+            <Text color="white">Post</Text>
           </Pressable>
         </Box>
         <Heading mb={5}>Everything look good?</Heading>
