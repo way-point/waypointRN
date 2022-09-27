@@ -1,7 +1,13 @@
 import {Box, useTheme} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
-import MapView, {LatLng, Marker, Region} from 'react-native-maps';
+import MapView, {
+  Heatmap,
+  LatLng,
+  Marker,
+  PROVIDER_GOOGLE,
+  Region,
+} from 'react-native-maps';
 import {useAtom} from 'jotai';
 import {cityAtom, currentTheme} from '../../constants/atoms';
 import AddPostButton from '../../components/AddPostButton';
@@ -14,6 +20,14 @@ import {feedDataItemProps} from '../../constants/types';
 import ProfileImage from '../../components/ProfileImage';
 
 enableLatestRenderer();
+
+const heatMap = [
+  {
+    latitude: 37.789,
+    longitude: -122.433,
+    weight: 1,
+  },
+];
 
 interface MarkerProps {
   coordinate: LatLng;
@@ -103,6 +117,7 @@ const ExploreScreen = () => {
     <Box flex={1} alignContent="center" justifyContent="center">
       {region && (
         <MapView
+          provider={PROVIDER_GOOGLE}
           initialRegion={region}
           style={styles.maps}
           customMapStyle={colors[currTheme].map}
@@ -122,6 +137,7 @@ const ExploreScreen = () => {
               </Marker>
             );
           })}
+          {/* <Heatmap points={heatMap} /> */}
         </MapView>
       )}
       <AddPostButton />

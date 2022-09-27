@@ -4,12 +4,14 @@ require File.join(File.dirname(`node --print "require.resolve('expo/package.json
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '12.4'
+platform :ios, '13.0'
 install! 'cocoapods', :deterministic_uuids => false
 
 target 'waypointapp' do
   use_expo_modules!
   use_frameworks! :linkage => :static
+  $static_framework = []
+  rn_maps_path = '../node_modules/react-native-maps'
   pod 'react-native-video', :path => '../node_modules/react-native-video/react-native-video.podspec'
   post_integrate do |installer|
     begin
@@ -19,6 +21,23 @@ target 'waypointapp' do
     end
   end
   config = use_native_modules!
+
+  $static_framework += [
+    'react-native-maps',
+    'react-native-google-maps',
+    'Google-Maps-iOS-Utils',
+    'GoogleMaps',
+    'RNPermissions',
+    'Permission-LocationWhenInUse',
+    'Permission-Notifications',
+    'react-native-paste-input',
+    'vision-camera-code-scanner',
+    'VisionCamera'
+  ]
+
+  pod 'react-native-google-maps', :path => rn_maps_path
+  pod 'GoogleMaps'
+  pod 'Google-Maps-iOS-Utils'
 
   # Flags change depending on the env values.
   flags = get_default_flags()
@@ -44,6 +63,17 @@ target 'waypointapp' do
     # Pods for testing
   end
 
+  pre_install do |installer|
+    Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+        installer.pod_targets.each do |pod|
+            if $static_framework.include?(pod.name)
+                def pod.build_type;
+                Pod::BuildType.static_library # >= 1.9
+              end
+          end
+      end
+  end
+
   post_install do |installer|
     react_native_post_install(
       installer,
@@ -51,6 +81,16 @@ target 'waypointapp' do
       # necessary for Mac Catalyst builds
       :mac_catalyst_enabled => false
     )
+    installer.pods_project.targets.each do |target|
+    if target.name == 'RCT-Folly'
+      target.build_configurations.each do |config|
+        config.build_settings['HEADER_SEARCH_PATHS'] = "$(inherited) ${PODS_ROOT}/fmt/include"
+        end
+      end
+    end
+    installer.pods_project.build_configurations.each do |config|
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+    end
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 end

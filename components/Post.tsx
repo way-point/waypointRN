@@ -59,7 +59,7 @@ const Post = ({item}: feedDataItemProps) => {
             event: item,
           });
         }}>
-        <Box flexDir="row">
+        <Box flexDir="row" mb={5}>
           <WhereTitle item={item} />
           <Box ml="auto" flexDir="row" alignItems="center">
             <TimeState item={item} />
