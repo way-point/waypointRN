@@ -35,6 +35,35 @@ const RegisterScreen = () => {
 
   const [curr, send] = useAtom(RegMachine);
 
+  const emailErr = () => {
+    if (curr.matches('errors.invalidEmail')) {
+      return 'invalid email';
+    }
+    if (curr.matches('errors.emailAlreadyInUse')) {
+      return 'email already in use';
+    }
+    return '';
+  };
+
+  const passwordErr = () => {
+    if (curr.matches('errors.invalidPassword')) {
+      return 'invalid password. Must be at least 6 characters.';
+    }
+    if (curr.matches('errors.passwordsNotMatch')) {
+      return "passwords don't match";
+    }
+    return '';
+  };
+
+  const confirmPasswordErr = () => {
+    if (curr.matches('errors.passwordsNotMatch')) {
+      return "passwords don't match";
+    }
+    return '';
+  };
+
+  console.log(curr.matches('authenticating'));
+
   return (
     <Box flex={1}>
       <ScrollView contentContainerStyle={styles.scrollView}>
@@ -43,7 +72,7 @@ const RegisterScreen = () => {
             SignUp
           </Text>
 
-          <FormControl isInvalid={curr.matches('emailErr')}>
+          <FormControl isInvalid={emailErr() !== ''}>
             <Input
               placeholder="Email"
               returnKeyType="next"
@@ -59,42 +88,57 @@ const RegisterScreen = () => {
               }}
             />
             <FormControl.ErrorMessage pl={3}>
-              Invalid Email
+              {emailErr()}
             </FormControl.ErrorMessage>
           </FormControl>
 
-          <Input
-            ref={PasswordRef}
-            placeholder="Password"
-            returnKeyType="next"
-            value={curr.context.password}
-            onChangeText={text => {
-              send({
-                type: 'ENTER_PASSWORD',
-                value: text,
-              });
-            }}
-            onSubmitEditing={() => {
-              ConfirmPasswordRef.current && ConfirmPasswordRef.current.focus();
-            }}
-          />
-          <Input
-            ref={ConfirmPasswordRef}
-            placeholder="Confirm Password"
-            returnKeyType="done"
-            value={curr.context.confirmPassword}
-            onChangeText={text => {
-              send({
-                type: 'ENTER_CONFIRM_PASSWORD',
-                value: text,
-              });
-            }}
-          />
+          <FormControl isInvalid={passwordErr() !== ''}>
+            <Input
+              ref={PasswordRef}
+              placeholder="Password"
+              returnKeyType="next"
+              value={curr.context.password}
+              onChangeText={text => {
+                send({
+                  type: 'ENTER_PASSWORD',
+                  value: text,
+                });
+              }}
+              onSubmitEditing={() => {
+                ConfirmPasswordRef.current &&
+                  ConfirmPasswordRef.current.focus();
+              }}
+            />
+            <FormControl.ErrorMessage pl={3}>
+              {passwordErr()}
+            </FormControl.ErrorMessage>
+          </FormControl>
+
+          <FormControl isInvalid={confirmPasswordErr() !== ''}>
+            <Input
+              ref={ConfirmPasswordRef}
+              placeholder="Confirm Password"
+              returnKeyType="done"
+              value={curr.context.confirmPassword}
+              onChangeText={text => {
+                send({
+                  type: 'ENTER_CONFIRM_PASSWORD',
+                  value: text,
+                });
+              }}
+            />
+            <FormControl.ErrorMessage pl={3}>
+              {confirmPasswordErr()}
+            </FormControl.ErrorMessage>
+          </FormControl>
 
           <SubmitButton
             onPress={() => {
-              console.log('test');
+              send({
+                type: 'ENTER_SUBMIT',
+              });
             }}
+            ifLoading={curr.matches('authenticating')}
           />
           <Flex direction="row" alignSelf="center">
             <Divider
