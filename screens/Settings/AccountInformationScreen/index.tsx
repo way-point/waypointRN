@@ -14,7 +14,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {currentTheme, ifSignedIn, RegMachine} from '../../../constants/atoms';
 import {SAFE_AREA_PADDING} from '../../../constants/Layout';
-import {AntDesign, Ionicons} from '@expo/vector-icons';
+import {Ionicons} from '@expo/vector-icons';
 import UidFind from '../../../api/route/User/UidFind';
 import auth from '@react-native-firebase/auth';
 

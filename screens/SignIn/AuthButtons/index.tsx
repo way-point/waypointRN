@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 async function onAppleButtonPress() {
   // Start the sign-in request
   const appleAuthRequestResponse = await appleAuth.performRequest({
-    requestedOperation: appleAuth.Operation.LOGIN,
+    requestedOperation: appleAuth.Operation.IMPLICIT,
     requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
   });
 
@@ -44,7 +44,9 @@ async function onAppleButtonPress() {
   );
 
   // Sign the user in with the credential
-  await auth().signInWithCredential(appleCredential);
+  const data = await auth().signInWithCredential(appleCredential);
+  console.log(data.user.email);
+  console.log(data.user);
 }
 
 async function onGoogleButtonPress() {
