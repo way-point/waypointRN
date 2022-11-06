@@ -9,7 +9,7 @@ import {
 import React, {useEffect} from 'react';
 import {Platform, StyleSheet} from 'react-native';
 import Google from '../../../assets/images/SignIn/Google';
-import {currentTheme} from '../../../constants/atoms';
+import {currentTheme, RegMachine} from '../../../constants/atoms';
 import {WEB_CLIENT_ID} from '../../../secrets';
 
 const styles = StyleSheet.create({
@@ -44,7 +44,7 @@ async function onAppleButtonPress() {
   );
 
   // Sign the user in with the credential
-  return auth().signInWithCredential(appleCredential);
+  await auth().signInWithCredential(appleCredential);
 }
 
 async function onGoogleButtonPress() {
@@ -55,11 +55,12 @@ async function onGoogleButtonPress() {
   const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
   // Sign-in the user with the credential
-  return auth().signInWithCredential(googleCredential);
+  await auth().signInWithCredential(googleCredential);
 }
 
 const AuthButtons = () => {
   const [currTheme] = useAtom(currentTheme);
+  const [, send] = useAtom(RegMachine);
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -71,7 +72,9 @@ const AuthButtons = () => {
     <Stack space={4}>
       <Pressable
         onPress={() => {
-          onGoogleButtonPress();
+          onGoogleButtonPress().then(() => {
+            send({type: 'ENTER_SOCIAL_PROVIDER'});
+          });
         }}
         bg={currTheme + '.navigation.card'}
         w={230}
@@ -91,9 +94,9 @@ const AuthButtons = () => {
           buttonType={AppleButton.Type.CONTINUE}
           style={styles.apple}
           onPress={() =>
-            onAppleButtonPress().then(() =>
-              console.log('Apple sign-in complete!'),
-            )
+            onAppleButtonPress().then(() => {
+              send({type: 'ENTER_SOCIAL_PROVIDER'});
+            })
           }
         />
       )}

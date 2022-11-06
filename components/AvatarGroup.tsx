@@ -12,7 +12,6 @@ interface AvatarGroupProps {
 const AvatarGroup = ({userImages}: AvatarGroupProps) => {
   const {colors} = useTheme();
   const [currTheme] = useAtom(currentTheme);
-  console.log(userImages.length);
   return (
     <Box alignItems="flex-start">
       {userImages.length === 0 ? (
@@ -29,7 +28,8 @@ const AvatarGroup = ({userImages}: AvatarGroupProps) => {
             return (
               <Avatar
                 key={e.id}
-                bg="green.500"
+                borderWidth={0}
+                bg="constants.primary"
                 source={{
                   uri: e.profileURL,
                 }}>

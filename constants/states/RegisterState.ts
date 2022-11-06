@@ -46,6 +46,9 @@ const act = {
       target: 'authenticating_login',
     },
   ],
+  ENTER_SOCIAL_PROVIDER: {
+    target: 'checkIfUserExists',
+  },
   ENTER_SUBMIT: [
     {
       target: '#RegisterMachine.errors.invalidEmail',
@@ -131,7 +134,16 @@ const RegisterMachine = createMachine(
           ],
         },
       },
-      signedIn: {},
+      signedIn: {
+        on: {
+          RESET: {
+            target: 'dataEntry',
+            actions: assign(() => {
+              return initialContext;
+            }),
+          },
+        },
+      },
       checkIfUserExists: {
         invoke: {
           src: 'checkIfUserExists',

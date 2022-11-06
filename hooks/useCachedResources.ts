@@ -1,10 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useEffect, useState} from 'react';
-import {
-  ASYNC_THEME_VAL,
-  calendarSyncAtom,
-  ifSignedIn,
-} from '../constants/atoms';
+import {calendarSyncAtom, currentTheme, ifSignedIn} from '../constants/atoms';
 import useColorScheme from './useColorScheme';
 import * as Calendar from 'expo-calendar';
 import get_events from '../constants/get_event';
@@ -18,15 +13,14 @@ export default function useCachedResources() {
   const colorScheme = useColorScheme();
   const [, setIfSignIn] = useAtom(ifSignedIn);
   const [, setCalendarSyncAtom] = useAtom(calendarSyncAtom);
+  const [, setCurrTheme] = useAtom(currentTheme);
   // Load any resources or data that we need prior to rendering the app
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-        const data = await AsyncStorage.getItem(ASYNC_THEME_VAL);
-        console.log(data);
-        if (data === null) {
-          await AsyncStorage.setItem(ASYNC_THEME_VAL, colorScheme);
-        }
+        setCurrTheme(colorScheme);
+        // checks if user already exists in database and moves to
+        // signed in state instead.
         await configureFetcher();
         const ifUid = await UidFind(auth().currentUser?.uid || '');
         if (ifUid && 'username' in ifUid) {
@@ -47,7 +41,7 @@ export default function useCachedResources() {
     }
 
     loadResourcesAndDataAsync();
-  }, [colorScheme, setCalendarSyncAtom, setIfSignIn]);
+  }, [colorScheme, setCalendarSyncAtom, setCurrTheme, setIfSignIn]);
 
   return isLoadingComplete;
 }

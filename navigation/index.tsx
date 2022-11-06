@@ -8,7 +8,7 @@ import {useAtom} from 'jotai';
 import {Box, Input, Pressable, Spinner, Text, useTheme} from 'native-base';
 import {Platform, StyleSheet} from 'react-native';
 import React from 'react';
-import {Feather, Ionicons, FontAwesome5} from '@expo/vector-icons';
+import {Feather, Ionicons, FontAwesome5, AntDesign} from '@expo/vector-icons';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   createDrawerNavigator,
@@ -22,6 +22,7 @@ import {
   RootProp,
   RootStackParamList,
   RootTabParamList,
+  SettingTabParamList,
   SignInStackParamList,
 } from './types';
 import {cityAtom, currentTheme, ifSignedIn} from '../constants/atoms';
@@ -33,7 +34,7 @@ import {BlurView} from '@react-native-community/blur';
 import ExploreScreen from '../screens/ExploreScreen';
 import Layout, {SAFE_AREA_PADDING} from '../constants/Layout';
 import AddTitleScreen from '../screens/CreateEvent/AddTitleScreen';
-import EventDetailsScreen from '../screens/EventDetailScreen';
+import EventDetailsScreen from '../screens/CreateEvent/EventDetailScreen';
 import AddDateScreen from '../screens/CreateEvent/AddDateScreen';
 import RepeatScreen from '../screens/CreateEvent/RepeatScreen';
 import SearchAddressScreen from '../screens/CreateEvent/SearchAdressScreen';
@@ -43,6 +44,8 @@ import ImageViewerScreen from '../screens/ImageViewerScreen';
 import CalendarSyncScreen from '../screens/SignIn/CalendarSyncScreen';
 import EmailVerifyScreen from '../screens/SignIn/EmailVerifyScreen';
 import UsernameScreen from '../screens/SignIn/UsernameScreen';
+import SettingScreen from '../screens/Settings/SettingScreen';
+import AccountInformationScreen from '../screens/Settings/AccountInformationScreen';
 
 export const uri =
   'https://media-exp1.licdn.com/dms/image/C5603AQEQZuyIujt9xA/profile-displayphoto-shrink_200_200/0/1640233246542?e=2147483647&v=beta&t=06q_FRXOtNMMPTnZmHt7CDL6g3C6tC_0erJ4JaWTNgo';
@@ -132,9 +135,14 @@ const BottomTabNavigator = () => {
           },
           headerLeft: () => {
             return (
-              <Box backgroundColor="transparent" pl={3}>
+              <Pressable
+                onPress={() => {
+                  navigation.openDrawer();
+                }}
+                backgroundColor="transparent"
+                pl={3}>
                 <ProfileImage uri={uri} />
-              </Box>
+              </Pressable>
             );
           },
           headerTitle: () => {
@@ -191,13 +199,29 @@ const BottomTabNavigator = () => {
 function CustomDrawerContent(props: DrawerContentComponentProps) {
   return (
     <DrawerContentScrollView {...props}>
-      <Box bg="transparent" px={SAFE_AREA_PADDING.paddingLeft} mb={10}>
-        <ProfileImage uri={uri} size={16} />
+      <Pressable bg="transparent" px={SAFE_AREA_PADDING.paddingLeft}>
+        <ProfileImage uri={uri} />
+      </Pressable>
+      <Box mt={5} backgroundColor="transparent">
+        <DrawerItemList {...props} />
       </Box>
-      <DrawerItemList {...props} />
     </DrawerContentScrollView>
   );
 }
+
+const SettingsNavigator = () => {
+  const Stack = createNativeStackNavigator<SettingTabParamList>();
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="general" component={SettingScreen} />
+      <Stack.Screen name="accountInfo" component={AccountInformationScreen} />
+    </Stack.Navigator>
+  );
+};
 
 const DrawerNavigator = () => {
   const Stack = createDrawerNavigator();
@@ -211,13 +235,29 @@ const DrawerNavigator = () => {
       }}
       drawerContent={CustomDrawerContent}>
       <Stack.Screen
-        name="Home"
+        name="Initial"
         component={BottomTabNavigator}
         options={{
+          title: 'Home',
           drawerIcon: ({color, size, focused}) => {
             return (
               <Feather
                 name="home"
+                size={size}
+                color={focused ? colors.constants.primary : color}
+              />
+            );
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsNavigator}
+        options={{
+          drawerIcon: ({color, size, focused}) => {
+            return (
+              <AntDesign
+                name="setting"
                 size={size}
                 color={focused ? colors.constants.primary : color}
               />

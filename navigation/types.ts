@@ -10,6 +10,11 @@ export type RootTabParamList = {
   Account: undefined;
 };
 
+export type SettingTabParamList = {
+  general: undefined;
+  accountInfo: undefined;
+};
+
 export type DrawerTabParamList = {
   Home: NavigatorScreenParams<RootTabParamList> | undefined;
 };
@@ -34,4 +39,5 @@ export type SignInStackParamList = {
 };
 
 export type SignInProp = NativeStackNavigationProp<SignInStackParamList>;
+export type SettingProp = NativeStackNavigationProp<SettingTabParamList>;
 export type RootProp = DrawerNavigationProp<RootStackParamList>;

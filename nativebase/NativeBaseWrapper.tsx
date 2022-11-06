@@ -1,8 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useAtom} from 'jotai';
 import {extendTheme, NativeBaseProvider} from 'native-base';
-import React, {useEffect} from 'react';
-import {ASYNC_THEME_VAL, currentTheme} from '../constants/atoms';
+import React from 'react';
+import {currentTheme} from '../constants/atoms';
 import useColorScheme from '../hooks/useColorScheme';
 import {Themes} from './themes';
 
@@ -23,13 +22,7 @@ declare module 'native-base' {
 const NativeBaseWrapper = ({children}: NativeBaseWrapperProps) => {
   const colorScheme = useColorScheme();
 
-  const [currTheme, setCurrTheme] = useAtom(currentTheme);
-
-  // TODO: disable this when user wants specific theme
-  useEffect(() => {
-    setCurrTheme(colorScheme);
-    AsyncStorage.setItem(ASYNC_THEME_VAL, colorScheme);
-  }, [colorScheme, setCurrTheme]);
+  const [currTheme] = useAtom(currentTheme);
 
   const components = {
     Text: {

@@ -2,13 +2,13 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import {Box, ScrollView, Text} from 'native-base';
 import React from 'react';
 import {ImageBackground, StyleSheet} from 'react-native';
-import AvatarGroup from '../../components/AvatarGroup';
-import JoinEvent from '../../components/JoinEvent';
-import Menu from '../../components/Menu';
-import WhereTitle from '../../components/WhereTitle';
-import {SAFE_AREA_PADDING} from '../../constants/Layout';
-import menuConfigImage from '../../constants/Menu/menuConfigImage';
-import {RootStackParamList} from '../../navigation/types';
+import AvatarGroup from '../../../components/AvatarGroup';
+import JoinEvent from '../../../components/JoinEvent';
+import Menu from '../../../components/Menu';
+import WhereTitle from '../../../components/WhereTitle';
+import {SAFE_AREA_PADDING} from '../../../constants/Layout';
+import menuConfigImage from '../../../constants/Menu/menuConfigImage';
+import {RootStackParamList} from '../../../navigation/types';
 
 const styles = StyleSheet.create({
   image: {

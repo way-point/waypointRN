@@ -1,12 +1,13 @@
 import React from 'react';
 import {Avatar} from 'native-base';
+import {ThemeComponentSizeType} from 'native-base/lib/typescript/components/types';
 
 interface ProfileImageProps {
   uri: string;
-  size?: number;
+  size?: ThemeComponentSizeType<'Avatar'>;
 }
 
-const ProfileImage = ({uri, size = 10}: ProfileImageProps) => {
+const ProfileImage = ({uri, size = 9}: ProfileImageProps) => {
   return (
     <Avatar
       bg="constants.primary"
