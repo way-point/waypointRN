@@ -3,14 +3,14 @@ import {definitions} from '../../generated/schema';
 const createUser = fetcher.path('/api/user/userCreate').method('post').create();
 
 const UserCreate = (username: string) => {
-  createUser({username})
+  return createUser({username})
     .then(response => {
-      return response;
+      return response.data;
     })
     .catch(e => {
       if (e instanceof createUser.Error) {
         const error = e.getActualType();
-        return error;
+        return error.data;
       }
       const err: definitions['GenericErrorSchema'] = {
         errors: ['Service Error'],

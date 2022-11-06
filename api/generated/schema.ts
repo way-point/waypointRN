@@ -4,6 +4,27 @@
  */
 
 export interface paths {
+  '/api/user/ifUsernameExist': {
+    get: {
+      parameters: {
+        query: {
+          username: unknown;
+        };
+      };
+      responses: {
+        /** Returns the first FIVE users as a list */
+        200: {
+          schema: definitions['IfUserExistSchema'];
+        };
+        400: {
+          schema: definitions['GenericErrorSchema'];
+        };
+        500: {
+          schema: definitions['GenericErrorSchema'];
+        };
+      };
+    };
+  };
   '/api/user/uidFind': {
     get: {
       parameters: {
@@ -76,6 +97,9 @@ export interface paths {
 export interface definitions {
   GenericErrorSchema: {
     errors?: string[];
+  };
+  IfUserExistSchema: {
+    ifUserExist?: boolean;
   };
   NestedUsers: {
     users?: {

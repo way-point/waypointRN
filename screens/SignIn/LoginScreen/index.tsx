@@ -4,15 +4,16 @@ import {
   Box,
   Divider,
   Flex,
+  FormControl,
   Input,
   Pressable,
   ScrollView,
   Stack,
   Text,
 } from 'native-base';
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {StyleSheet, TextInput} from 'react-native';
-import {currentTheme} from '../../../constants/atoms';
+import {currentTheme, ifSignedIn, RegMachine} from '../../../constants/atoms';
 import {SignInProp} from '../../../navigation/types';
 import AuthButtons from '../AuthButtons';
 import SubmitButton from '../../../components/SubmitButton';
@@ -28,8 +29,46 @@ const styles = StyleSheet.create({
 const LoginScreen = () => {
   const [currTheme] = useAtom(currentTheme);
   const navigation = useNavigation<SignInProp>();
+  const [, setIfSignIn] = useAtom(ifSignedIn);
 
   const PasswordRef = useRef<TextInput>(null);
+
+  const [curr, send] = useAtom(RegMachine);
+
+  useEffect(() => {
+    if (curr.matches('emailVerify')) {
+      navigation.navigate('EmailVerify');
+    }
+    if (curr.matches('attachUsername')) {
+      navigation.navigate('Username');
+    }
+    if (curr.matches('signedIn')) {
+      setIfSignIn(false);
+    }
+  }, [curr, navigation, setIfSignIn]);
+
+  const emailErr = () => {
+    if (curr.matches('errors.invalidEmail')) {
+      return 'invalid email';
+    }
+    if (curr.matches('errors.userDisabled')) {
+      return 'user is disabled';
+    }
+    if (curr.matches('errors.userNotFound')) {
+      return 'email is not found';
+    }
+    return '';
+  };
+
+  const passwordErr = () => {
+    if (curr.matches('errors.wrongPassword')) {
+      return 'password is incorrect';
+    }
+    if (curr.matches('errors.invalidPassword')) {
+      return 'invalid password. Must be at least 6 characters.';
+    }
+    return '';
+  };
 
   return (
     <Box flex={1}>
@@ -39,25 +78,50 @@ const LoginScreen = () => {
             SignIn
           </Text>
 
-          <Input
-            variant="filled"
-            placeholder="Email"
-            returnKeyType="next"
-            onSubmitEditing={() => {
-              PasswordRef.current && PasswordRef.current.focus();
-            }}
-          />
-          <Input
-            ref={PasswordRef}
-            variant="filled"
-            placeholder="Password"
-            returnKeyType="done"
-          />
+          <FormControl isInvalid={emailErr() !== ''}>
+            <Input
+              placeholder="Email"
+              returnKeyType="next"
+              value={curr.context.email}
+              onChangeText={text => {
+                send({
+                  type: 'ENTER_EMAIL',
+                  value: text,
+                });
+              }}
+              onSubmitEditing={() => {
+                PasswordRef.current && PasswordRef.current.focus();
+              }}
+            />
+            <FormControl.ErrorMessage pl={3}>
+              {emailErr()}
+            </FormControl.ErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={passwordErr() !== ''}>
+            <Input
+              ref={PasswordRef}
+              placeholder="Password"
+              returnKeyType="next"
+              value={curr.context.password}
+              onChangeText={text => {
+                send({
+                  type: 'ENTER_PASSWORD',
+                  value: text,
+                });
+              }}
+            />
+            <FormControl.ErrorMessage pl={3}>
+              {passwordErr()}
+            </FormControl.ErrorMessage>
+          </FormControl>
 
           <SubmitButton
             onPress={() => {
-              navigation.navigate('CalendarSync');
+              send({
+                type: 'ENTER_SUBMIT_LOGIN',
+              });
             }}
+            ifLoading={curr.matches('authenticating_login')}
           />
           <Flex direction="row" alignSelf="center">
             <Divider
@@ -84,6 +148,7 @@ const LoginScreen = () => {
             <Text>Don't have an account? </Text>
             <Pressable
               onPress={() => {
+                send({type: 'RESET'});
                 navigation.navigate('Register');
               }}>
               <Text color="constants.primary" fontWeight={600}>

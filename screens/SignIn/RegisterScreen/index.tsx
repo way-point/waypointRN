@@ -11,9 +11,9 @@ import {
   Stack,
   Text,
 } from 'native-base';
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {StyleSheet, TextInput} from 'react-native';
-import {currentTheme, RegMachine} from '../../../constants/atoms';
+import {currentTheme, ifSignedIn, RegMachine} from '../../../constants/atoms';
 import {SignInProp} from '../../../navigation/types';
 import AuthButtons from '../AuthButtons';
 import SubmitButton from '../../../components/SubmitButton';
@@ -29,11 +29,24 @@ const styles = StyleSheet.create({
 const RegisterScreen = () => {
   const [currTheme] = useAtom(currentTheme);
   const navigation = useNavigation<SignInProp>();
+  const [, setIfSignIn] = useAtom(ifSignedIn);
 
   const PasswordRef = useRef<TextInput>(null);
   const ConfirmPasswordRef = useRef<TextInput>(null);
 
   const [curr, send] = useAtom(RegMachine);
+
+  useEffect(() => {
+    if (curr.matches('emailVerify')) {
+      navigation.navigate('EmailVerify');
+    }
+    if (curr.matches('attachUsername')) {
+      navigation.navigate('Username');
+    }
+    if (curr.matches('signedIn')) {
+      setIfSignIn(false);
+    }
+  }, [curr, navigation, setIfSignIn]);
 
   const emailErr = () => {
     if (curr.matches('errors.invalidEmail')) {
@@ -61,8 +74,6 @@ const RegisterScreen = () => {
     }
     return '';
   };
-
-  console.log(curr.matches('authenticating'));
 
   return (
     <Box flex={1}>
@@ -165,6 +176,7 @@ const RegisterScreen = () => {
             <Text>Already have an account? </Text>
             <Pressable
               onPress={() => {
+                send({type: 'RESET'});
                 navigation.navigate('Login');
               }}>
               <Text color="constants.primary" fontWeight={600}>

@@ -5,17 +5,21 @@ interface SubmitButtonProps {
   onPress: () => void;
   submitText?: string;
   ifLoading?: boolean;
+  disabled?: boolean;
 }
 
 const SubmitButton = ({
   onPress,
   submitText = 'Submit',
   ifLoading = false,
+  disabled = false,
 }: SubmitButtonProps) => {
   return (
     <Pressable
       onPress={onPress}
       backgroundColor="constants.primary"
+      disabled={disabled}
+      _disabled={{opacity: 0.8}}
       p={3}
       borderRadius={8}>
       {ifLoading ? (

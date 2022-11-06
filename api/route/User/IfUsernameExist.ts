@@ -1,14 +1,16 @@
 import {fetcher} from '../../config/fetcher';
 
-const uidFind = fetcher.path('/api/user/uidFind').method('get').create();
+const uidFind = fetcher
+  .path('/api/user/ifUsernameExist')
+  .method('get')
+  .create();
 
-const UidFind = (uid: string) => {
-  return uidFind({uid})
+const IfUsernameExist = (username: string) => {
+  return uidFind({username})
     .then(response => {
       return response.data;
     })
     .catch(e => {
-      console.log(e);
       if (e instanceof uidFind.Error) {
         const error = e.getActualType();
         return error.data;
@@ -20,4 +22,4 @@ const UidFind = (uid: string) => {
     });
 };
 
-export default UidFind;
+export default IfUsernameExist;

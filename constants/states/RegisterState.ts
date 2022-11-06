@@ -1,4 +1,4 @@
-import {actions, createMachine} from 'xstate';
+import {actions, assign, createMachine} from 'xstate';
 import auth from '@react-native-firebase/auth';
 import {configureFetcher} from '../../api/config/fetcher';
 import UidFind from '../../api/route/User/UidFind';
@@ -7,6 +7,62 @@ const initialContext = {
   email: '',
   password: '',
   confirmPassword: '',
+};
+
+// All possible actions that can be done by user
+// under both login and register screens.
+const act = {
+  ENTER_EMAIL: {
+    target: 'dataEntry',
+    actions: 'cacheEmail',
+    internal: false,
+  },
+  ENTER_PASSWORD: {
+    target: 'dataEntry',
+    actions: 'cachePassword',
+    internal: false,
+  },
+  ENTER_CONFIRM_PASSWORD: {
+    target: 'dataEntry',
+    actions: 'cacheConfirmPassword',
+    internal: false,
+  },
+  RESET: {
+    target: 'dataEntry',
+    actions: assign(() => {
+      return initialContext;
+    }),
+  },
+  ENTER_SUBMIT_LOGIN: [
+    {
+      target: '#RegisterMachine.errors.invalidEmail',
+      cond: 'checkEmail',
+    },
+    {
+      target: '#RegisterMachine.errors.invalidPassword',
+      cond: 'checkPassword',
+    },
+    {
+      target: 'authenticating_login',
+    },
+  ],
+  ENTER_SUBMIT: [
+    {
+      target: '#RegisterMachine.errors.invalidEmail',
+      cond: 'checkEmail',
+    },
+    {
+      target: '#RegisterMachine.errors.invalidPassword',
+      cond: 'checkPassword',
+    },
+    {
+      target: '#RegisterMachine.errors.passwordsNotMatch',
+      cond: 'checkPasswordsMatch',
+    },
+    {
+      target: 'authenticating',
+    },
+  ],
 };
 
 // taken from https://www.w3resource.com/javascript/form/email-validation.php
@@ -24,6 +80,18 @@ const authenticate = (email: string, password: string) => {
     });
 };
 
+const authenticate_login = (email: string, password: string) => {
+  return auth()
+    .signInWithEmailAndPassword(email, password)
+    .then(() => {
+      configureFetcher();
+      return Promise.resolve(1);
+    })
+    .catch(error => {
+      return Promise.reject(error);
+    });
+};
+
 const RegisterMachine = createMachine(
   {
     context: initialContext,
@@ -32,74 +100,45 @@ const RegisterMachine = createMachine(
     initial: 'dataEntry',
     states: {
       dataEntry: {
-        on: {
-          ENTER_EMAIL: {
-            target: 'dataEntry',
-            actions: 'cacheEmail',
-            internal: false,
-          },
-          ENTER_PASSWORD: {
-            target: 'dataEntry',
-            actions: 'cachePassword',
-            internal: false,
-          },
-          ENTER_CONFIRM_PASSWORD: {
-            target: 'dataEntry',
-            actions: 'cacheConfirmPassword',
-            internal: false,
-          },
-          ENTER_SUBMIT: [
-            {
-              target: '#RegisterMachine.errors.invalidEmail',
-              cond: 'checkEmail',
-            },
-            {
-              target: '#RegisterMachine.errors.invalidPassword',
-              cond: 'checkPassword',
-            },
-            {
-              target: '#RegisterMachine.errors.passwordsNotMatch',
-              cond: 'checkPasswordsMatch',
-            },
-            {
-              target: 'authenticating',
-            },
-          ],
-        },
+        on: act,
       },
       errors: {
         initial: 'authFailed',
         states: {
           invalidEmail: {},
           emailAlreadyInUse: {},
+          userDisabled: {},
+          userNotFound: {},
           invalidPassword: {},
+          wrongPassword: {},
           passwordsNotMatch: {},
           authFailed: {},
         },
+        on: act,
+      },
+      attachUsername: {
         on: {
-          ENTER_EMAIL: {
-            target: 'dataEntry',
-            actions: 'cacheEmail',
-          },
-          ENTER_PASSWORD: {
-            target: 'dataEntry',
-            actions: 'cachePassword',
-          },
-          ENTER_CONFIRM_PASSWORD: {
-            target: 'dataEntry',
-            actions: 'cacheConfirmPassword',
-          },
+          SIGN_IN: {target: '#RegisterMachine.signedIn'},
         },
       },
-      attachUsername: {},
-      emailVerify: {},
+      emailVerify: {
+        on: {
+          ENTER_VERIFY: [
+            {
+              cond: () => auth().currentUser?.emailVerified || false,
+              target: 'checkIfUserExists',
+            },
+          ],
+        },
+      },
       signedIn: {},
-      authenticating: {
+      checkIfUserExists: {
         invoke: {
-          src: 'authenticating',
+          src: 'checkIfUserExists',
           onDone: [
             {
               cond: (_, event) => {
+                console.log(event);
                 return event.data === 'email-not-verified';
               },
               target: '#RegisterMachine.emailVerify',
@@ -117,7 +156,72 @@ const RegisterMachine = createMachine(
               target: '#RegisterMachine.signedIn',
             },
             {
-              target: 'dataEntry',
+              cond: (_, event) => {
+                return event.data === 'service-error';
+              },
+              target: '#RegisterMachine.errors.authFailed',
+            },
+          ],
+        },
+      },
+      authenticating_login: {
+        invoke: {
+          src: 'authenticating_login',
+          onDone: [
+            {
+              cond: (_, event) => {
+                console.log(event);
+                return event.data === 'email-not-verified';
+              },
+              target: '#RegisterMachine.emailVerify',
+            },
+            {
+              target: 'checkIfUserExists',
+            },
+          ],
+          onError: [
+            {
+              cond: (_, event) => {
+                return event.data === 'auth/invalid-email';
+              },
+              target: '#RegisterMachine.errors.invalidEmail',
+            },
+            {
+              cond: (_, event) => {
+                return event.data === 'auth/user-disabled';
+              },
+              target: '#RegisterMachine.errors.userDisabled',
+            },
+            {
+              cond: (_, event) => {
+                return event.data === 'auth/user-not-found';
+              },
+              target: '#RegisterMachine.errors.userNotFound',
+            },
+            {
+              cond: (_, event) => {
+                return event.data === 'auth/wrong-password';
+              },
+              target: '#RegisterMachine.errors.wrongPassword',
+            },
+            {
+              target: '#RegisterMachine.errors.authFailed',
+            },
+          ],
+        },
+      },
+      authenticating: {
+        invoke: {
+          src: 'authenticating',
+          onDone: [
+            {
+              cond: (_, event) => {
+                return event.data === 'email-not-verified';
+              },
+              target: '#RegisterMachine.emailVerify',
+            },
+            {
+              target: 'checkIfUserExists',
             },
           ],
           onError: [
@@ -140,7 +244,7 @@ const RegisterMachine = createMachine(
               target: '#RegisterMachine.errors.invalidPassword',
             },
             {
-              target: 'dataEntry',
+              target: '#RegisterMachine.errors.authFailed',
             },
           ],
         },
@@ -165,25 +269,49 @@ const RegisterMachine = createMachine(
       checkPasswordsMatch: (ctx, _) => ctx.confirmPassword !== ctx.password,
     },
     services: {
+      checkIfUserExists: () => {
+        console.log(auth().currentUser?.uid);
+        return UidFind(auth().currentUser?.uid || '')
+          .then(res => {
+            console.log(res);
+            console.log('---------');
+            if ('username' in res) {
+              return 'uidFind/username-found';
+            } else if (
+              'errors' in res &&
+              res.errors?.length === 1 &&
+              res.errors[0] === 'user not found'
+            ) {
+              return 'uidFind/username-not-found';
+            }
+            return 'service-error';
+          })
+          .catch(err => {
+            console.log(err);
+            return 'service-error';
+          });
+      },
       authenticating: ctx => {
         return authenticate(ctx.email, ctx.password)
           .then(() => {
             if (auth().currentUser && !auth().currentUser?.emailVerified) {
-              Promise.resolve('email-not-verified');
+              auth().currentUser?.sendEmailVerification();
+              return 'email-not-verified';
             }
-            UidFind(auth().currentUser?.uid || '').then(res => {
-              if (res === true) {
-                // go to home page
-                Promise.resolve('uidFind/username-found');
-              }
-              if (res === false) {
-                // go to username page
-                Promise.resolve('uidFind/username-not-found');
-              } else {
-                // unexpected validation/service error
-                Promise.reject(0);
-              }
-            });
+            Promise.resolve(1);
+          })
+          .catch(err => {
+            return Promise.reject(err.code);
+          });
+      },
+      authenticating_login: ctx => {
+        return authenticate_login(ctx.email, ctx.password)
+          .then(() => {
+            if (auth().currentUser && !auth().currentUser?.emailVerified) {
+              auth().currentUser?.sendEmailVerification();
+              return 'email-not-verified';
+            }
+            Promise.resolve(1);
           })
           .catch(err => {
             return Promise.reject(err.code);
