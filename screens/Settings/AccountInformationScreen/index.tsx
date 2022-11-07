@@ -12,7 +12,12 @@ import {
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
-import {currentTheme, ifSignedIn, RegMachine} from '../../../constants/atoms';
+import {
+  currentTheme,
+  ifSignedIn,
+  RegMachine,
+  userNameAtom,
+} from '../../../constants/atoms';
 import {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import {Ionicons} from '@expo/vector-icons';
 import UidFind from '../../../api/route/User/UidFind';
@@ -32,17 +37,20 @@ const AccountInformationScreen = () => {
   const [data, setData] = useState(null as any);
   const [, send] = useAtom(RegMachine);
   const [, setIfSignIn] = useAtom(ifSignedIn);
+  const [, setUsername] = useAtom(userNameAtom);
 
   const LoadUserInfo = async () => {
     const d = await UidFind(auth().currentUser?.uid || '');
     if ('username' in d) {
       setData(d);
+      setUsername(d.username);
     }
     return 'err';
   };
 
   useEffect(() => {
     LoadUserInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
