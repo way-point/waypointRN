@@ -2,7 +2,6 @@ import {Box, useTheme} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import MapView, {
-  Heatmap,
   LatLng,
   Marker,
   PROVIDER_GOOGLE,
@@ -20,15 +19,6 @@ import {feedDataItemProps} from '../../constants/types';
 import ProfileImage from '../../components/ProfileImage';
 
 enableLatestRenderer();
-
-const heatMap = [
-  {
-    latitude: 37.789,
-    longitude: -122.433,
-    weight: 1,
-  },
-];
-
 interface MarkerProps {
   coordinate: LatLng;
   id: number;

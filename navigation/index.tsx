@@ -25,7 +25,12 @@ import {
   SettingTabParamList,
   SignInStackParamList,
 } from './types';
-import {cityAtom, currentTheme, ifSignedIn} from '../constants/atoms';
+import {
+  cityAtom,
+  currentTheme,
+  ifSignedIn,
+  userNameAtom,
+} from '../constants/atoms';
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/SignIn/LoginScreen';
 import RegisterScreen from '../screens/SignIn/RegisterScreen';
@@ -197,10 +202,17 @@ const BottomTabNavigator = () => {
 };
 
 function CustomDrawerContent(props: DrawerContentComponentProps) {
+  const [username] = useAtom(userNameAtom);
   return (
     <DrawerContentScrollView {...props}>
-      <Pressable bg="transparent" px={SAFE_AREA_PADDING.paddingLeft}>
+      <Pressable
+        bg="transparent"
+        px={SAFE_AREA_PADDING.paddingLeft}
+        flexDir="row">
         <ProfileImage uri={uri} />
+        <Text fontSize={18} mt="auto" mb="auto" ml={2} opacity={0.8}>
+          @{username}
+        </Text>
       </Pressable>
       <Box mt={5} backgroundColor="transparent">
         <DrawerItemList {...props} />
