@@ -51,7 +51,7 @@ export interface paths {
       parameters: {
         body: {
           /** Creates a user from a username */
-          body: definitions['UsernameSchema'];
+          body: definitions['UsernameAndProfileUriSchema'];
         };
         header: {
           /** JWT Token given by Signed in user */
@@ -105,6 +105,7 @@ export interface definitions {
     users?: {
       /** Format: date-time */
       date_created?: string;
+      profile_uri?: string;
       uid: string;
       username: string;
     }[];
@@ -115,11 +116,16 @@ export interface definitions {
   User: {
     /** Format: date-time */
     date_created?: string;
+    profile_uri?: string;
     uid: string;
     username: string;
   };
+  UsernameAndProfileUriSchema: {
+    profile_uri?: string;
+    username: string;
+  };
   UsernameSchema: {
-    username?: string;
+    username: string;
   };
 }
 

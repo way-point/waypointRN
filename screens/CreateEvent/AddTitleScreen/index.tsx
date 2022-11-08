@@ -17,10 +17,9 @@ import {
 } from 'react-native';
 import ProfileImage from '../../../components/ProfileImage';
 import Layout, {SAFE_AREA_PADDING} from '../../../constants/Layout';
-import {uri} from '../../../navigation';
 import {Feather, AntDesign} from '@expo/vector-icons';
 import {useAtom} from 'jotai';
-import {currentTheme, EventMachine} from '../../../constants/atoms';
+import {currentTheme, EventMachine, userAtom} from '../../../constants/atoms';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -97,6 +96,7 @@ const AddTitleScreen = () => {
   const height = useSharedValue(0);
   const [albums, setAlbums] = useState([] as Album[]);
   const [curr, send] = useAtom(EventMachine);
+  const [{profile_uri}] = useAtom(userAtom);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -153,7 +153,7 @@ const AddTitleScreen = () => {
     host: {
       id: '2',
       username: 'Aankur01',
-      profileURL: uri,
+      profileURL: profile_uri,
     },
     image:
       curr.context.attachment.type === 'photo'
@@ -198,7 +198,7 @@ const AddTitleScreen = () => {
             h="100%">
             <Box bg="transparent" flexDir="row" justifyContent="space-between">
               <Box bg="transparent" flexDir="row">
-                <ProfileImage uri={uri} />
+                <ProfileImage uri={profile_uri} />
                 <Box my="auto" bg="transparent">
                   <Pressable
                     onPress={() => {

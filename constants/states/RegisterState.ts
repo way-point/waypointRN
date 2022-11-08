@@ -49,6 +49,12 @@ const act = {
   ENTER_SOCIAL_PROVIDER: {
     target: 'checkIfUserExists',
   },
+  ENTER_VERIFY: [
+    {
+      cond: () => auth().currentUser?.emailVerified || false,
+      target: 'checkIfUserExists',
+    },
+  ],
   ENTER_SUBMIT: [
     {
       target: '#RegisterMachine.errors.invalidEmail',

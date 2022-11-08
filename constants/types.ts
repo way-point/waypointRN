@@ -1,6 +1,6 @@
 export interface userImageProps {
   username: string;
-  profileURL: string;
+  profileURL?: string;
   id: string;
 }
 export interface feedDataProps {

@@ -3,7 +3,7 @@ import {
   calendarSyncAtom,
   currentTheme,
   ifSignedIn,
-  userNameAtom,
+  userAtom,
 } from '../constants/atoms';
 import useColorScheme from './useColorScheme';
 import * as Calendar from 'expo-calendar';
@@ -19,7 +19,7 @@ export default function useCachedResources() {
   const [, setIfSignIn] = useAtom(ifSignedIn);
   const [, setCalendarSyncAtom] = useAtom(calendarSyncAtom);
   const [, setCurrTheme] = useAtom(currentTheme);
-  const [, setUsername] = useAtom(userNameAtom);
+  const [, setUser] = useAtom(userAtom);
   // Load any resources or data that we need prior to rendering the app
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
@@ -30,7 +30,10 @@ export default function useCachedResources() {
         await configureFetcher();
         const ifUid = await UidFind(auth().currentUser?.uid || '');
         if (ifUid && 'username' in ifUid) {
-          setUsername(ifUid.username);
+          setUser({
+            username: ifUid.username,
+            profile_uri: ifUid.profile_uri,
+          });
           setIfSignIn(false);
         }
         const status = await Calendar.getCalendarPermissionsAsync();
@@ -48,13 +51,7 @@ export default function useCachedResources() {
     }
 
     loadResourcesAndDataAsync();
-  }, [
-    colorScheme,
-    setCalendarSyncAtom,
-    setCurrTheme,
-    setIfSignIn,
-    setUsername,
-  ]);
+  }, [colorScheme, setCalendarSyncAtom, setCurrTheme, setIfSignIn, setUser]);
 
   return isLoadingComplete;
 }

@@ -25,12 +25,7 @@ import {
   SettingTabParamList,
   SignInStackParamList,
 } from './types';
-import {
-  cityAtom,
-  currentTheme,
-  ifSignedIn,
-  userNameAtom,
-} from '../constants/atoms';
+import {cityAtom, currentTheme, ifSignedIn, userAtom} from '../constants/atoms';
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/SignIn/LoginScreen';
 import RegisterScreen from '../screens/SignIn/RegisterScreen';
@@ -52,15 +47,13 @@ import UsernameScreen from '../screens/SignIn/UsernameScreen';
 import SettingScreen from '../screens/Settings/SettingScreen';
 import AccountInformationScreen from '../screens/Settings/AccountInformationScreen';
 
-export const uri =
-  'https://media-exp1.licdn.com/dms/image/C5603AQEQZuyIujt9xA/profile-displayphoto-shrink_200_200/0/1640233246542?e=2147483647&v=beta&t=06q_FRXOtNMMPTnZmHt7CDL6g3C6tC_0erJ4JaWTNgo';
-
 const BottomTabNavigator = () => {
   const Stack = createBottomTabNavigator<RootTabParamList>();
   const [city] = useAtom(cityAtom);
   const [currTheme] = useAtom(currentTheme);
   const {colors} = useTheme();
   const navigation = useNavigation<RootProp>();
+  const [{profile_uri}] = useAtom(userAtom);
 
   return (
     <Stack.Navigator
@@ -100,7 +93,7 @@ const BottomTabNavigator = () => {
                 }}
                 backgroundColor="transparent"
                 pl={3}>
-                <ProfileImage uri={uri} />
+                <ProfileImage uri={profile_uri} />
               </Pressable>
             );
           },
@@ -108,6 +101,7 @@ const BottomTabNavigator = () => {
             return (
               <Input
                 width={Layout.window.width - 100}
+                h={33}
                 placeholder="What's on your mind?"
                 textAlign="center"
                 InputRightElement={
@@ -146,7 +140,7 @@ const BottomTabNavigator = () => {
                 }}
                 backgroundColor="transparent"
                 pl={3}>
-                <ProfileImage uri={uri} />
+                <ProfileImage uri={profile_uri} />
               </Pressable>
             );
           },
@@ -173,7 +167,7 @@ const BottomTabNavigator = () => {
           headerLeft: () => {
             return (
               <Box backgroundColor="transparent" pl={3}>
-                <ProfileImage uri={uri} />
+                <ProfileImage uri={profile_uri} />
               </Box>
             );
           },
@@ -202,14 +196,14 @@ const BottomTabNavigator = () => {
 };
 
 function CustomDrawerContent(props: DrawerContentComponentProps) {
-  const [username] = useAtom(userNameAtom);
+  const [{username, profile_uri}] = useAtom(userAtom);
   return (
     <DrawerContentScrollView {...props}>
       <Pressable
         bg="transparent"
         px={SAFE_AREA_PADDING.paddingLeft}
         flexDir="row">
-        <ProfileImage uri={uri} />
+        <ProfileImage uri={profile_uri} />
         <Text fontSize={18} mt="auto" mb="auto" ml={2} opacity={0.8}>
           @{username}
         </Text>

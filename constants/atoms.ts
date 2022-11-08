@@ -12,6 +12,16 @@ export const currentTheme = atom('light' as ThemeType);
 export const RegMachine = atomWithMachine(RegisterMachine);
 export const EventMachine = atomWithMachine(CreateEventMachine);
 export const cityAtom = atom('');
-export const userNameAtom = atom('');
+
+type userType = {
+  username: string;
+  profile_uri?: string;
+};
+
+export const userAtom = atom({
+  username: '',
+  profile_uri: '',
+} as userType);
+
 export const calendarSyncAtom = atom(null as Event[] | null);
 export const ifSignedIn = atom(true);

@@ -2,8 +2,8 @@ import {fetcher} from '../../config/fetcher';
 import {definitions} from '../../generated/schema';
 const createUser = fetcher.path('/api/user/userCreate').method('post').create();
 
-const UserCreate = (username: string) => {
-  return createUser({username})
+const UserCreate = (username: string, profile_uri?: string) => {
+  return createUser({username, profile_uri})
     .then(response => {
       return response.data;
     })

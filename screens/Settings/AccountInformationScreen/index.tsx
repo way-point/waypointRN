@@ -16,12 +16,13 @@ import {
   currentTheme,
   ifSignedIn,
   RegMachine,
-  userNameAtom,
+  userAtom,
 } from '../../../constants/atoms';
 import {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import {Ionicons} from '@expo/vector-icons';
 import UidFind from '../../../api/route/User/UidFind';
 import auth from '@react-native-firebase/auth';
+import ProfileImage from '../../../components/ProfileImage';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -37,13 +38,13 @@ const AccountInformationScreen = () => {
   const [data, setData] = useState(null as any);
   const [, send] = useAtom(RegMachine);
   const [, setIfSignIn] = useAtom(ifSignedIn);
-  const [, setUsername] = useAtom(userNameAtom);
+  const [{profile_uri}, setUser] = useAtom(userAtom);
 
   const LoadUserInfo = async () => {
     const d = await UidFind(auth().currentUser?.uid || '');
     if ('username' in d) {
       setData(d);
-      setUsername(d.username);
+      setUser({username: d.username, profile_uri: d.profile_uri});
     }
     return 'err';
   };
@@ -86,6 +87,9 @@ const AccountInformationScreen = () => {
             <Spinner color="constants.primary" />
           ) : (
             <Stack space={4}>
+              <Box ml="auto" mr="auto">
+                <ProfileImage uri={profile_uri} size={100} />
+              </Box>
               <Box flexDir="row" justifyContent="space-between">
                 <Box flexDir="row">
                   <Text fontWeight={500} fontSize={16} ml={5}>

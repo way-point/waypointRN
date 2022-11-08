@@ -3,19 +3,21 @@ import {Box, Heading, Pressable, Text} from 'native-base';
 import React from 'react';
 import Post from '../../../components/Post';
 import ProfileImage from '../../../components/ProfileImage';
-import {EventMachine} from '../../../constants/atoms';
+import {EventMachine, userAtom} from '../../../constants/atoms';
+import convertToUrl from '../../../constants/convertToUrl';
 import {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import {feedDataProps} from '../../../constants/types';
-import {uri} from '../../../navigation';
+import auth from '@react-native-firebase/auth';
 
 const ReviewScreen = () => {
   const [curr] = useAtom(EventMachine);
+  const [{username, profile_uri}] = useAtom(userAtom);
   const postData: feedDataProps = {
     id: '1',
     host: {
       id: '2',
-      username: 'Aankur01',
-      profileURL: uri,
+      username: username,
+      profileURL: profile_uri,
     },
     image:
       curr.context.attachment.type === 'photo'
@@ -58,12 +60,19 @@ const ReviewScreen = () => {
           mb={5}
           mt={SAFE_AREA_PADDING.paddingLeft}>
           <Box bg="transparent" flexDir="row">
-            <ProfileImage uri={uri} />
+            <ProfileImage uri={profile_uri} />
           </Box>
           <Pressable
             bg="constants.primary"
             _disabled={{
               opacity: 0.5,
+            }}
+            onPress={async () => {
+              const d = await convertToUrl(
+                curr.context.attachment.uri,
+                `images/${auth().currentUser!.uid}/post`,
+              );
+              console.log(d);
             }}
             px={2}
             py={1}
