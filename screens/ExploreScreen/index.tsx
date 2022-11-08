@@ -35,8 +35,8 @@ const Markers: MarkerProps[] = [
 ];
 
 const calc_size = (subscribers: number) => {
-  const min_size = 10;
-  const max_size = 50;
+  const min_size = 30;
+  const max_size = 100;
 
   if (min_size >= subscribers) {
     return min_size;

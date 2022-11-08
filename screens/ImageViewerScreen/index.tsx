@@ -24,11 +24,12 @@ import {AntDesign, Feather} from '@expo/vector-icons';
 import {useAtom} from 'jotai';
 import {currentTheme} from '../../constants/atoms';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import {LiveTextImageView} from 'react-native-live-text-image-view';
 
 const styles = StyleSheet.create({
   image: {
     width: '100%',
-    height: '100%',
+    height: 300,
     marginTop: 'auto',
     marginBottom: 'auto',
   },
@@ -242,12 +243,16 @@ const Pinchable = ({item}: feedDataItemProps) => {
       <PinchGestureHandler onGestureEvent={pinchHandler}>
         <Animated.View style={styles.flex}>
           {item.type === 'photo' && item.image && (
-            <AnimatedImage
-              alt="Image"
-              resizeMode="contain"
-              style={[styles.image, rStyle]}
-              source={{uri: item.image}}
-            />
+            <Box mt="auto" mb="auto">
+              <LiveTextImageView>
+                <AnimatedImage
+                  alt="Image"
+                  resizeMode="contain"
+                  style={[rStyle, styles.image]}
+                  source={{uri: item.image}}
+                />
+              </LiveTextImageView>
+            </Box>
           )}
           {item.type === 'video' && item.video && (
             <AnimatedVideo

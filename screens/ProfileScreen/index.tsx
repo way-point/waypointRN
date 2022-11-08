@@ -1,11 +1,12 @@
 import React from 'react';
 import {Box, Divider, FlatList, Text} from 'native-base';
 import ProfileImage from '../../components/ProfileImage';
-import {uri} from '../../navigation';
 import Layout, {SAFE_AREA_PADDING} from '../../constants/Layout';
 import {ImageBackground} from 'react-native';
 import TimeState from '../../components/WhenTitle';
 import feedData from '../../data/feedData';
+import {useAtom} from 'jotai';
+import {userAtom} from '../../constants/atoms';
 
 const Images = [
   'https://cdn1.epicgames.com/salesEvent/salesEvent/amoguslandscape_2560x1440-3fac17e8bb45d81ec9b2c24655758075',
@@ -49,6 +50,7 @@ const renderItem = ({item}: renderItemProps) => {
 };
 
 const ProfileScreen = () => {
+  const [{profile_uri, username}] = useAtom(userAtom);
   return (
     <Box flex={1}>
       <Box
@@ -58,9 +60,9 @@ const ProfileScreen = () => {
         justifyContent="space-around"
         alignItems="center">
         <Box alignItems="center">
-          <ProfileImage size={90} uri={uri} />
+          <ProfileImage size={90} uri={profile_uri} />
           <Text mt={2} fontWeight="bold">
-            Aankur01
+            {username}
           </Text>
         </Box>
         <Box flexDir="row">

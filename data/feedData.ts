@@ -24,7 +24,7 @@ const feedData: feedDataProps[] = [
       },
     },
     image:
-      'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.lifestyleasia.com%2Fwp-content%2Fuploads%2Fsites%2F2%2F2021%2F11%2F03175949%2FBored-Ape-1.jpg&f=1&nofb=1',
+      'https://www.techsmith.com/blog/wp-content/uploads/2020/11/TechSmith-Blog-ExtractText.png',
     type: 'photo',
     description:
       'justo laoreet sit amet cursus sit amet dictum sit amet justo donec enim diam vulputate ut pharetra sit amet aliquam',
