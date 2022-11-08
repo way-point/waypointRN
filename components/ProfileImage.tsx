@@ -1,21 +1,20 @@
 import React from 'react';
-import {Avatar} from 'native-base';
-import {ThemeComponentSizeType} from 'native-base/lib/typescript/components/types';
 import {guest} from '../constants/guestUrl';
+import FastImage from 'react-native-fast-image';
 
 interface ProfileImageProps {
   uri?: string;
-  size?: ThemeComponentSizeType<'Avatar'>;
+  size?: number;
 }
 
-const ProfileImage = ({uri = guest, size = 9}: ProfileImageProps) => {
+const ProfileImage = ({uri = guest, size = 35}: ProfileImageProps) => {
   return (
-    <Avatar
-      bg="constants.primary"
+    <FastImage
+      style={{width: size, height: size, borderRadius: size / 2}}
       source={{
-        uri,
+        uri: uri,
+        priority: FastImage.priority.normal,
       }}
-      size={size}
     />
   );
 };
