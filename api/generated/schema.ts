@@ -4,6 +4,52 @@
  */
 
 export interface paths {
+  '/api/post/postCreate': {
+    post: {
+      parameters: {
+        body: {
+          body: definitions['PostSchema'];
+        };
+        header: {
+          /** JWT Token given by Signed in user */
+          authorization_bearer: unknown;
+        };
+      };
+      responses: {
+        200: {
+          schema: definitions['PostSchema'];
+        };
+        400: {
+          schema: definitions['GenericErrorSchema'];
+        };
+        500: {
+          schema: definitions['GenericErrorSchema'];
+        };
+      };
+    };
+  };
+  '/api/post/postFind': {
+    get: {
+      parameters: {
+        query: {
+          lat: unknown;
+          lng: unknown;
+        };
+      };
+      responses: {
+        /** Returns the first FIVE posts as a list */
+        200: {
+          schema: definitions['NestedPosts'];
+        };
+        400: {
+          schema: definitions['GenericErrorSchema'];
+        };
+        500: {
+          schema: definitions['GenericErrorSchema'];
+        };
+      };
+    };
+  };
   '/api/user/ifUsernameExist': {
     get: {
       parameters: {
@@ -101,14 +147,69 @@ export interface definitions {
   IfUserExistSchema: {
     ifUserExist?: boolean;
   };
+  NestedPosts: {
+    posts?: {
+      attachment?: {
+        /** @enum {string} */
+        attachment_type: 'video' | 'photo';
+        duration?: number;
+        url: string;
+      };
+      /** Format: date-time */
+      date_created?: string;
+      event_details?: {
+        address: string;
+        coordinate: {
+          geoPoint?: unknown;
+          latitude: number;
+          longitude: number;
+        };
+        time_of_event: {
+          /** Format: date */
+          end_time: string;
+          /** Format: date-time */
+          start_time: string;
+        };
+      };
+      host_id?: unknown;
+      id?: unknown;
+    }[];
+  };
   NestedUsers: {
     users?: {
       /** Format: date-time */
       date_created?: string;
+      posts?: unknown[];
       profile_uri?: string;
       uid: string;
       username: string;
     }[];
+  };
+  PostSchema: {
+    attachment?: {
+      /** @enum {string} */
+      attachment_type: 'video' | 'photo';
+      duration?: number;
+      url: string;
+    };
+    /** Format: date-time */
+    date_created?: string;
+    event_details?: {
+      address: string;
+      coordinate: {
+        geoPoint?: unknown;
+        latitude: number;
+        longitude: number;
+      };
+      time_of_event: {
+        /** Format: date */
+        end_time: string;
+        /** Format: date-time */
+        start_time: string;
+      };
+    };
+    host_id?: unknown;
+    id?: unknown;
   };
   UidSchema: {
     uid: string;
@@ -116,6 +217,7 @@ export interface definitions {
   User: {
     /** Format: date-time */
     date_created?: string;
+    posts?: unknown[];
     profile_uri?: string;
     uid: string;
     username: string;

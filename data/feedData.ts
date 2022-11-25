@@ -5,81 +5,22 @@ const url =
 
 const feedData: feedDataProps[] = [
   {
-    id: '1',
-    host: {
-      username: 'Aankur01',
-      profileURL: url,
-      id: '1',
+    attachment: {
+      attachment_type: 'photo',
+      url: url,
     },
-    eventDetails: {
-      where: {
-        latitude: 120,
-        longitude: 120,
-        address: '5923 River Creek Rd.',
+    date_created: '2022-11-23T01:11:57.082Z',
+    event_details: {
+      address: 'string',
+      coordinate: {
+        latitude: 0,
+        longitude: 0,
       },
-      when: {
-        startDate: new Date(Date.now()),
-        endDate: new Date(new Date().getFullYear() + 1, 0, 1),
-        repeat: ['Monday'],
+      time_of_event: {
+        end_time: '2022-11-23',
+        start_time: '2022-11-23T01:11:57.082Z',
       },
     },
-    image:
-      'https://www.techsmith.com/blog/wp-content/uploads/2020/11/TechSmith-Blog-ExtractText.png',
-    type: 'photo',
-    description:
-      'justo laoreet sit amet cursus sit amet dictum sit amet justo donec enim diam vulputate ut pharetra sit amet aliquam',
-    subscribers: [
-      {
-        profileURL:
-          'https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-        username: 'Aankur01',
-        id: '2',
-      },
-      {
-        profileURL:
-          'https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-        username: 'Aankur01',
-        id: '3',
-      },
-      {
-        profileURL:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-        username: 'Susan',
-        id: '45',
-      },
-      {
-        profileURL:
-          'https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-        username: 'among',
-        id: '4345',
-      },
-    ],
-  },
-  {
-    id: '2',
-    host: {
-      username: 'Aankur02',
-      profileURL: url,
-      id: '4',
-    },
-    eventDetails: {
-      where: {
-        latitude: 120,
-        longitude: 120,
-        address: '5923 River Creek Rd.',
-      },
-      when: {
-        startDate: new Date(Date.now()),
-        endDate: new Date(new Date().getFullYear() + 1, 0, 1),
-        repeat: [],
-      },
-    },
-    image:
-      'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.nZ9yqbFez-PvOsJSIvwn1gHaEK%26pid%3DApi&f=1',
-    type: 'photo',
-    description:
-      'suspendisse faucibus interdum posuere lorem ipsum dolor sit amet consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla',
-    subscribers: [{profileURL: url, username: 'Aankur01', id: '5'}],
   },
 ];
 

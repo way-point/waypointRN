@@ -1,6 +1,6 @@
 import {Box, Pressable, Text, useTheme} from 'native-base';
 import React from 'react';
-import AvatarGroup from './AvatarGroup';
+// import AvatarGroup from './AvatarGroup';
 import Menu from './Menu';
 import {feedDataItemProps} from '../constants/types';
 import {useAtom} from 'jotai';
@@ -77,14 +77,14 @@ const Post = ({item}: feedDataItemProps) => {
               previewRenderItem: menuUserRenderItem,
             }}
             menuConfig={menuConfigUser}>
-            <ProfileImage uri={item.host.profileURL} size={40} />
+            <ProfileImage id={item.host_id as string} size={40} />
           </Menu>
           <WhereTitle item={item} />
           <Box ml="auto" flexDir="row" alignItems="center">
             <TimeState item={item} />
             {if_busy(
-              item.eventDetails.when.startDate,
-              item.eventDetails.when.endDate,
+              item.event_details?.time_of_event.start_time as unknown as Date,
+              item.event_details?.time_of_event.end_time as unknown as Date,
             ) && (
               <MaterialIcons
                 name="event-busy"
@@ -100,12 +100,12 @@ const Post = ({item}: feedDataItemProps) => {
           flexDirection="row"
           justifyContent="space-between"
           alignItems="center">
-          <AvatarGroup userImages={item.subscribers} />
+          {/* <AvatarGroup userImages={item.subscribers} /> */}
           <JoinEvent />
         </Box>
-        <Text fontSize={20} mb={5}>
+        {/* <Text fontSize={20} mb={5}>
           {item.description}
-        </Text>
+        </Text> */}
         <PostImage item={item} />
         <Box flexDir="row" justifyContent="space-evenly" mt={2}>
           <Box flexDir="row">
@@ -114,7 +114,7 @@ const Post = ({item}: feedDataItemProps) => {
               size={20}
               color={colors[currTheme].text}
             />
-            <Text ml={1}>{item.subscribers.length}</Text>
+            <Text ml={1}>{2}</Text>
           </Box>
           <Box flexDir="row">
             <EvilIcons
@@ -122,11 +122,11 @@ const Post = ({item}: feedDataItemProps) => {
               size={24}
               color={colors[currTheme].text}
             />
-            <Text ml={1}>{item.subscribers.length}</Text>
+            <Text ml={1}>{3}</Text>
           </Box>
           <Box flexDir="row">
             <Feather name="share" size={19} color={colors[currTheme].text} />
-            <Text ml={1}>{item.subscribers.length}</Text>
+            <Text ml={1}>{4}</Text>
           </Box>
           <Box flexDir="row">
             <FontAwesome5

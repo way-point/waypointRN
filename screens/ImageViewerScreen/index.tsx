@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Image, Pressable, useTheme} from 'native-base';
+import {Box, Pressable, useTheme} from 'native-base';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {RootStackParamList} from '../../navigation/types';
 import Animated, {
@@ -24,12 +24,11 @@ import {AntDesign, Feather} from '@expo/vector-icons';
 import {useAtom} from 'jotai';
 import {currentTheme} from '../../constants/atoms';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-import {LiveTextImageView} from 'react-native-live-text-image-view';
+import Image from 'react-native-scalable-image';
 
 const styles = StyleSheet.create({
   image: {
-    width: '100%',
-    height: 300,
+    width: 1,
     marginTop: 'auto',
     marginBottom: 'auto',
   },
@@ -192,8 +191,8 @@ const Pinchable = ({item}: feedDataItemProps) => {
   const focalY = useSharedValue(0);
   const width = Layout.window.width;
   const height = Layout.window.height;
-  const AnimatedImage = Animated.createAnimatedComponent(Image);
   const AnimatedVideo = Animated.createAnimatedComponent(Video);
+  const AnimatedBox = Animated.createAnimatedComponent(Box);
 
   const options = {
     enableVibrateFallback: true,
@@ -243,16 +242,9 @@ const Pinchable = ({item}: feedDataItemProps) => {
       <PinchGestureHandler onGestureEvent={pinchHandler}>
         <Animated.View style={styles.flex}>
           {item.type === 'photo' && item.image && (
-            <Box mt="auto" mb="auto">
-              <LiveTextImageView>
-                <AnimatedImage
-                  alt="Image"
-                  resizeMode="contain"
-                  style={[rStyle, styles.image]}
-                  source={{uri: item.image}}
-                />
-              </LiveTextImageView>
-            </Box>
+            <AnimatedBox style={rStyle} mt="auto" mb="auto">
+              <Image width={Layout.window.width} source={{uri: item.image}} />
+            </AnimatedBox>
           )}
           {item.type === 'video' && item.video && (
             <AnimatedVideo

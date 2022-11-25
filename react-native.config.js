@@ -14,10 +14,5 @@ module.exports = {
         android: null,
       },
     },
-    'react-native-live-text-image-view': {
-      platforms: {
-        android: null,
-      },
-    },
   },
 };

@@ -19,11 +19,14 @@ const TimeState = ({item}: feedDataItemProps) => {
   } as timeLeftProps);
 
   useEffect(() => {
-    if (new Date(Date.now()) < item.eventDetails.when.startDate) {
+    if (
+      new Date(Date.now()) <
+      new Date(item.event_details?.time_of_event.start_time || '')
+    ) {
       const intervalID = setInterval(() => {
         const data = intervalToDuration({
           start: new Date(Date.now()),
-          end: item.eventDetails.when.startDate,
+          end: new Date(item.event_details?.time_of_event.start_time || ''),
         });
         setTimeLeft({
           days: data.days || 0,
@@ -35,9 +38,12 @@ const TimeState = ({item}: feedDataItemProps) => {
 
       return () => clearInterval(intervalID);
     }
-  }, [item.eventDetails.when.startDate]);
+  }, [item?.event_details?.time_of_event.start_time]);
 
-  if (new Date(Date.now()) >= item.eventDetails.when.endDate) {
+  if (
+    new Date(Date.now()) >=
+    new Date(item.event_details?.time_of_event.end_time || '')
+  ) {
     return (
       <Text fontWeight={600} fontSize={20}>
         Expired
@@ -45,7 +51,10 @@ const TimeState = ({item}: feedDataItemProps) => {
     );
   }
 
-  if (new Date(Date.now()) >= item.eventDetails.when.startDate) {
+  if (
+    new Date(Date.now()) >=
+    new Date(item.event_details?.time_of_event.start_time || '')
+  ) {
     return (
       <Text fontWeight={600} fontSize={20}>
         Live

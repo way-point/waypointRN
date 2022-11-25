@@ -11,10 +11,9 @@ import {
 import React, {useEffect, useState} from 'react';
 import {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import {useAtom} from 'jotai';
-import {currentTheme, EventMachine} from '../../../constants/atoms';
+import {currentTheme, EventMachine, userAtom} from '../../../constants/atoms';
 import {EndDatePicker, StartDatePicker} from '../../../components/DatePickers';
 import ProfileImage from '../../../components/ProfileImage';
-import {uri} from '../../../navigation';
 import {useNavigation} from '@react-navigation/native';
 import {RootProp} from '../../../navigation/types';
 import {Feather} from '@expo/vector-icons';
@@ -72,6 +71,7 @@ const AddDateScreen = () => {
   const {colors} = useTheme();
   const [, send] = useAtom(EventMachine);
   const [loading, setLoading] = useState(false);
+  const [{profile_uri}] = useAtom(userAtom);
   const [coords, setCoords] = useState({
     latitude: undefined,
     longitude: undefined,
@@ -126,7 +126,7 @@ const AddDateScreen = () => {
           mb={5}
           mt={SAFE_AREA_PADDING.paddingLeft}>
           <Box bg="transparent" flexDir="row">
-            <ProfileImage uri={uri} />
+            <ProfileImage uri={profile_uri} />
           </Box>
           <Pressable
             bg="constants.primary"

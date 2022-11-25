@@ -8,43 +8,30 @@ import convertToUrl from '../../../constants/convertToUrl';
 import {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import {feedDataProps} from '../../../constants/types';
 import auth from '@react-native-firebase/auth';
+import PostCreate from '../../../api/route/Post/PostCreate';
 
 const ReviewScreen = () => {
-  const [curr] = useAtom(EventMachine);
-  const [{username, profile_uri}] = useAtom(userAtom);
+  const [curr, send] = useAtom(EventMachine);
+  const [{profile_uri}] = useAtom(userAtom);
+
   const postData: feedDataProps = {
-    id: '1',
-    host: {
-      id: '2',
-      username: username,
-      profileURL: profile_uri,
+    host_id: auth().currentUser?.uid || '',
+    attachment: {
+      attachment_type: curr.context.attachment.type || 'photo',
+      duration: curr.context.attachment.duration,
+      url: curr.context.attachment.uri,
     },
-    image:
-      curr.context.attachment.type === 'photo'
-        ? curr.context.attachment.uri
-        : undefined,
-    video:
-      curr.context.attachment.type === 'video'
-        ? {
-            uri: curr.context.attachment.uri,
-            duration: curr.context.attachment.duration,
-          }
-        : undefined,
-    type: curr.context.attachment.type || 'photo',
-    eventDetails: {
-      where: {
-        longitude: curr.context.eventLocation.coordinate.longitude || 0,
-        latitude: curr.context.eventLocation.coordinate.latitude || 0,
-        address: curr.context.eventLocation.address || '',
+    event_details: {
+      address: curr.context.eventLocation.address || '',
+      coordinate: {
+        latitude: curr.context.eventLocation.coordinate.latitude || -200,
+        longitude: curr.context.eventLocation.coordinate.longitude || -200,
       },
-      when: {
-        startDate: curr.context.eventDate.startDate || new Date(Date.now()),
-        endDate: curr.context.eventDate.endDate || new Date(Date.now()),
-        repeat: curr.context.eventDate.repeat,
+      time_of_event: {
+        start_time: curr.context.eventDate.startDate!.toISOString(),
+        end_time: curr.context.eventDate.endDate!.toISOString(),
       },
     },
-    subscribers: [],
-    description: curr.context.message,
   };
   return (
     <Box flex={1} bg="transparent">
@@ -68,11 +55,28 @@ const ReviewScreen = () => {
               opacity: 0.5,
             }}
             onPress={async () => {
-              const d = await convertToUrl(
-                curr.context.attachment.uri,
-                `images/${auth().currentUser!.uid}/post`,
-              );
-              console.log(d);
+              const d = postData.attachment?.url;
+              // const d = await convertToUrl(
+              //   curr.context.attachment.uri,
+              //   `images/${auth().currentUser!.uid}/post`,
+              // );
+              if (d !== undefined) {
+                send({type: 'ENTER_URI', value: {uri: d}});
+              } else {
+                delete postData.attachment;
+              }
+
+              console.log(postData);
+
+
+              PostCreate({data: postData})
+                .then(ch => {
+                  console.log(ch);
+                  console.log(ch['errors']['event_details']['time_of_event'])
+                })
+                .catch(e => {
+                  console.log(e);
+                });
             }}
             px={2}
             py={1}

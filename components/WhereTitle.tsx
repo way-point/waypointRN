@@ -9,7 +9,7 @@ const WhereTitle = ({item}: feedDataItemProps) => {
     <Box flexDirection="row" alignItems="center" ml={3}>
       <Box w="75%" flexDir="row">
         <Text mr={1} numberOfLines={1} color="constants.primary">
-          {item.eventDetails.where.address}
+          {item.event_details?.address}
         </Text>
         <FontAwesome5
           name="map-marker-alt"

@@ -18,7 +18,7 @@ const HomeScreen = () => {
         data={feedData}
         contentContainerStyle={styles.flatlist}
         renderItem={({item}) => <Post item={item} />}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id as string}
       />
       <AddPostButton />
     </Box>

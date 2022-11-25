@@ -75,6 +75,10 @@ const CreateEventMachine = createMachine(
             actions: 'cacheLocation',
             target: 'dataEntry',
           },
+          ENTER_URI: {
+            actions: 'cacheUri',
+            target: 'dataEntry',
+          },
         },
       },
     },
@@ -89,6 +93,13 @@ const CreateEventMachine = createMachine(
           uri: evt.value.uri,
           type: evt.value.attachmentType,
           duration: evt.value.duration || 0,
+        },
+      })),
+      cacheUri: actions.assign((ctx, evt: any) => ({
+        attachment: {
+          uri: evt.value.uri,
+          type: ctx.attachment.type,
+          duration: ctx.attachment.duration,
         },
       })),
       cacheStartDate: actions.assign((ctx, evt: any) => ({

@@ -34,18 +34,18 @@ const Markers: MarkerProps[] = [
   },
 ];
 
-const calc_size = (subscribers: number) => {
-  const min_size = 30;
-  const max_size = 100;
+// const calc_size = (subscribers: number) => {
+//   const min_size = 30;
+//   const max_size = 100;
 
-  if (min_size >= subscribers) {
-    return min_size;
-  }
-  if (max_size <= subscribers) {
-    return max_size;
-  }
-  return subscribers;
-};
+//   if (min_size >= subscribers) {
+//     return min_size;
+//   }
+//   if (max_size <= subscribers) {
+//     return max_size;
+//   }
+//   return subscribers;
+// };
 
 const RenderMaker = ({item}: feedDataItemProps) => {
   const {colors} = useTheme();
@@ -55,10 +55,7 @@ const RenderMaker = ({item}: feedDataItemProps) => {
       borderRadius={30}
       borderColor={colors[currTheme].background}
       borderWidth={3}>
-      <ProfileImage
-        uri={item.host.profileURL}
-        size={calc_size(item.subscribers.length)}
-      />
+      <ProfileImage id={item.host_id as string} size={10} />
     </Box>
   );
 };

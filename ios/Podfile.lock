@@ -374,9 +374,7 @@ PODS:
     - Google-Maps-iOS-Utils (= 4.1.0)
     - GoogleMaps (= 7.0.0)
     - React-Core
-  - react-native-ios-context-menu (1.12.1):
-    - React-Core
-  - react-native-live-text-image-view (0.4.0):
+  - react-native-ios-context-menu (1.15.1):
     - React-Core
   - react-native-maps (1.3.1):
     - React-Core
@@ -578,7 +576,6 @@ DEPENDENCIES:
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-google-maps (from `../node_modules/react-native-maps`)
   - react-native-ios-context-menu (from `../node_modules/react-native-ios-context-menu`)
-  - react-native-live-text-image-view (from `../node_modules/react-native-live-text-image-view`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-video (from `../node_modules/react-native-video/react-native-video.podspec`)
@@ -718,8 +715,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-maps"
   react-native-ios-context-menu:
     :path: "../node_modules/react-native-ios-context-menu"
-  react-native-live-text-image-view:
-    :path: "../node_modules/react-native-live-text-image-view"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
   react-native-safe-area-context:
@@ -846,8 +841,7 @@ SPEC CHECKSUMS:
   react-native-blur: 3e9c8e8e9f7d17fa1b94e1a0ae9fd816675f5382
   react-native-geolocation: b80a44fb11e18eff64a68984092aacf3528580c3
   react-native-google-maps: 751f1dd2362c09d4ac45b09970d78f138a109268
-  react-native-ios-context-menu: ca642c1a1e4b115d05d9f800606705b6ba28cd38
-  react-native-live-text-image-view: 483bacfdba464162b8cf176bba555364f18b584c
+  react-native-ios-context-menu: b170594b4448c0cd10c79e13432216bac99de1ac
   react-native-maps: f4067ffa5044ade5bf98d6dde15014318a537c2f
   react-native-safe-area-context: b456e1c40ec86f5593d58b275bd0e9603169daca
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
