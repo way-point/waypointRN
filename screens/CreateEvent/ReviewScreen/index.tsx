@@ -16,6 +16,7 @@ const ReviewScreen = () => {
 
   const postData: feedDataProps = {
     host_id: auth().currentUser?.uid || '',
+    description: curr.context.message,
     attachment: {
       attachment_type: curr.context.attachment.type || 'photo',
       duration: curr.context.attachment.duration,
@@ -55,24 +56,24 @@ const ReviewScreen = () => {
               opacity: 0.5,
             }}
             onPress={async () => {
-              const d = postData.attachment?.url;
-              // const d = await convertToUrl(
-              //   curr.context.attachment.uri,
-              //   `images/${auth().currentUser!.uid}/post`,
-              // );
-              if (d !== undefined) {
-                send({type: 'ENTER_URI', value: {uri: d}});
-              } else {
+              let d = postData.attachment?.url;
+              if (d && d.startsWith('https://')) {
+                d = await convertToUrl(
+                  curr.context.attachment.uri,
+                  `images/${auth().currentUser!.uid}/post`,
+                );
+              }
+              if (d === '' || d === undefined) {
                 delete postData.attachment;
+              } else {
+                send({type: 'ENTER_URI', value: {uri: d}});
               }
 
               console.log(postData);
 
-
               PostCreate({data: postData})
                 .then(ch => {
                   console.log(ch);
-                  console.log(ch['errors']['event_details']['time_of_event'])
                 })
                 .catch(e => {
                   console.log(e);

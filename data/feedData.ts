@@ -9,6 +9,8 @@ const feedData: feedDataProps[] = [
       attachment_type: 'photo',
       url: url,
     },
+    host_id: '3xijFxM9JZbqDdgVGrUFehBRrtr2',
+    description: 'testing...',
     date_created: '2022-11-23T01:11:57.082Z',
     event_details: {
       address: 'string',

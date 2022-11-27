@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 
 const HomeScreen = () => {
   return (
-    <Box bg="transparent">
+    <Box bg="transparent" flex={1}>
       <FlatList
         data={feedData}
         contentContainerStyle={styles.flatlist}

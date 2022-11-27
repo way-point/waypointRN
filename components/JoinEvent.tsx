@@ -1,13 +1,25 @@
 import React from 'react';
-import {Pressable, Text} from 'native-base';
+import {Box, Pressable, Text, useTheme} from 'native-base';
+import {Feather} from '@expo/vector-icons';
+import {useAtom} from 'jotai';
+import {currentTheme} from '../constants/atoms';
 
 const JoinEvent = () => {
+  const [currTheme] = useAtom(currentTheme);
+  const {colors} = useTheme();
+
   return (
-    <Pressable ml="auto" bg="constants.primary" px={2} h={10} borderRadius={10}>
-      <Text mt="auto" mb="auto" color="white">
-        Join Event
-      </Text>
-    </Pressable>
+    <Box ml="auto" flexDir="row" my="auto">
+      <Box my="auto" flexDir="row" mr={2}>
+        <Text mr={1}>3</Text>
+        <Feather name="user" size={18} color={colors[currTheme].text} />
+      </Box>
+      <Pressable bg="constants.primary" px={2} h={10} borderRadius={10}>
+        <Text mt="auto" mb="auto" color="white">
+          Join Event
+        </Text>
+      </Pressable>
+    </Box>
   );
 };
 

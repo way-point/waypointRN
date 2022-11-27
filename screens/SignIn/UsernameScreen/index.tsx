@@ -219,6 +219,8 @@ const UsernameScreen = () => {
                   profileUri,
                   `/images/${auth().currentUser!.uid}/profileImage`,
                 );
+              } else {
+                generated_url = profileUri;
               }
               await createUser(searchTerm, generated_url);
             }}

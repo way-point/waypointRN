@@ -1,5 +1,5 @@
 import {Box, Pressable, Text, useTheme} from 'native-base';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 // import AvatarGroup from './AvatarGroup';
 import Menu from './Menu';
 import {feedDataItemProps} from '../constants/types';
@@ -8,7 +8,6 @@ import {calendarSyncAtom, currentTheme} from '../constants/atoms';
 import {useNavigation} from '@react-navigation/native';
 import {RootProp} from '../navigation/types';
 import JoinEvent from './JoinEvent';
-import WhereTitle from './WhereTitle';
 import Layout from '../constants/Layout';
 import PostImage from './PostImage';
 import TimeState from './WhenTitle';
@@ -27,6 +26,8 @@ import {
   menuUserRenderItem,
 } from '../constants/Menu/menuUserPreview';
 import ProfileImage from './ProfileImage';
+import UidFind from '../api/route/User/UidFind';
+import moment from 'moment';
 
 const styles = StyleSheet.create({
   eventBusy: {
@@ -39,6 +40,19 @@ const Post = ({item}: feedDataItemProps) => {
   const {colors} = useTheme();
   const navigation = useNavigation<RootProp>();
   const [calendarSync] = useAtom(calendarSyncAtom);
+
+  const [name, setName] = useState('');
+
+  const setNewName = async (host_id: string) => {
+    const d = await UidFind(host_id);
+    if ('username' in d) {
+      setName(d.username);
+    }
+  };
+
+  useEffect(() => {
+    setNewName(item.host_id as string);
+  }, [item.host_id]);
 
   const if_busy = (startDate: Date, endDate: Date) => {
     if (calendarSync !== null) {
@@ -70,7 +84,7 @@ const Post = ({item}: feedDataItemProps) => {
             event: item,
           });
         }}>
-        <Box flexDir="row" mb={5}>
+        <Box flexDir="row" mb={1}>
           <Menu
             preview={{
               previewConfig: menuUserPreviewConfig,
@@ -79,35 +93,45 @@ const Post = ({item}: feedDataItemProps) => {
             menuConfig={menuConfigUser}>
             <ProfileImage id={item.host_id as string} size={40} />
           </Menu>
-          <WhereTitle item={item} />
-          <Box ml="auto" flexDir="row" alignItems="center">
-            <TimeState item={item} />
-            {if_busy(
-              item.event_details?.time_of_event.start_time as unknown as Date,
-              item.event_details?.time_of_event.end_time as unknown as Date,
-            ) && (
-              <MaterialIcons
-                name="event-busy"
-                size={24}
-                style={styles.eventBusy}
-                color={colors[currTheme].error}
-              />
-            )}
+          <Box ml={2}>
+            <Box flexDir="row">
+              <Text fontWeight={600}>{name}</Text>
+              {item.date_created && (
+                <Text ml={2} opacity={0.6}>
+                  ･ {moment(item.date_created).fromNow()}
+                </Text>
+              )}
+            </Box>
+            <Box
+              flexDir="row"
+              alignItems="center"
+              my="auto"
+              borderRadius={10}
+              h={5}>
+              <TimeState item={item} />
+              {if_busy(
+                item.event_details?.time_of_event.start_time as unknown as Date,
+                item.event_details?.time_of_event.end_time as unknown as Date,
+              ) && (
+                <MaterialIcons
+                  name="event-busy"
+                  size={20}
+                  style={styles.eventBusy}
+                  color={colors[currTheme].error}
+                />
+              )}
+            </Box>
           </Box>
-        </Box>
-        <Box
-          mb={3}
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center">
-          {/* <AvatarGroup userImages={item.subscribers} /> */}
           <JoinEvent />
         </Box>
-        {/* <Text fontSize={20} mb={5}>
-          {item.description}
-        </Text> */}
+        <Box mb={3} flexDirection="row">
+          {/* <AvatarGroup userImages={item.subscribers} /> */}
+          <Text fontSize={20} mb={5}>
+            {item.description}
+          </Text>
+        </Box>
         <PostImage item={item} />
-        <Box flexDir="row" justifyContent="space-evenly" mt={2}>
+        <Box flexDir="row" justifyContent="space-between" mt={3} mx={3}>
           <Box flexDir="row">
             <Ionicons
               name="heart-outline"

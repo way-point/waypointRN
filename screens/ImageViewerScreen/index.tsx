@@ -241,15 +241,18 @@ const Pinchable = ({item}: feedDataItemProps) => {
     <GestureHandlerRootView style={styles.flex}>
       <PinchGestureHandler onGestureEvent={pinchHandler}>
         <Animated.View style={styles.flex}>
-          {item.type === 'photo' && item.image && (
+          {item.attachment?.attachment_type === 'photo' && (
             <AnimatedBox style={rStyle} mt="auto" mb="auto">
-              <Image width={Layout.window.width} source={{uri: item.image}} />
+              <Image
+                width={Layout.window.width}
+                source={{uri: item.attachment.url}}
+              />
             </AnimatedBox>
           )}
-          {item.type === 'video' && item.video && (
+          {item.attachment?.attachment_type === 'video' && (
             <AnimatedVideo
               style={[styles.video, rStyle]}
-              source={{uri: item.video.uri}}
+              source={{uri: item.attachment.url}}
               resizeMode="contain"
             />
           )}

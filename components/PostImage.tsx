@@ -1,8 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
-import {Box, Pressable, Text} from 'native-base';
+import {Box, Image, Pressable, Text} from 'native-base';
 import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
-import FastImage from 'react-native-fast-image';
 import Video from 'react-native-video';
 import menuConfigImage from '../constants/Menu/menuConfigImage';
 import TimeFormat from '../constants/timeFormat';
@@ -25,65 +24,69 @@ const styles = StyleSheet.create({
 });
 
 const PostImage = ({item}: PostImageProps) => {
-  const [duration, setDuration] = useState(item.video?.duration);
+  const [duration, setDuration] = useState(item.attachment?.duration);
   const navigation = useNavigation<RootProp>();
-  return (
-    <Box>
-      {item.type === 'video' && item.video && (
-        <Menu menuConfig={menuConfigImage}>
-          <Pressable
-            onPress={() => {
-              navigation.navigate('ImageView', {item: item});
-            }}>
-            <Video
-              source={{
-                uri: item.video.uri,
-              }}
-              style={styles.imageBackground}
-              muted
-              repeat
-              onProgress={e => {
-                setDuration(
-                  Math.round(
-                    (item.video?.duration || e.playableDuration) -
-                      e.currentTime,
-                  ),
-                );
-              }}
-              controls={false}
-              resizeMode="cover"
-            />
-            <Box
-              position="absolute"
-              bottom={2}
-              right={2}
-              p={1}
-              bg="constants.transparentDark"
-              alignSelf="flex-end"
-              borderRadius={8}>
-              <Text>{TimeFormat(duration)}</Text>
-            </Box>
-          </Pressable>
-        </Menu>
-      )}
-      {item.type === 'photo' && item.image && (
-        <Menu menuConfig={menuConfigImage} metaData={{imageURL: item.image}}>
-          <Pressable
-            onPress={() => {
-              navigation.navigate('ImageView', {item: item});
-            }}>
-            <FastImage
-              source={{
-                uri: item.image,
-                priority: FastImage.priority.high,
-              }}
-              style={styles.imageBackground}
-            />
-          </Pressable>
-        </Menu>
-      )}
-    </Box>
-  );
+  if (item.attachment?.url !== '') {
+    return (
+      <Box>
+        {item.attachment?.attachment_type === 'video' && (
+          <Menu menuConfig={menuConfigImage}>
+            <Pressable
+              onPress={() => {
+                navigation.navigate('ImageView', {item: item});
+              }}>
+              <Video
+                source={{
+                  uri: item.attachment.url,
+                }}
+                style={styles.imageBackground}
+                muted
+                repeat
+                onProgress={e => {
+                  setDuration(
+                    Math.round(
+                      (item.attachment?.duration || e.playableDuration) -
+                        e.currentTime,
+                    ),
+                  );
+                }}
+                controls={false}
+                resizeMode="cover"
+              />
+              <Box
+                position="absolute"
+                bottom={2}
+                right={2}
+                p={1}
+                bg="constants.transparentDark"
+                alignSelf="flex-end"
+                borderRadius={8}>
+                <Text>{TimeFormat(duration)}</Text>
+              </Box>
+            </Pressable>
+          </Menu>
+        )}
+        {item.attachment?.attachment_type === 'photo' && (
+          <Menu
+            menuConfig={menuConfigImage}
+            metaData={{imageURL: item.attachment.url}}>
+            <Pressable
+              onPress={() => {
+                navigation.navigate('ImageView', {item: item});
+              }}>
+              <Image
+                source={{
+                  uri: item.attachment.url,
+                }}
+                style={styles.imageBackground}
+              />
+            </Pressable>
+          </Menu>
+        )}
+      </Box>
+    );
+  }
+  return null;
 };
 
 export default PostImage;

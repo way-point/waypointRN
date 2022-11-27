@@ -8,7 +8,6 @@ const UidFind = (uid: string) => {
       return response.data;
     })
     .catch(e => {
-      console.log(e);
       if (e instanceof uidFind.Error) {
         const error = e.getActualType();
         return error.data;

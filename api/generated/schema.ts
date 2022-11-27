@@ -157,6 +157,7 @@ export interface definitions {
       };
       /** Format: date-time */
       date_created?: string;
+      description: string;
       event_details?: {
         address: string;
         coordinate: {
@@ -165,7 +166,7 @@ export interface definitions {
           longitude: number;
         };
         time_of_event: {
-          /** Format: date */
+          /** Format: date-time */
           end_time: string;
           /** Format: date-time */
           start_time: string;
@@ -179,9 +180,9 @@ export interface definitions {
     users?: {
       /** Format: date-time */
       date_created?: string;
-      posts?: unknown[];
       profile_uri?: string;
       uid: string;
+      user_posts_id?: unknown;
       username: string;
     }[];
   };
@@ -194,6 +195,7 @@ export interface definitions {
     };
     /** Format: date-time */
     date_created?: string;
+    description: string;
     event_details?: {
       address: string;
       coordinate: {
@@ -202,7 +204,7 @@ export interface definitions {
         longitude: number;
       };
       time_of_event: {
-        /** Format: date */
+        /** Format: date-time */
         end_time: string;
         /** Format: date-time */
         start_time: string;
@@ -217,9 +219,9 @@ export interface definitions {
   User: {
     /** Format: date-time */
     date_created?: string;
-    posts?: unknown[];
     profile_uri?: string;
     uid: string;
+    user_posts_id?: unknown;
     username: string;
   };
   UsernameAndProfileUriSchema: {

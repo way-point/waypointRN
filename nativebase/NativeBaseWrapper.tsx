@@ -30,6 +30,11 @@ const NativeBaseWrapper = ({children}: NativeBaseWrapperProps) => {
         color: `${currTheme}.text`,
       },
     },
+    Image: {
+      defaultProps: {
+        alt: 'image',
+      },
+    },
     Heading: {
       defaultProps: {
         color: `${currTheme}.text`,

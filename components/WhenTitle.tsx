@@ -1,6 +1,7 @@
 import {intervalToDuration} from 'date-fns';
-import {Text} from 'native-base';
+import {Spinner, Text, useTheme} from 'native-base';
 import React, {useState, useEffect} from 'react';
+import {StyleSheet} from 'react-native';
 import {feedDataItemProps} from '../constants/types';
 
 interface timeLeftProps {
@@ -17,6 +18,16 @@ const TimeState = ({item}: feedDataItemProps) => {
     minutes: 0,
     seconds: 0,
   } as timeLeftProps);
+
+  const {colors} = useTheme();
+
+  const styles = StyleSheet.create({
+    t: {
+      fontSize: 10,
+      fontWeight: '600',
+      color: colors.constants.primary,
+    },
+  });
 
   useEffect(() => {
     if (
@@ -44,36 +55,33 @@ const TimeState = ({item}: feedDataItemProps) => {
     new Date(Date.now()) >=
     new Date(item.event_details?.time_of_event.end_time || '')
   ) {
-    return (
-      <Text fontWeight={600} fontSize={20}>
-        Expired
-      </Text>
-    );
+    return <Text style={styles.t}>Expired</Text>;
+  }
+
+  if (
+    timeLeft.days === 0 &&
+    timeLeft.hours === 0 &&
+    timeLeft.minutes === 0 &&
+    timeLeft.seconds === 0
+  ) {
+    return <Spinner />;
   }
 
   if (
     new Date(Date.now()) >=
     new Date(item.event_details?.time_of_event.start_time || '')
   ) {
-    return (
-      <Text fontWeight={600} fontSize={20}>
-        Live
-      </Text>
-    );
+    return <Text style={styles.t}>Live</Text>;
   }
 
   if (timeLeft.days > 1) {
-    return (
-      <Text fontWeight={600} fontSize={20}>{`${timeLeft.days} days`}</Text>
-    );
+    return <Text style={styles.t}>{`${timeLeft.days} days`}</Text>;
   } else {
     if (timeLeft.hours > 1) {
-      return (
-        <Text fontWeight={600} fontSize={20}>{`${timeLeft.hours} hours`}</Text>
-      );
+      return <Text style={styles.t}>{`${timeLeft.hours} hours`}</Text>;
     } else {
       return (
-        <Text fontWeight={600} fontSize={20}>{`${timeLeft.minutes}:${
+        <Text style={styles.t}>{`${timeLeft.minutes}:${
           timeLeft.seconds >= 10 ? timeLeft.seconds : '0' + timeLeft.seconds
         }`}</Text>
       );
