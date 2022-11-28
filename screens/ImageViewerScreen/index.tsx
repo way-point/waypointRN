@@ -118,7 +118,6 @@ const SwipeToLeave = ({children}: SwipeToLeaveProps) => {
           50 / Math.abs(event.translationY === 0 ? 100 : event.translationY);
       },
       onEnd: event => {
-        console.log(event.translationY);
         if (Math.abs(event.translationY) > 150) {
           runOnJS(back)();
         } else {

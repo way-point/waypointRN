@@ -45,7 +45,6 @@ export default menuConfigImage;
 export const copy_image = async (url: string) => {
   const fs = RNFetchBlob.fs;
   let imagePath: string | null = null;
-  console.log('test');
   RNFetchBlob.config({
     fileCache: true,
   })

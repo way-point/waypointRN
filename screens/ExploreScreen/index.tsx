@@ -114,12 +114,7 @@ const ExploreScreen = () => {
           }}>
           {Markers.map((e, i) => {
             return (
-              <Marker
-                key={e.id}
-                coordinate={e.coordinate}
-                onPress={() => {
-                  console.log('testing...');
-                }}>
+              <Marker key={e.id} coordinate={e.coordinate} onPress={() => {}}>
                 <RenderMaker item={feedData[i]} />
               </Marker>
             );

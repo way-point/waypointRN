@@ -13,12 +13,12 @@ const IfUsernameExist = (username: string) => {
     .catch(e => {
       if (e instanceof uidFind.Error) {
         const error = e.getActualType();
-        return error.data;
+        throw error.data;
       }
       const err = {
         errors: ['Service Error'],
       };
-      return err;
+      throw err;
     });
 };
 

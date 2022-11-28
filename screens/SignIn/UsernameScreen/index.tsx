@@ -95,20 +95,26 @@ const UsernameScreen = () => {
   const [curr, send] = useAtom(RegMachine);
   const navigation = useNavigation<SignInProp>();
   const [, setIfSignIn] = useAtom(ifSignedIn);
-  const [u, setUser] = useAtom(userAtom);
+  const [, setUser] = useAtom(userAtom);
 
   // should be pretty confident this works because we already
   // checked if user exists and if username exists. This function
   // creates a user entity in mongodb.
   const createUser = async (username: string, profile_uri?: string) => {
-    const data = await UserCreate(username, profile_uri);
+    const data = await UserCreate(username, profile_uri).catch(err => {
+      if (
+        'errors' in err &&
+        err.errors.length === 1 &&
+        err.errors[0] === 'Invalid ID Token'
+      ) {
+        setIfSignIn(true);
+      }
+    });
     if (data && !('errors' in data)) {
+      console.log(data);
       // user created in mongodb
       if ('username' in data) {
-        setUser({username: data.username, profile_uri: u.profile_uri});
-      }
-      if ('profile_uri' in data) {
-        setUser({username: u.username, profile_uri: data.profile_uri});
+        setUser({username: data.username, profile_uri: data.profile_uri});
       }
       send({type: 'SIGN_IN'});
     }

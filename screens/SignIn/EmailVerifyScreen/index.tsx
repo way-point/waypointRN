@@ -44,7 +44,6 @@ const EmailVerifyScreen = () => {
   }, [ifResendLinkClicked]);
 
   useEffect(() => {
-    console.log(curr.matches('dataEntry'));
     if (curr.matches('attachUsername')) {
       navigation.navigate('Username');
     }

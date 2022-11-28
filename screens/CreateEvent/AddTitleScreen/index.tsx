@@ -39,6 +39,7 @@ import {useNavigation} from '@react-navigation/native';
 import {RootProp} from '../../../navigation/types';
 import Video from 'react-native-video';
 import {feedDataProps} from '../../../constants/types';
+import auth from '@react-native-firebase/auth';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -104,7 +105,6 @@ const AddTitleScreen = () => {
   const snapPoints = useMemo(() => ['25%', '50%'], []);
 
   const handleSheetChanges = useCallback((index: number) => {
-    console.log(index);
     if (index === -1 && descriptionRef.current) {
       descriptionRef.current.focus();
     }
@@ -148,38 +148,38 @@ const AddTitleScreen = () => {
     return result;
   };
 
+  const [hostId, setHostId] = useState('');
+
+  useEffect(() => {
+    const getHost = async () => {
+      const jwt_token = await auth().currentUser?.getIdToken();
+      setHostId(jwt_token || '');
+    };
+    getHost();
+  }, []);
+
   const postData: feedDataProps = {
-    id: '1',
-    host: {
-      id: '2',
-      username: 'Aankur01',
-      profileURL: profile_uri,
+    host_id: hostId,
+    attachment: {
+      attachment_type: curr.context.attachment.type || 'photo',
+      url: curr.context.attachment.uri,
+      duration: curr.context.attachment.duration,
     },
-    image:
-      curr.context.attachment.type === 'photo'
-        ? curr.context.attachment.uri
-        : undefined,
-    video:
-      curr.context.attachment.type === 'video'
-        ? {
-            uri: curr.context.attachment.uri,
-            duration: curr.context.attachment.duration,
-          }
-        : undefined,
-    type: curr.context.attachment.type || 'photo',
-    eventDetails: {
-      where: {
+    event_details: {
+      address: curr.context.eventLocation.address || '',
+      coordinate: {
         longitude: curr.context.eventLocation.coordinate.longitude || 0,
         latitude: curr.context.eventLocation.coordinate.latitude || 0,
-        address: curr.context.eventLocation.address || '',
+        geoPoint: [
+          curr.context.eventLocation.coordinate.longitude,
+          curr.context.eventLocation.coordinate.latitude,
+        ],
       },
-      when: {
-        startDate: curr.context.eventDate.startDate || new Date(Date.now()),
-        endDate: curr.context.eventDate.endDate || new Date(Date.now()),
-        repeat: curr.context.eventDate.repeat,
+      time_of_event: {
+        start_time: curr.context.eventDate.startDate?.toISOString() || '',
+        end_time: curr.context.eventDate.endDate?.toISOString() || '',
       },
     },
-    subscribers: [],
     description: curr.context.message,
   };
 

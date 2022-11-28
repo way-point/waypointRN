@@ -44,9 +44,7 @@ async function onAppleButtonPress() {
   );
 
   // Sign the user in with the credential
-  const data = await auth().signInWithCredential(appleCredential);
-  console.log(data.user.email);
-  console.log(data.user);
+  await auth().signInWithCredential(appleCredential);
 }
 
 async function onGoogleButtonPress() {

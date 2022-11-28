@@ -3,7 +3,7 @@ import {Box, Heading, Pressable, Text} from 'native-base';
 import React from 'react';
 import Post from '../../../components/Post';
 import ProfileImage from '../../../components/ProfileImage';
-import {EventMachine, userAtom} from '../../../constants/atoms';
+import {EventMachine, ifSignedIn, userAtom} from '../../../constants/atoms';
 import convertToUrl from '../../../constants/convertToUrl';
 import {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import {feedDataProps} from '../../../constants/types';
@@ -13,6 +13,7 @@ import PostCreate from '../../../api/route/Post/PostCreate';
 const ReviewScreen = () => {
   const [curr, send] = useAtom(EventMachine);
   const [{profile_uri}] = useAtom(userAtom);
+  const [, setIfSignedIn] = useAtom(ifSignedIn);
 
   const postData: feedDataProps = {
     host_id: auth().currentUser?.uid || '',
@@ -69,14 +70,19 @@ const ReviewScreen = () => {
                 send({type: 'ENTER_URI', value: {uri: d}});
               }
 
-              console.log(postData);
-
-              PostCreate({data: postData})
-                .then(ch => {
-                  console.log(ch);
+              await PostCreate({data: postData})
+                .then(res => {
+                  console.log(res);
                 })
-                .catch(e => {
-                  console.log(e);
+                .catch(err => {
+                  console.log(err);
+                  if (
+                    'errors' in err &&
+                    err.errors.length === 1 &&
+                    err.errors[0] === 'Invalid ID Token'
+                  ) {
+                    setIfSignedIn(true);
+                  }
                 });
             }}
             px={2}
