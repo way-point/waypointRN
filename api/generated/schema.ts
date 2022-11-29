@@ -167,6 +167,26 @@ export interface paths {
       };
     };
   };
+  '/api/user/numFollowerAndFollowing': {
+    get: {
+      parameters: {
+        query: {
+          uid: unknown;
+        };
+      };
+      responses: {
+        200: {
+          schema: definitions['NumFollowerAndFollowingSchema'];
+        };
+        400: {
+          schema: definitions['GenericErrorSchema'];
+        };
+        500: {
+          schema: definitions['GenericErrorSchema'];
+        };
+      };
+    };
+  };
   '/api/user/uidFind': {
     get: {
       parameters: {
@@ -312,6 +332,10 @@ export interface definitions {
       user_posts_id?: unknown;
       username: string;
     }[];
+  };
+  NumFollowerAndFollowingSchema: {
+    followers?: number;
+    following?: number;
   };
   PostSchema: {
     attachment?: {

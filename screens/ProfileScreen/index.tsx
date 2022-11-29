@@ -9,6 +9,7 @@ import auth from '@react-native-firebase/auth';
 import {feedDataProps} from '../../constants/types';
 import Post from '../../components/Post';
 import {StyleSheet} from 'react-native';
+import NumFollowerAndFollowing from '../../api/route/User/NumFollowerAndFollowing';
 
 const styles = StyleSheet.create({
   flatlist: {
@@ -20,9 +21,15 @@ const ProfileScreen = () => {
   const [{username}] = useAtom(userAtom);
   const [posts, setPosts] = useState([] as feedDataProps[]);
 
+  const [followers, setFollowers] = useState(0);
+  const [following, setFollowing] = useState(0);
+
   useEffect(() => {
     const getUserPosts = async () => {
       const uid = await auth().currentUser?.uid;
+      const numFollowerAndFollowing = await NumFollowerAndFollowing(uid || '');
+      setFollowers(numFollowerAndFollowing.followers || 0);
+      setFollowing(numFollowerAndFollowing.following || 0);
       const user = await findByUser(uid || '');
       if (user.posts && user.posts.length > 0) {
         setPosts(user.posts);
@@ -47,15 +54,15 @@ const ProfileScreen = () => {
         </Box>
         <Box flexDir="row">
           <Box alignItems="center" mx={2}>
-            <Text fontWeight="bold">20</Text>
+            <Text fontWeight="bold">{posts.length}</Text>
             <Text>Events</Text>
           </Box>
           <Box alignItems="center" mx={2}>
-            <Text fontWeight="bold">32</Text>
+            <Text fontWeight="bold">{followers}</Text>
             <Text>Followers</Text>
           </Box>
           <Box alignItems="center" mx={2}>
-            <Text fontWeight="bold">32</Text>
+            <Text fontWeight="bold">{following}</Text>
             <Text>Following</Text>
           </Box>
         </Box>
