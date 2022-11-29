@@ -101,17 +101,8 @@ const UsernameScreen = () => {
   // checked if user exists and if username exists. This function
   // creates a user entity in mongodb.
   const createUser = async (username: string, profile_uri?: string) => {
-    const data = await UserCreate(username, profile_uri).catch(err => {
-      if (
-        'errors' in err &&
-        err.errors.length === 1 &&
-        err.errors[0] === 'Invalid ID Token'
-      ) {
-        setIfSignIn(true);
-      }
-    });
+    const data = await UserCreate(username, profile_uri);
     if (data && !('errors' in data)) {
-      console.log(data);
       // user created in mongodb
       if ('username' in data) {
         setUser({username: data.username, profile_uri: data.profile_uri});
@@ -170,7 +161,7 @@ const UsernameScreen = () => {
             Let's name yourself
           </Text>
           <Box ml="auto" mr="auto">
-            <ProfileImage uri={profileUri} size={100} />
+            <ProfileImage id={auth().currentUser?.uid} size={100} />
             <Box flexDir="row" mt={1} justifyContent="space-around">
               <Pressable
                 onPress={async () => {

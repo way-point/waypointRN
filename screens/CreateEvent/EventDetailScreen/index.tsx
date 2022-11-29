@@ -58,7 +58,6 @@ const EventDetailsScreen = () => {
         w={CONTAINER_WIDTH}
         p={SAFE_AREA_PADDING.paddingLeft}>
         <Box justifyContent="space-around" flexDir="row">
-          {/* <ProfileImage uri={event.subscribers[0].profileURL} size={42} /> */}
           <Box>
             <Text fontSize={20}>Testing this out</Text>
             <Menu

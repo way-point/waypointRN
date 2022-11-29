@@ -3,7 +3,7 @@ import {Box, Heading, Pressable, Text} from 'native-base';
 import React from 'react';
 import Post from '../../../components/Post';
 import ProfileImage from '../../../components/ProfileImage';
-import {EventMachine, ifSignedIn, userAtom} from '../../../constants/atoms';
+import {EventMachine, ifSignedIn} from '../../../constants/atoms';
 import convertToUrl from '../../../constants/convertToUrl';
 import {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import {feedDataProps} from '../../../constants/types';
@@ -12,7 +12,6 @@ import PostCreate from '../../../api/route/Post/PostCreate';
 
 const ReviewScreen = () => {
   const [curr, send] = useAtom(EventMachine);
-  const [{profile_uri}] = useAtom(userAtom);
   const [, setIfSignedIn] = useAtom(ifSignedIn);
 
   const postData: feedDataProps = {
@@ -49,7 +48,7 @@ const ReviewScreen = () => {
           mb={5}
           mt={SAFE_AREA_PADDING.paddingLeft}>
           <Box bg="transparent" flexDir="row">
-            <ProfileImage uri={profile_uri} />
+            <ProfileImage id={auth().currentUser?.uid} />
           </Box>
           <Pressable
             bg="constants.primary"

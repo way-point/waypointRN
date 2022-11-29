@@ -46,6 +46,7 @@ import EmailVerifyScreen from '../screens/SignIn/EmailVerifyScreen';
 import UsernameScreen from '../screens/SignIn/UsernameScreen';
 import SettingScreen from '../screens/Settings/SettingScreen';
 import AccountInformationScreen from '../screens/Settings/AccountInformationScreen';
+import auth from '@react-native-firebase/auth';
 
 const BottomTabNavigator = () => {
   const Stack = createBottomTabNavigator<RootTabParamList>();
@@ -53,7 +54,6 @@ const BottomTabNavigator = () => {
   const [currTheme] = useAtom(currentTheme);
   const {colors} = useTheme();
   const navigation = useNavigation<RootProp>();
-  const [{profile_uri}] = useAtom(userAtom);
 
   return (
     <Stack.Navigator
@@ -93,7 +93,7 @@ const BottomTabNavigator = () => {
                 }}
                 backgroundColor="transparent"
                 pl={3}>
-                <ProfileImage uri={profile_uri} />
+                <ProfileImage id={auth().currentUser?.uid} />
               </Pressable>
             );
           },
@@ -140,7 +140,7 @@ const BottomTabNavigator = () => {
                 }}
                 backgroundColor="transparent"
                 pl={3}>
-                <ProfileImage uri={profile_uri} />
+                <ProfileImage id={auth().currentUser?.uid} />
               </Pressable>
             );
           },
@@ -167,7 +167,7 @@ const BottomTabNavigator = () => {
           headerLeft: () => {
             return (
               <Box backgroundColor="transparent" pl={3}>
-                <ProfileImage uri={profile_uri} />
+                <ProfileImage id={auth().currentUser?.uid} />
               </Box>
             );
           },
@@ -196,14 +196,14 @@ const BottomTabNavigator = () => {
 };
 
 function CustomDrawerContent(props: DrawerContentComponentProps) {
-  const [{username, profile_uri}] = useAtom(userAtom);
+  const [{username}] = useAtom(userAtom);
   return (
     <DrawerContentScrollView {...props}>
       <Pressable
         bg="transparent"
         px={SAFE_AREA_PADDING.paddingLeft}
         flexDir="row">
-        <ProfileImage uri={profile_uri} />
+        <ProfileImage id={auth().currentUser?.uid} />
         <Text fontSize={18} mt="auto" mb="auto" ml={2} opacity={0.8}>
           @{username}
         </Text>

@@ -38,7 +38,7 @@ const AccountInformationScreen = () => {
   const [data, setData] = useState(null as any);
   const [, send] = useAtom(RegMachine);
   const [, setIfSignIn] = useAtom(ifSignedIn);
-  const [{profile_uri}, setUser] = useAtom(userAtom);
+  const [, setUser] = useAtom(userAtom);
 
   const LoadUserInfo = async () => {
     const d = await UidFind(auth().currentUser?.uid || '');
@@ -88,7 +88,7 @@ const AccountInformationScreen = () => {
           ) : (
             <Stack space={4}>
               <Box ml="auto" mr="auto">
-                <ProfileImage uri={profile_uri} size={100} />
+                <ProfileImage id={auth().currentUser?.uid} size={100} />
               </Box>
               <Box flexDir="row" justifyContent="space-between">
                 <Box flexDir="row">

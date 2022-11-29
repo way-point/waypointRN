@@ -4,6 +4,49 @@
  */
 
 export interface paths {
+  '/api/post/findByUser': {
+    get: {
+      parameters: {
+        query: {
+          uid: unknown;
+        };
+      };
+      responses: {
+        /** Returns all posts made by that user */
+        200: {
+          schema: definitions['NestedPosts'];
+        };
+        400: {
+          schema: definitions['GenericErrorSchema'];
+        };
+        500: {
+          schema: definitions['GenericErrorSchema'];
+        };
+      };
+    };
+  };
+  '/api/post/findNearestPoint': {
+    get: {
+      parameters: {
+        query: {
+          lat: unknown;
+          lng: unknown;
+        };
+      };
+      responses: {
+        /** Returns the first FIVE posts as a list */
+        200: {
+          schema: definitions['NestedPosts'];
+        };
+        400: {
+          schema: definitions['GenericErrorSchema'];
+        };
+        500: {
+          schema: definitions['GenericErrorSchema'];
+        };
+      };
+    };
+  };
   '/api/post/postCreate': {
     post: {
       parameters: {
@@ -28,18 +71,71 @@ export interface paths {
       };
     };
   };
-  '/api/post/postFind': {
+  '/api/user/checkRelationshipToUser': {
     get: {
       parameters: {
         query: {
-          lat: unknown;
-          lng: unknown;
+          uid: unknown;
+        };
+        header: {
+          /** JWT Token given by Signed in user */
+          authorization_bearer: unknown;
         };
       };
       responses: {
-        /** Returns the first FIVE posts as a list */
+        /** Returns the friendship model */
         200: {
-          schema: definitions['NestedPosts'];
+          schema: definitions['RelationshipOutputSchema'];
+        };
+        400: {
+          schema: definitions['GenericErrorSchema'];
+        };
+        500: {
+          schema: definitions['GenericErrorSchema'];
+        };
+      };
+    };
+  };
+  '/api/user/followBackUser': {
+    post: {
+      parameters: {
+        body: {
+          uid: definitions['UidSchema'];
+        };
+        header: {
+          /** JWT Token given by Signed in user */
+          authorization_bearer: unknown;
+        };
+      };
+      responses: {
+        /** Returns the friendship model */
+        200: {
+          schema: definitions['FriendshipSchema'];
+        };
+        400: {
+          schema: definitions['GenericErrorSchema'];
+        };
+        500: {
+          schema: definitions['GenericErrorSchema'];
+        };
+      };
+    };
+  };
+  '/api/user/followUser': {
+    post: {
+      parameters: {
+        body: {
+          uid: definitions['UidSchema'];
+        };
+        header: {
+          /** JWT Token given by Signed in user */
+          authorization_bearer: unknown;
+        };
+      };
+      responses: {
+        /** Returns the friendship model */
+        200: {
+          schema: definitions['FriendshipSchema'];
         };
         400: {
           schema: definitions['GenericErrorSchema'];
@@ -83,6 +179,29 @@ export interface paths {
         200: {
           schema: definitions['User'];
         };
+        400: {
+          schema: definitions['GenericErrorSchema'];
+        };
+        500: {
+          schema: definitions['GenericErrorSchema'];
+        };
+      };
+    };
+  };
+  '/api/user/unFollow': {
+    post: {
+      parameters: {
+        body: {
+          uid: definitions['UidSchema'];
+        };
+        header: {
+          /** JWT Token given by Signed in user */
+          authorization_bearer: unknown;
+        };
+      };
+      responses: {
+        /** returned if succesfully unfollowed */
+        200: unknown;
         400: {
           schema: definitions['GenericErrorSchema'];
         };
@@ -141,6 +260,13 @@ export interface paths {
 }
 
 export interface definitions {
+  FriendshipSchema: {
+    id?: unknown;
+    requested_by: unknown;
+    requested_to: unknown;
+    /** @enum {string} */
+    status?: 'new' | 'ongoing' | 'done';
+  };
   GenericErrorSchema: {
     errors?: string[];
   };
@@ -180,6 +306,7 @@ export interface definitions {
     users?: {
       /** Format: date-time */
       date_created?: string;
+      followers_id?: unknown;
       profile_uri?: string;
       uid: string;
       user_posts_id?: unknown;
@@ -213,12 +340,18 @@ export interface definitions {
     host_id?: unknown;
     id?: unknown;
   };
+  RelationshipOutputSchema: {
+    id?: unknown;
+    /** @enum {string} */
+    status?: 'not following' | 'could follow back' | 'following';
+  };
   UidSchema: {
     uid: string;
   };
   User: {
     /** Format: date-time */
     date_created?: string;
+    followers_id?: unknown;
     profile_uri?: string;
     uid: string;
     user_posts_id?: unknown;
