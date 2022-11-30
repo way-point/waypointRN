@@ -21,13 +21,10 @@ import {
 } from '@expo/vector-icons';
 import {StyleSheet} from 'react-native';
 import menuConfigUser from '../constants/Menu/menuConfigUser';
-import {
-  menuUserPreviewConfig,
-  menuUserRenderItem,
-} from '../constants/Menu/menuUserPreview';
 import ProfileImage from './ProfileImage';
 import UidFind from '../api/route/User/UidFind';
 import moment from 'moment';
+import {UserProfileScreen} from '../screens/UserProfileScreen';
 
 const styles = StyleSheet.create({
   eventBusy: {
@@ -86,9 +83,21 @@ const Post = ({item}: feedDataItemProps) => {
         }}>
         <Box flexDir="row" mb={1}>
           <Menu
+            onPressMenuPreview={() => {
+              navigation.navigate('Profile', {host_id: item.host_id as string});
+            }}
             preview={{
-              previewConfig: menuUserPreviewConfig,
-              previewRenderItem: menuUserRenderItem,
+              previewConfig: {
+                previewType: 'CUSTOM',
+                previewSize: 'STRETCH',
+              },
+              previewRenderItem: () => {
+                return (
+                  <Box>
+                    <UserProfileScreen host_id={item.host_id as string} />
+                  </Box>
+                );
+              },
             }}
             menuConfig={menuConfigUser}>
             <ProfileImage id={item.host_id as string} size={40} />

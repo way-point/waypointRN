@@ -55,6 +55,7 @@ import AccountInformationScreen from '../screens/Settings/AccountInformationScre
 import auth from '@react-native-firebase/auth';
 import findFollowerRequests from '../api/route/User/FindFollowerRequests';
 import NotificationScreen from '../screens/NotificationScreen';
+import {NavigationProfileScreen} from '../screens/UserProfileScreen';
 
 const BottomTabNavigator = () => {
   const Stack = createBottomTabNavigator<RootTabParamList>();
@@ -314,6 +315,11 @@ const RootNavigator = () => {
         <Stack.Screen name="Repeat" component={RepeatScreen} />
         <Stack.Screen name="SearchAddress" component={SearchAddressScreen} />
         <Stack.Screen name="Review" component={ReviewScreen} />
+        <Stack.Screen
+          name="Profile"
+          component={NavigationProfileScreen}
+          initialParams={{host_id: auth().currentUser?.uid || ''}}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );

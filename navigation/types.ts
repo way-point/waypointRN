@@ -27,6 +27,7 @@ export type RootStackParamList = {
   Repeat: undefined;
   SearchAddress: undefined;
   Review: undefined;
+  Profile: {host_id: string};
   ImageView: {item: feedDataProps};
 };
 
