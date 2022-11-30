@@ -7,7 +7,7 @@ import {
 import {useAtom} from 'jotai';
 import {Box, Input, Pressable, Spinner, Text, useTheme} from 'native-base';
 import {Platform, StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Feather, Ionicons, FontAwesome5, AntDesign} from '@expo/vector-icons';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
@@ -25,7 +25,13 @@ import {
   SettingTabParamList,
   SignInStackParamList,
 } from './types';
-import {cityAtom, currentTheme, ifSignedIn, userAtom} from '../constants/atoms';
+import {
+  cityAtom,
+  currentTheme,
+  ifSignedIn,
+  userAtom,
+  UserRecommendations,
+} from '../constants/atoms';
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/SignIn/LoginScreen';
 import RegisterScreen from '../screens/SignIn/RegisterScreen';
@@ -47,13 +53,27 @@ import UsernameScreen from '../screens/SignIn/UsernameScreen';
 import SettingScreen from '../screens/Settings/SettingScreen';
 import AccountInformationScreen from '../screens/Settings/AccountInformationScreen';
 import auth from '@react-native-firebase/auth';
+import findFollowerRequests from '../api/route/User/FindFollowerRequests';
+import NotificationScreen from '../screens/NotificationScreen';
 
 const BottomTabNavigator = () => {
   const Stack = createBottomTabNavigator<RootTabParamList>();
   const [city] = useAtom(cityAtom);
+  const [userRecommendations, setUserRecommendations] =
+    useAtom(UserRecommendations);
   const [currTheme] = useAtom(currentTheme);
   const {colors} = useTheme();
   const navigation = useNavigation<RootProp>();
+
+  useEffect(() => {
+    const findRequests = async () => {
+      findFollowerRequests(undefined).then(res => {
+        setUserRecommendations(res);
+      });
+    };
+    findRequests();
+    // setTimeout(findRequests, 1000 * 60);
+  }, [setUserRecommendations]);
 
   return (
     <Stack.Navigator
@@ -153,7 +173,7 @@ const BottomTabNavigator = () => {
 
       <Stack.Screen
         name="Notification"
-        component={HomeScreen}
+        component={NotificationScreen}
         options={{
           tabBarIcon: ({color, focused}) => {
             return (
@@ -164,6 +184,7 @@ const BottomTabNavigator = () => {
               />
             );
           },
+          tabBarBadge: userRecommendations.relations_new?.length || undefined,
           headerLeft: () => {
             return (
               <Box backgroundColor="transparent" pl={3}>

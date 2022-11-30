@@ -96,6 +96,30 @@ export interface paths {
       };
     };
   };
+  '/api/user/findFollowerRequests': {
+    post: {
+      parameters: {
+        body: {
+          date: definitions['DateSchema'];
+        };
+        header: {
+          /** JWT Token given by Signed in user */
+          authorization_bearer: unknown;
+        };
+      };
+      responses: {
+        200: {
+          schema: definitions['NestedFollowersRelation'];
+        };
+        400: {
+          schema: definitions['GenericErrorSchema'];
+        };
+        500: {
+          schema: definitions['GenericErrorSchema'];
+        };
+      };
+    };
+  };
   '/api/user/followBackUser': {
     post: {
       parameters: {
@@ -280,7 +304,13 @@ export interface paths {
 }
 
 export interface definitions {
+  DateSchema: {
+    /** Format: date-time */
+    date?: string;
+  };
   FriendshipSchema: {
+    /** Format: date-time */
+    date_created?: string;
     id?: unknown;
     requested_by: unknown;
     requested_to: unknown;
@@ -292,6 +322,26 @@ export interface definitions {
   };
   IfUserExistSchema: {
     ifUserExist?: boolean;
+  };
+  NestedFollowersRelation: {
+    relations_new?: {
+      /** Format: date-time */
+      date_created?: string;
+      followers_id?: unknown;
+      profile_uri?: string;
+      uid: string;
+      user_posts_id?: unknown;
+      username: string;
+    }[];
+    relations_old?: {
+      /** Format: date-time */
+      date_created?: string;
+      followers_id?: unknown;
+      profile_uri?: string;
+      uid: string;
+      user_posts_id?: unknown;
+      username: string;
+    }[];
   };
   NestedPosts: {
     posts?: {
@@ -334,8 +384,8 @@ export interface definitions {
     }[];
   };
   NumFollowerAndFollowingSchema: {
-    followers?: number;
-    following?: number;
+    followers: number;
+    following: number;
   };
   PostSchema: {
     attachment?: {

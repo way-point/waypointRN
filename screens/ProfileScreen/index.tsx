@@ -44,32 +44,31 @@ const ProfileScreen = () => {
         px={SAFE_AREA_PADDING.paddingLeft}
         pt={SAFE_AREA_PADDING.paddingLeft}
         flexDir="row"
+        bg="transparent"
         justifyContent="space-around"
         alignItems="center">
-        <Box alignItems="center">
+        <Box alignItems="center" bg="transparent">
           <ProfileImage id={auth().currentUser?.uid} size={90} />
           <Text mt={2} fontWeight="bold">
             {username}
           </Text>
         </Box>
-        <Box flexDir="row">
-          <Box alignItems="center" mx={2}>
+        <Box bg="transparent" flexDir="row">
+          <Box bg="transparent" alignItems="center" mx={2}>
             <Text fontWeight="bold">{posts.length}</Text>
             <Text>Events</Text>
           </Box>
-          <Box alignItems="center" mx={2}>
+          <Box bg="transparent" alignItems="center" mx={2}>
             <Text fontWeight="bold">{followers}</Text>
             <Text>Followers</Text>
           </Box>
-          <Box alignItems="center" mx={2}>
+          <Box bg="transparent" alignItems="center" mx={2}>
             <Text fontWeight="bold">{following}</Text>
             <Text>Following</Text>
           </Box>
         </Box>
       </Box>
-      <Box>
-        <Divider mt={5} />
-      </Box>
+      <Divider mt={5} />
       <FlatList
         data={posts}
         contentContainerStyle={styles.flatlist}
