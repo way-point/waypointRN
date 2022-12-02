@@ -7,7 +7,7 @@ export const fetcher = Fetcher.for<paths>();
 export const configureFetcher = async () => {
   const jwt_token = await auth().currentUser?.getIdToken();
   fetcher.configure({
-    baseUrl: 'http://100.64.16.97:8080',
+    baseUrl: 'http://169.233.204.69:8080',
     init: {
       headers: {
         authorization_bearer: jwt_token || '',

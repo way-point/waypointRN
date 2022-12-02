@@ -128,15 +128,6 @@ PODS:
   - GTMSessionFetcher/Core (2.2.0)
   - hermes-engine (0.70.0)
   - libevent (2.1.12)
-  - libwebp (1.2.3):
-    - libwebp/demux (= 1.2.3)
-    - libwebp/mux (= 1.2.3)
-    - libwebp/webp (= 1.2.3)
-  - libwebp/demux (1.2.3):
-    - libwebp/webp
-  - libwebp/mux (1.2.3):
-    - libwebp/demux
-  - libwebp/webp (1.2.3)
   - PromisesObjC (2.1.1)
   - RCT-Folly (2021.07.22.00):
     - boost
@@ -465,10 +456,6 @@ PODS:
     - React
   - RNDateTimePicker (6.3.2):
     - React-Core
-  - RNFastImage (8.6.3):
-    - React-Core
-    - SDWebImage (~> 5.11.1)
-    - SDWebImageWebPCoder (~> 0.8.4)
   - RNFBApp (16.4.3):
     - Firebase/CoreOnly (= 10.1.0)
     - React-Core
@@ -523,12 +510,6 @@ PODS:
     - React-Core
   - RNSVG (13.1.0):
     - React-Core
-  - SDWebImage (5.11.1):
-    - SDWebImage/Core (= 5.11.1)
-  - SDWebImage/Core (5.11.1)
-  - SDWebImageWebPCoder (0.8.5):
-    - libwebp (~> 1.0)
-    - SDWebImage/Core (~> 5.10)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -596,7 +577,6 @@ DEPENDENCIES:
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - RNConvertPhAsset (from `../node_modules/react-native-convert-ph-asset`)
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
-  - RNFastImage (from `../node_modules/react-native-fast-image`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
@@ -629,10 +609,7 @@ SPEC REPOS:
     - GTMAppAuth
     - GTMSessionFetcher
     - libevent
-    - libwebp
     - PromisesObjC
-    - SDWebImage
-    - SDWebImageWebPCoder
 
 EXTERNAL SOURCES:
   boost:
@@ -755,8 +732,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-convert-ph-asset"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
-  RNFastImage:
-    :path: "../node_modules/react-native-fast-image"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
@@ -820,7 +795,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: d62ffccea5108bb9e7762ee121ae63bbdd2c6303
   hermes-engine: 8e84f1284180801c1a1b241f443ba64f931ff561
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  libwebp: 60305b2e989864154bd9be3d772730f08fc6a59c
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: d0e501e8024056451424aa341daa078c0c620b0d
@@ -862,7 +836,6 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
   RNDateTimePicker: 4f1fc917f5af9d9ae4c5fc0c63a4474d61338693
-  RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
   RNFBApp: e2157f61e4769b53641df8948c534580630cb50a
   RNFBAuth: fab3fbb2a96ca1f24d7e890a1673bdf3fbd5a6ae
   RNFBStorage: 8addb089a67f88833e34f8ef8dde13a0a64c0050
@@ -874,8 +847,6 @@ SPEC CHECKSUMS:
   RNShare: be91a5c149585affb02c25b351bd07ba927c7006
   RNStaticSafeAreaInsets: 055ddbf5e476321720457cdaeec0ff2ba40ec1b8
   RNSVG: 1153e8eeb34c788841016c517dba9f57f20b762f
-  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
-  SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   Yoga: 82c9e8f652789f67d98bed5aef9d6653f71b04a9
 
 PODFILE CHECKSUM: 9c7a405e3f954b4b34e3df91a47d7fce5ba3890e
