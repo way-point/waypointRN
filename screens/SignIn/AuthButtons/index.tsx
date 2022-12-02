@@ -10,7 +10,7 @@ import React, {useEffect} from 'react';
 import {Platform, StyleSheet} from 'react-native';
 import Google from '../../../assets/images/SignIn/Google';
 import {currentTheme, RegMachine} from '../../../constants/atoms';
-import {WEB_CLIENT_ID} from '../../../secrets';
+import {REACT_APP_WEB_CLIENT_ID} from '@env';
 
 const styles = StyleSheet.create({
   google: {
@@ -64,7 +64,7 @@ const AuthButtons = () => {
 
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId: WEB_CLIENT_ID,
+      webClientId: REACT_APP_WEB_CLIENT_ID,
     });
   }, []);
 

@@ -18,7 +18,7 @@ import {useNavigation} from '@react-navigation/native';
 import {RootProp} from '../../../navigation/types';
 import {Feather} from '@expo/vector-icons';
 import Geolocation from '@react-native-community/geolocation';
-import {AUTOCOMPLETE_API_KEY, GEOCODE_API_KEY} from '../../../secrets';
+import {REACT_APP_AUTOCOMPLETE_API_KEY, REACT_APP_GEOCODE_API_KEY} from '@env';
 
 interface coordsProps {
   latitude: number | undefined;
@@ -75,7 +75,7 @@ const SearchAddressScreen = () => {
         }
         if (Platform.OS === 'android') {
           const fet = await fetch(
-            `https://api.geoapify.com/v1/geocode/reverse?lat=${coords.latitude}&lon=${coords.longitude}&apiKey=${GEOCODE_API_KEY}`,
+            `https://api.geoapify.com/v1/geocode/reverse?lat=${coords.latitude}&lon=${coords.longitude}&apiKey=${REACT_APP_GEOCODE_API_KEY}`,
           );
           const data = await fet.json();
           address = data.features[0].properties.formatted;
@@ -180,7 +180,7 @@ const SearchAddressScreen = () => {
 
             if (Platform.OS === 'android') {
               const GeoSuggestions = await fetch(
-                `https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&format=json&apiKey=${AUTOCOMPLETE_API_KEY}`,
+                `https://api.geoapify.com/v1/geocode/autocomplete?text=${text}&format=json&apiKey=${REACT_APP_AUTOCOMPLETE_API_KEY}`,
                 {method: 'GET'},
               );
               const {results} = await GeoSuggestions.json();

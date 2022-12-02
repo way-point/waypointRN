@@ -20,7 +20,7 @@ import {Feather} from '@expo/vector-icons';
 import Geolocation from '@react-native-community/geolocation';
 import AddressAutocomplete from 'react-native-address-autocomplete';
 import {Platform} from 'react-native';
-import {GEOCODE_API_KEY} from '../../../secrets';
+import {REACT_APP_GEOCODE_API_KEY} from '@env';
 import auth from '@react-native-firebase/auth';
 
 const formatAMPM = (date: Date) => {
@@ -92,7 +92,7 @@ const AddDateScreen = () => {
         }
         if (Platform.OS === 'android') {
           const fet = await fetch(
-            `https://api.geoapify.com/v1/geocode/reverse?lat=${coords.latitude}&lon=${coords.longitude}&apiKey=${GEOCODE_API_KEY}`,
+            `https://api.geoapify.com/v1/geocode/reverse?lat=${coords.latitude}&lon=${coords.longitude}&apiKey=${REACT_APP_GEOCODE_API_KEY}`,
           );
           const data = await fet.json();
           address = data.features[0].properties.formatted;

@@ -5,6 +5,10 @@
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
     /* Completeness */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
+    "baseUrl": ".", // this must be specified if "paths" is specified.
+    "paths": {
+      "@env": ["node_modules/react-native-dotenv"] // this mapping is relative to "baseUrl"
+    }
   }
 }
