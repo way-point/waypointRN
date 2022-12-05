@@ -7,7 +7,7 @@ import {
   TextArea,
   useTheme,
 } from 'native-base';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   ImageBackground,
   Keyboard,
@@ -33,7 +33,6 @@ import {
 } from 'expo-image-picker';
 import {Album, getAlbumsAsync} from 'expo-media-library';
 import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import ChooseEvents from '../../../components/ChooseEvents';
 import TimeFormat from '../../../constants/timeFormat';
 import {useNavigation} from '@react-navigation/native';
 import {RootProp} from '../../../navigation/types';
@@ -99,19 +98,6 @@ const AddTitleScreen = () => {
   const [curr, send] = useAtom(EventMachine);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-
-  // variables
-  const snapPoints = useMemo(() => ['25%', '50%'], []);
-
-  const handleSheetChanges = useCallback((index: number) => {
-    if (index === -1 && descriptionRef.current) {
-      descriptionRef.current.focus();
-    }
-  }, []);
-  // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
 
   const heightAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -198,48 +184,6 @@ const AddTitleScreen = () => {
             <Box bg="transparent" flexDir="row" justifyContent="space-between">
               <Box bg="transparent" flexDir="row">
                 <ProfileImage id={auth().currentUser?.uid} />
-                <Box my="auto" bg="transparent">
-                  <Pressable
-                    onPress={() => {
-                      Keyboard.dismiss();
-                      handlePresentModalPress();
-                    }}
-                    borderColor="constants.primary"
-                    flexDir="row"
-                    borderWidth={2}
-                    borderRadius={10}
-                    ml={3}
-                    px={1}>
-                    <Text color="constants.primary" px={1} my="auto">
-                      Public
-                    </Text>
-                    <Feather
-                      name="chevron-down"
-                      size={24}
-                      style={styles.carrot}
-                      color={colors.constants.primary}
-                    />
-                  </Pressable>
-                  <BottomSheetModal
-                    containerStyle={{
-                      backgroundColor: colors.constants.transparentDark,
-                    }}
-                    style={styles.transparent}
-                    stackBehavior="push"
-                    handleStyle={[
-                      {backgroundColor: colors[currTheme].textField},
-                      styles.radius,
-                    ]}
-                    handleIndicatorStyle={{
-                      backgroundColor: colors[currTheme].text,
-                    }}
-                    ref={bottomSheetModalRef}
-                    index={1}
-                    snapPoints={snapPoints}
-                    onChange={handleSheetChanges}>
-                    <ChooseEvents />
-                  </BottomSheetModal>
-                </Box>
               </Box>
               <Pressable
                 bg="constants.primary"
