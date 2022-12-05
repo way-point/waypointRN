@@ -39,6 +39,7 @@ import {RootProp} from '../../../navigation/types';
 import Video from 'react-native-video';
 import {feedDataProps} from '../../../constants/types';
 import auth from '@react-native-firebase/auth';
+import LinkPreviewBox from '../../../components/LinkPreview';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -96,7 +97,6 @@ const AddTitleScreen = () => {
   const height = useSharedValue(0);
   const [albums, setAlbums] = useState([] as Album[]);
   const [curr, send] = useAtom(EventMachine);
-
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   const heightAnimatedStyle = useAnimatedStyle(() => {
@@ -225,6 +225,13 @@ const AddTitleScreen = () => {
               placeholder="What's the occasion?"
               w="100%"
             />
+
+            {!curr.context.attachment.uri && (
+              <Box mt={3} bg="transparent">
+                <LinkPreviewBox message={curr.context.message} />
+              </Box>
+            )}
+
             {curr.context.attachment.type === 'photo' &&
               curr.context.attachment.uri && (
                 <Pressable

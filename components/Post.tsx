@@ -25,6 +25,7 @@ import ProfileImage from './ProfileImage';
 import UidFind from '../api/route/User/UidFind';
 import moment from 'moment';
 import {UserProfileScreen} from '../screens/UserProfileScreen';
+import LinkPreviewBox from './LinkPreview';
 
 const styles = StyleSheet.create({
   eventBusy: {
@@ -139,6 +140,11 @@ const Post = ({item}: feedDataItemProps) => {
             {item.description}
           </Text>
         </Box>
+        {!item?.attachment?.url && (
+          <Box mt={3} bg="transparent">
+            <LinkPreviewBox message={item.description} />
+          </Box>
+        )}
         <PostImage item={item} />
         <Box flexDir="row" justifyContent="space-between" mt={3} mx={3}>
           <Box flexDir="row">
