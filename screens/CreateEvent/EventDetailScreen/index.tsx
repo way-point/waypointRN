@@ -1,56 +1,21 @@
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {Box, ScrollView, Text, Image} from 'native-base';
 import React from 'react';
-import {ImageBackground, StyleSheet} from 'react-native';
-// import AvatarGroup from '../../../components/AvatarGroup';
-import JoinEvent from '../../../components/JoinEvent';
 import Menu from '../../../components/Menu';
-// import ProfileImage from '../../../components/ProfileImage';
-import WhereTitle from '../../../components/WhereTitle';
+import Post from '../../../components/Post';
 import {CONTAINER_WIDTH, SAFE_AREA_PADDING} from '../../../constants/Layout';
 import menuConfigImage from '../../../constants/Menu/menuConfigImage';
+import {feedDataProps} from '../../../constants/types';
 import {RootStackParamList} from '../../../navigation/types';
 
-const styles = StyleSheet.create({
-  image: {
-    width: '100%',
-    height: 200,
-  },
-});
+interface EventDetailsProps {
+  event: feedDataProps;
+}
 
-const EventDetailsScreen = () => {
-  const {event} =
-    useRoute<RouteProp<RootStackParamList, 'EventDetails'>>().params;
-
+export const EventDetails = ({event}: EventDetailsProps) => {
   return (
-    <ScrollView bg="transparent" mt={SAFE_AREA_PADDING.paddingTop}>
-      <Menu
-        menuConfig={menuConfigImage}
-        metaData={{imageURL: event.attachment?.url}}>
-        {event.attachment?.url && (
-          <ImageBackground
-            source={{
-              uri: event.attachment.url,
-            }}
-            style={styles.image}
-            resizeMode="cover"
-          />
-        )}
-      </Menu>
-      <Box
-        pr={SAFE_AREA_PADDING.paddingRight}
-        pl={SAFE_AREA_PADDING.paddingLeft}
-        pt={SAFE_AREA_PADDING.paddingLeft}>
-        <WhereTitle item={event} />
-        <Box flexDir="row" mt={5} justifyContent="space-between">
-          {/* <AvatarGroup userImages={event.subscribers} /> */}
-          <JoinEvent />
-        </Box>
-        {/* <Text mt={5} fontSize={20}>
-          {event.description}
-        </Text> */}
-      </Box>
-
+    <ScrollView bg="transparent">
+      <Post item={event} />
       <Box
         my={10}
         borderRadius={10}
@@ -80,4 +45,8 @@ const EventDetailsScreen = () => {
   );
 };
 
-export default EventDetailsScreen;
+export const EventDetailsScreen = () => {
+  const {event} =
+    useRoute<RouteProp<RootStackParamList, 'EventDetails'>>().params;
+  return <EventDetails event={event} />;
+};

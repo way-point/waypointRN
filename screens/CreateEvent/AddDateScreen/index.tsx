@@ -114,11 +114,7 @@ const AddDateScreen = () => {
 
   return (
     <Box flex={1} bg="transparent">
-      <Box
-        bg="transparent"
-        mt={SAFE_AREA_PADDING.paddingTop}
-        px={SAFE_AREA_PADDING.paddingLeft}
-        h="100%">
+      <Box bg="transparent" px={SAFE_AREA_PADDING.paddingLeft} h="100%">
         <Box
           flexDir="row"
           bg="transparent"
@@ -184,14 +180,14 @@ const AddDateScreen = () => {
             </Pressable>
           </Box>
         </Box>
-        <Pressable
+        {/* <Pressable
           onPress={() => {
             navigation.navigate('Repeat');
           }}>
           <Text alignSelf="center" color="constants.primary">
             Repeat Every
           </Text>
-        </Pressable>
+        </Pressable> */}
         <Divider my={5} />
         <Heading mb={5}>Where</Heading>
         <Input

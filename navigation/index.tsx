@@ -40,7 +40,7 @@ import {BlurView} from '@react-native-community/blur';
 import ExploreScreen from '../screens/ExploreScreen';
 import Layout, {SAFE_AREA_PADDING} from '../constants/Layout';
 import AddTitleScreen from '../screens/CreateEvent/AddTitleScreen';
-import EventDetailsScreen from '../screens/CreateEvent/EventDetailScreen';
+import {EventDetailsScreen} from '../screens/CreateEvent/EventDetailScreen';
 import AddDateScreen from '../screens/CreateEvent/AddDateScreen';
 import RepeatScreen from '../screens/CreateEvent/RepeatScreen';
 import SearchAddressScreen from '../screens/CreateEvent/SearchAdressScreen';
@@ -301,26 +301,46 @@ const RootNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
 
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Root" component={DrawerNavigator} />
-      <Stack.Screen
-        name="ImageView"
-        component={ImageViewerScreen}
-        options={{presentation: 'containedTransparentModal'}}
-      />
-      <Stack.Group>
-        <Stack.Screen name="CreateTitle" component={AddTitleScreen} />
-        <Stack.Screen name="EventDetails" component={EventDetailsScreen} />
-        <Stack.Screen name="AddDate" component={AddDateScreen} />
-        <Stack.Screen name="Repeat" component={RepeatScreen} />
-        <Stack.Screen name="SearchAddress" component={SearchAddressScreen} />
-        <Stack.Screen name="Review" component={ReviewScreen} />
+    <Stack.Navigator>
+      <Stack.Group screenOptions={{headerShown: false}}>
         <Stack.Screen
-          name="Profile"
-          component={NavigationProfileScreen}
-          initialParams={{host_id: auth().currentUser?.uid || ''}}
+          name="Root"
+          options={{title: 'Home'}}
+          component={DrawerNavigator}
+        />
+        <Stack.Screen
+          name="ImageView"
+          component={ImageViewerScreen}
+          options={{presentation: 'containedTransparentModal'}}
         />
       </Stack.Group>
+      <Stack.Screen
+        name="EventDetails"
+        component={EventDetailsScreen}
+        options={{headerTitle: '', animation: 'fade', animationDuration: 100}}
+      />
+      <Stack.Screen
+        name="AddDate"
+        component={AddDateScreen}
+        options={{headerTitle: 'Date'}}
+      />
+      <Stack.Screen name="Repeat" component={RepeatScreen} />
+      <Stack.Screen name="SearchAddress" component={SearchAddressScreen} />
+      <Stack.Screen name="Review" component={ReviewScreen} />
+      <Stack.Screen
+        name="CreateTitle"
+        component={AddTitleScreen}
+        options={{headerTitle: 'Create'}}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={NavigationProfileScreen}
+        options={{
+          animation: 'fade',
+          animationDuration: 100,
+        }}
+        initialParams={{host_id: auth().currentUser?.uid || ''}}
+      />
     </Stack.Navigator>
   );
 };

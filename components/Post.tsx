@@ -26,6 +26,7 @@ import UidFind from '../api/route/User/UidFind';
 import moment from 'moment';
 import {UserProfileScreen} from '../screens/UserProfileScreen';
 import LinkPreviewBox from './LinkPreview';
+import {EventDetails} from '../screens/CreateEvent/EventDetailScreen';
 
 const styles = StyleSheet.create({
   eventBusy: {
@@ -67,7 +68,25 @@ const Post = ({item}: feedDataItemProps) => {
   };
 
   return (
-    <Menu menuConfig={menuConfigEvent}>
+    <Menu
+      menuConfig={menuConfigEvent}
+      onPressMenuPreview={() => {
+        navigation.navigate('EventDetails', {event: item});
+      }}
+      preview={{
+        previewConfig: {
+          previewType: 'CUSTOM',
+          previewSize: 'STRETCH',
+          preferredCommitStyle: 'pop',
+        },
+        previewRenderItem: () => {
+          return (
+            <Box>
+              <EventDetails event={item} />
+            </Box>
+          );
+        },
+      }}>
       <Pressable
         bg={currTheme + '.background'}
         alignSelf="center"
@@ -91,6 +110,7 @@ const Post = ({item}: feedDataItemProps) => {
               previewConfig: {
                 previewType: 'CUSTOM',
                 previewSize: 'STRETCH',
+                preferredCommitStyle: 'pop',
               },
               previewRenderItem: () => {
                 return (

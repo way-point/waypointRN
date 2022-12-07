@@ -36,11 +36,7 @@ const ReviewScreen = () => {
   };
   return (
     <Box flex={1} bg="transparent">
-      <Box
-        bg="transparent"
-        mt={SAFE_AREA_PADDING.paddingTop}
-        px={SAFE_AREA_PADDING.paddingLeft}
-        h="100%">
+      <Box bg="transparent" px={SAFE_AREA_PADDING.paddingLeft} h="100%">
         <Box
           flexDir="row"
           bg="transparent"

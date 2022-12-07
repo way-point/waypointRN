@@ -43,7 +43,6 @@ import LinkPreviewBox from '../../../components/LinkPreview';
 
 const styles = StyleSheet.create({
   scrollView: {
-    marginTop: SAFE_AREA_PADDING.paddingTop,
     flexGrow: 1,
   },
   carrot: {
