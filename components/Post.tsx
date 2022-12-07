@@ -19,7 +19,7 @@ import {
   Ionicons,
   MaterialIcons,
 } from '@expo/vector-icons';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import menuConfigUser from '../constants/Menu/menuConfigUser';
 import ProfileImage from './ProfileImage';
 import UidFind from '../api/route/User/UidFind';
@@ -121,7 +121,14 @@ const Post = ({item}: feedDataItemProps) => {
               },
             }}
             menuConfig={menuConfigUser}>
-            <ProfileImage id={item.host_id as string} size={40} />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Profile', {
+                  host_id: item.host_id as string,
+                });
+              }}>
+              <ProfileImage id={item.host_id as string} size={40} />
+            </TouchableOpacity>
           </Menu>
           <Box ml={2}>
             <Box flexDir="row">
