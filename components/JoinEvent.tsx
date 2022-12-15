@@ -14,7 +14,7 @@ const JoinEvent = () => {
         <Text mr={1}>3</Text>
         <Feather name="user" size={18} color={colors[currTheme].text} />
       </Box>
-      <Pressable bg="constants.primary" px={2} h={10} borderRadius={10}>
+      <Pressable bg="constants.primary" px={2} h={8} borderRadius={10}>
         <Text mt="auto" mb="auto" color="white">
           Join Event
         </Text>

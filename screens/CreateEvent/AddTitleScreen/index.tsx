@@ -39,7 +39,6 @@ import {RootProp} from '../../../navigation/types';
 import Video from 'react-native-video';
 import {feedDataProps} from '../../../constants/types';
 import auth from '@react-native-firebase/auth';
-import LinkPreviewBox from '../../../components/LinkPreview';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -173,7 +172,7 @@ const AddTitleScreen = () => {
       <BottomSheetModalProvider>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={Platform.OS === 'android' ? 10 : 0}
+          keyboardVerticalOffset={Platform.OS === 'android' ? 10 : 90}
           style={styles.scrollView}>
           <Box
             bg="transparent"
@@ -224,12 +223,6 @@ const AddTitleScreen = () => {
               placeholder="What's the occasion?"
               w="100%"
             />
-
-            {!curr.context.attachment.uri && (
-              <Box mt={3} bg="transparent">
-                <LinkPreviewBox message={curr.context.message} />
-              </Box>
-            )}
 
             {curr.context.attachment.type === 'photo' &&
               curr.context.attachment.uri && (

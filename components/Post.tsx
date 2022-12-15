@@ -25,7 +25,6 @@ import ProfileImage from './ProfileImage';
 import UidFind from '../api/route/User/UidFind';
 import moment from 'moment';
 import {UserProfileScreen} from '../screens/UserProfileScreen';
-import LinkPreviewBox from './LinkPreview';
 import {EventDetails} from '../screens/CreateEvent/EventDetailScreen';
 
 const styles = StyleSheet.create({
@@ -161,17 +160,12 @@ const Post = ({item}: feedDataItemProps) => {
           </Box>
           <JoinEvent />
         </Box>
-        <Box mb={3} flexDirection="row">
+        <Box flexDirection="row">
           {/* <AvatarGroup userImages={item.subscribers} /> */}
-          <Text fontSize={20} mb={5}>
+          <Text fontSize={20} mb={3}>
             {item.description}
           </Text>
         </Box>
-        {!item?.attachment?.url && (
-          <Box mt={3} bg="transparent">
-            <LinkPreviewBox message={item.description} />
-          </Box>
-        )}
         <PostImage item={item} />
         <Box flexDir="row" justifyContent="space-between" mt={3} mx={3}>
           <Box flexDir="row">

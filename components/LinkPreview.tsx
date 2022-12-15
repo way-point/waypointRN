@@ -24,8 +24,8 @@ const LinkPreviewBox = ({message}: LinkPreviewBoxProps) => {
       renderDescription={description => {
         return <Text>{description}</Text>;
       }}
-      renderText={text => {
-        return <Text>{text}</Text>;
+      renderText={() => {
+        return null;
       }}
       renderTitle={title => {
         return (

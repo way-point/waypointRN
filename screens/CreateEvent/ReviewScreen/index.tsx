@@ -1,5 +1,5 @@
 import {useAtom} from 'jotai';
-import {Box, Heading, Pressable, Text} from 'native-base';
+import {Box, Pressable, Text} from 'native-base';
 import React from 'react';
 import Post from '../../../components/Post';
 import ProfileImage from '../../../components/ProfileImage';
@@ -87,7 +87,6 @@ const ReviewScreen = () => {
             <Text color="white">Post</Text>
           </Pressable>
         </Box>
-        <Heading mb={5}>Everything look good?</Heading>
         <Post item={postData} />
       </Box>
     </Box>
