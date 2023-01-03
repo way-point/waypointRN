@@ -4,7 +4,7 @@ import ProfileImage from '../../components/ProfileImage';
 import {SAFE_AREA_PADDING} from '../../constants/Layout';
 import {useAtom} from 'jotai';
 import {userAtom} from '../../constants/atoms';
-import findByUser from '../../api/route/User/FindByUser';
+import findByUser from '../../api/route/Post/FindByUser';
 import auth from '@react-native-firebase/auth';
 import {feedDataProps} from '../../constants/types';
 import Post from '../../components/Post';
@@ -27,10 +27,18 @@ const ProfileScreen = () => {
   useEffect(() => {
     const getUserPosts = async () => {
       const uid = await auth().currentUser?.uid;
-      const numFollowerAndFollowing = await NumFollowerAndFollowing(uid || '');
-      setFollowers(numFollowerAndFollowing.followers || 0);
-      setFollowing(numFollowerAndFollowing.following || 0);
+      console.log(uid);
+      NumFollowerAndFollowing(uid || '')
+        .then(numFollowerAndFollowing => {
+          setFollowers(numFollowerAndFollowing.followers || 0);
+          setFollowing(numFollowerAndFollowing.following || 0);
+        })
+        .catch(() => {
+          setFollowers(0);
+          setFollowing(0);
+        });
       const user = await findByUser(uid || '');
+      console.log(user);
       if (user.posts && user.posts.length > 0) {
         setPosts(user.posts);
       }

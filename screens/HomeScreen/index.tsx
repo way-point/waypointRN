@@ -1,9 +1,9 @@
-import {Box, FlatList} from 'native-base';
+import { Box, FlatList } from 'native-base';
 import React from 'react';
 import feedData from '../../data/feedData';
 import AddPostButton from '../../components/AddPostButton';
 import Post from '../../components/Post';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   flatlist: {
@@ -17,7 +17,7 @@ const HomeScreen = () => {
       <FlatList
         data={feedData}
         contentContainerStyle={styles.flatlist}
-        renderItem={({item}) => <Post item={item} />}
+        renderItem={({ item }) => <Post item={item} />}
         keyExtractor={item => item.id as string}
       />
       <AddPostButton />

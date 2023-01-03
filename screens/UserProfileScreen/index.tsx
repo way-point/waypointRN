@@ -1,16 +1,17 @@
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {useAtom} from 'jotai';
 import {Box, Divider, FlatList, Text} from 'native-base';
 import React, {useState, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
-import findByUser from '../../api/route/User/FindByUser';
+import findByUser from '../../api/route/Post/FindByUser';
 import NumFollowerAndFollowing from '../../api/route/User/NumFollowerAndFollowing';
 import Post from '../../components/Post';
 import ProfileImage from '../../components/ProfileImage';
-import {userAtom} from '../../constants/atoms';
 import {SAFE_AREA_PADDING} from '../../constants/Layout';
 import {feedDataProps} from '../../constants/types';
 import {RootStackParamList} from '../../navigation/types';
+import auth from '@react-native-firebase/auth';
+import StatusOfUserButton from '../../components/StatusOfUserButton';
+import UidFind from '../../api/route/User/UidFind';
 
 interface UserProfileProps {
   host_id: string;
@@ -28,18 +29,24 @@ export const NavigationProfileScreen = () => {
 };
 
 export const UserProfileScreen = ({host_id}: UserProfileProps) => {
-  const [{username}] = useAtom(userAtom);
   const [posts, setPosts] = useState([] as feedDataProps[]);
-
+  const [username, setUsername] = useState(null as null | string);
   const [followers, setFollowers] = useState(0);
   const [following, setFollowing] = useState(0);
-
   useEffect(() => {
-    const getUserPosts = async () => {
-      const uid = host_id;
+    const getFollowerAndFollowing = async (uid: string) => {
       const numFollowerAndFollowing = await NumFollowerAndFollowing(uid || '');
       setFollowers(numFollowerAndFollowing.followers || 0);
       setFollowing(numFollowerAndFollowing.following || 0);
+    };
+
+    const getUserPosts = async () => {
+      const uid = host_id;
+      const uidUser = await UidFind(uid);
+      await getFollowerAndFollowing(uid);
+      if ('username' in uidUser) {
+        setUsername(uidUser.username);
+      }
       const user = await findByUser(uid || '');
       if (user.posts && user.posts.length > 0) {
         setPosts(user.posts);
@@ -78,6 +85,12 @@ export const UserProfileScreen = ({host_id}: UserProfileProps) => {
           </Box>
         </Box>
       </Box>
+
+      {host_id !== auth().currentUser?.uid && (
+        <Box ml="auto" mr={SAFE_AREA_PADDING.paddingLeft} bg="transparent">
+          <StatusOfUserButton uid={host_id} />
+        </Box>
+      )}
       <Divider mt={5} />
       <FlatList
         data={posts}

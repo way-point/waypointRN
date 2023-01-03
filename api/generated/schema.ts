@@ -47,6 +47,31 @@ export interface paths {
       };
     };
   };
+  '/api/post/likePost': {
+    post: {
+      parameters: {
+        body: {
+          post_id: definitions['PostIdSchema'];
+        };
+        header: {
+          /** JWT Token given by Signed in user */
+          authorization_bearer: unknown;
+        };
+      };
+      responses: {
+        /** Returns the first FIVE posts as a list */
+        200: {
+          schema: definitions['LikeOutputSchema'];
+        };
+        400: {
+          schema: definitions['GenericErrorSchema'];
+        };
+        500: {
+          schema: definitions['GenericErrorSchema'];
+        };
+      };
+    };
+  };
   '/api/post/postCreate': {
     post: {
       parameters: {
@@ -61,6 +86,31 @@ export interface paths {
       responses: {
         200: {
           schema: definitions['PostSchema'];
+        };
+        400: {
+          schema: definitions['GenericErrorSchema'];
+        };
+        500: {
+          schema: definitions['GenericErrorSchema'];
+        };
+      };
+    };
+  };
+  '/api/post/unLikePost': {
+    post: {
+      parameters: {
+        body: {
+          post_id: definitions['PostIdSchema'];
+        };
+        header: {
+          /** JWT Token given by Signed in user */
+          authorization_bearer: unknown;
+        };
+      };
+      responses: {
+        /** Returns the first FIVE posts as a list */
+        200: {
+          schema: definitions['LikeOutputSchema'];
         };
         400: {
           schema: definitions['GenericErrorSchema'];
@@ -96,31 +146,7 @@ export interface paths {
       };
     };
   };
-  '/api/user/findFollowerRequests': {
-    post: {
-      parameters: {
-        body: {
-          date: definitions['DateSchema'];
-        };
-        header: {
-          /** JWT Token given by Signed in user */
-          authorization_bearer: unknown;
-        };
-      };
-      responses: {
-        200: {
-          schema: definitions['NestedFollowersRelation'];
-        };
-        400: {
-          schema: definitions['GenericErrorSchema'];
-        };
-        500: {
-          schema: definitions['GenericErrorSchema'];
-        };
-      };
-    };
-  };
-  '/api/user/followBackUser': {
+  '/api/user/follow': {
     post: {
       parameters: {
         body: {
@@ -134,53 +160,7 @@ export interface paths {
       responses: {
         /** Returns the friendship model */
         200: {
-          schema: definitions['FriendshipSchema'];
-        };
-        400: {
           schema: definitions['GenericErrorSchema'];
-        };
-        500: {
-          schema: definitions['GenericErrorSchema'];
-        };
-      };
-    };
-  };
-  '/api/user/followUser': {
-    post: {
-      parameters: {
-        body: {
-          uid: definitions['UidSchema'];
-        };
-        header: {
-          /** JWT Token given by Signed in user */
-          authorization_bearer: unknown;
-        };
-      };
-      responses: {
-        /** Returns the friendship model */
-        200: {
-          schema: definitions['FriendshipSchema'];
-        };
-        400: {
-          schema: definitions['GenericErrorSchema'];
-        };
-        500: {
-          schema: definitions['GenericErrorSchema'];
-        };
-      };
-    };
-  };
-  '/api/user/ifUsernameExist': {
-    get: {
-      parameters: {
-        query: {
-          username: unknown;
-        };
-      };
-      responses: {
-        /** Returns the first FIVE users as a list */
-        200: {
-          schema: definitions['IfUserExistSchema'];
         };
         400: {
           schema: definitions['GenericErrorSchema'];
@@ -280,7 +260,7 @@ export interface paths {
       };
     };
   };
-  '/api/user/userFind': {
+  '/api/user/usernameSearch': {
     get: {
       parameters: {
         query: {
@@ -304,44 +284,12 @@ export interface paths {
 }
 
 export interface definitions {
-  DateSchema: {
-    /** Format: date-time */
-    date?: string;
-  };
-  FriendshipSchema: {
-    /** Format: date-time */
-    date_created?: string;
-    id?: unknown;
-    requested_by: unknown;
-    requested_to: unknown;
-    /** @enum {string} */
-    status?: 'new' | 'ongoing' | 'done';
-  };
   GenericErrorSchema: {
     errors?: string[];
   };
-  IfUserExistSchema: {
-    ifUserExist?: boolean;
-  };
-  NestedFollowersRelation: {
-    relations_new?: {
-      /** Format: date-time */
-      date_created?: string;
-      followers_id?: unknown;
-      profile_uri?: string;
-      uid: string;
-      user_posts_id?: unknown;
-      username: string;
-    }[];
-    relations_old?: {
-      /** Format: date-time */
-      date_created?: string;
-      followers_id?: unknown;
-      profile_uri?: string;
-      uid: string;
-      user_posts_id?: unknown;
-      username: string;
-    }[];
+  LikeOutputSchema: {
+    ifLiked?: boolean;
+    numLikes?: number;
   };
   NestedPosts: {
     posts?: {
@@ -370,12 +318,14 @@ export interface definitions {
       };
       host_id?: unknown;
       id?: unknown;
+      likes?: unknown;
     }[];
   };
   NestedUsers: {
     users?: {
       /** Format: date-time */
       date_created?: string;
+      follower_requests_id?: unknown;
       followers_id?: unknown;
       profile_uri?: string;
       uid: string;
@@ -386,6 +336,9 @@ export interface definitions {
   NumFollowerAndFollowingSchema: {
     followers: number;
     following: number;
+  };
+  PostIdSchema: {
+    post_id?: string;
   };
   PostSchema: {
     attachment?: {
@@ -413,6 +366,7 @@ export interface definitions {
     };
     host_id?: unknown;
     id?: unknown;
+    likes?: unknown;
   };
   RelationshipOutputSchema: {
     id?: unknown;
@@ -425,6 +379,7 @@ export interface definitions {
   User: {
     /** Format: date-time */
     date_created?: string;
+    follower_requests_id?: unknown;
     followers_id?: unknown;
     profile_uri?: string;
     uid: string;

@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   extends: '@react-native-community',
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'react', 'react-native'],
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
@@ -13,4 +13,7 @@ module.exports = {
       },
     },
   ],
+  env: {
+    'react-native/react-native': true,
+  },
 };

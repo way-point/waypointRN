@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {guest} from '../constants/guestUrl';
+import React, { useEffect, useState } from 'react';
+import { guest } from '../constants/guestUrl';
 import UidFind from '../api/route/User/UidFind';
-import {Image} from 'native-base';
+import { Image } from 'native-base';
 
 interface ProfileImageProps {
   uri?: string;
@@ -9,7 +9,7 @@ interface ProfileImageProps {
   id?: string;
 }
 
-const ProfileImage = ({uri = guest, size = 35, id = ''}: ProfileImageProps) => {
+const ProfileImage = ({ uri = guest, size = 35, id = '' }: ProfileImageProps) => {
   const [currentImage, setCurrentImage] = useState(uri);
 
   useEffect(() => {
@@ -23,9 +23,9 @@ const ProfileImage = ({uri = guest, size = 35, id = ''}: ProfileImageProps) => {
   }, [id, uri]);
   return (
     <Image
-      style={{width: size, height: size, borderRadius: size / 2}}
+      style={{ width: size, height: size, borderRadius: size / 2 }}
       source={{
-        uri: currentImage,
+        uri: currentImage || guest,
       }}
     />
   );

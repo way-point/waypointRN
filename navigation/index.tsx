@@ -1,18 +1,19 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   DefaultTheme,
   NavigationContainer,
   useNavigation,
 } from '@react-navigation/native';
-import {useAtom} from 'jotai';
-import {Box, Input, Pressable, Spinner, Text, useTheme} from 'native-base';
-import {Platform, StyleSheet} from 'react-native';
-import React, {useEffect} from 'react';
-import {Feather, Ionicons, FontAwesome5, AntDesign} from '@expo/vector-icons';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { useAtom } from 'jotai';
+import { Box, Input, Pressable, Spinner, Text, useTheme } from 'native-base';
+import { Platform, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Feather, Ionicons, FontAwesome5, AntDesign } from '@expo/vector-icons';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   createDrawerNavigator,
   DrawerContentComponentProps,
+  useDrawerStatus
 } from '@react-navigation/drawer';
 import {
   DrawerContentScrollView,
@@ -25,22 +26,16 @@ import {
   SettingTabParamList,
   SignInStackParamList,
 } from './types';
-import {
-  cityAtom,
-  currentTheme,
-  ifSignedIn,
-  userAtom,
-  UserRecommendations,
-} from '../constants/atoms';
+import { cityAtom, currentTheme, ifSignedIn, userAtom } from '../constants/atoms';
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/SignIn/LoginScreen';
 import RegisterScreen from '../screens/SignIn/RegisterScreen';
 import ProfileImage from '../components/ProfileImage';
-import {BlurView} from '@react-native-community/blur';
+import { BlurView } from '@react-native-community/blur';
 import ExploreScreen from '../screens/ExploreScreen';
-import Layout, {SAFE_AREA_PADDING} from '../constants/Layout';
+import Layout, { SAFE_AREA_PADDING } from '../constants/Layout';
 import AddTitleScreen from '../screens/CreateEvent/AddTitleScreen';
-import {EventDetailsScreen} from '../screens/CreateEvent/EventDetailScreen';
+import { EventDetailsScreen } from '../screens/CreateEvent/EventDetailScreen';
 import AddDateScreen from '../screens/CreateEvent/AddDateScreen';
 import RepeatScreen from '../screens/CreateEvent/RepeatScreen';
 import SearchAddressScreen from '../screens/CreateEvent/SearchAdressScreen';
@@ -53,28 +48,16 @@ import UsernameScreen from '../screens/SignIn/UsernameScreen';
 import SettingScreen from '../screens/Settings/SettingScreen';
 import AccountInformationScreen from '../screens/Settings/AccountInformationScreen';
 import auth from '@react-native-firebase/auth';
-import findFollowerRequests from '../api/route/User/FindFollowerRequests';
 import NotificationScreen from '../screens/NotificationScreen';
-import {NavigationProfileScreen} from '../screens/UserProfileScreen';
+import { NavigationProfileScreen } from '../screens/UserProfileScreen';
+import NumFollowerAndFollowing from '../api/route/User/NumFollowerAndFollowing';
 
 const BottomTabNavigator = () => {
   const Stack = createBottomTabNavigator<RootTabParamList>();
   const [city] = useAtom(cityAtom);
-  const [userRecommendations, setUserRecommendations] =
-    useAtom(UserRecommendations);
   const [currTheme] = useAtom(currentTheme);
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   const navigation = useNavigation<RootProp>();
-
-  useEffect(() => {
-    const findRequests = async () => {
-      findFollowerRequests(undefined).then(res => {
-        setUserRecommendations(res);
-      });
-    };
-    findRequests();
-    // setTimeout(findRequests, 1000 * 60);
-  }, [setUserRecommendations]);
 
   return (
     <Stack.Navigator
@@ -97,7 +80,7 @@ const BottomTabNavigator = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({color, focused}) => {
+          tabBarIcon: ({ color, focused }) => {
             return (
               <Feather
                 name="home"
@@ -144,7 +127,7 @@ const BottomTabNavigator = () => {
         name="Search"
         component={ExploreScreen}
         options={{
-          tabBarIcon: ({color, focused}) => {
+          tabBarIcon: ({ color, focused }) => {
             return (
               <FontAwesome5
                 name="map-marker-alt"
@@ -176,7 +159,7 @@ const BottomTabNavigator = () => {
         name="Notification"
         component={NotificationScreen}
         options={{
-          tabBarIcon: ({color, focused}) => {
+          tabBarIcon: ({ color, focused }) => {
             return (
               <Ionicons
                 name="notifications-outline"
@@ -185,7 +168,7 @@ const BottomTabNavigator = () => {
               />
             );
           },
-          tabBarBadge: userRecommendations.relations_new?.length || undefined,
+          tabBarBadge: undefined,
           headerLeft: () => {
             return (
               <Box backgroundColor="transparent" pl={3}>
@@ -201,7 +184,7 @@ const BottomTabNavigator = () => {
         name="Account"
         component={ProfileScreen}
         options={{
-          tabBarIcon: ({color, focused}) => {
+          tabBarIcon: ({ color, focused }) => {
             return (
               <Feather
                 name="user"
@@ -218,18 +201,52 @@ const BottomTabNavigator = () => {
 };
 
 function CustomDrawerContent(props: DrawerContentComponentProps) {
-  const [{username}] = useAtom(userAtom);
+  const [{ username }] = useAtom(userAtom);
+  const [followersAndFollowing, setFollowersAndFollowing] = useState(null as null | { following: number, followers: number });
+  const isDrawerOpen = useDrawerStatus() === 'open'
+  const get_follower_count = async () => {
+    const uid = auth().currentUser?.uid || '';
+    const data = await NumFollowerAndFollowing(uid);
+    if (!('errors' in data)) {
+      setFollowersAndFollowing(data);
+    }
+  }
+
+  useEffect(() => {
+    if (isDrawerOpen) {
+      get_follower_count()
+    }
+  }, [isDrawerOpen])
   return (
     <DrawerContentScrollView {...props}>
       <Pressable
         bg="transparent"
         px={SAFE_AREA_PADDING.paddingLeft}
-        flexDir="row">
+      >
         <ProfileImage id={auth().currentUser?.uid} />
-        <Text fontSize={18} mt="auto" mb="auto" ml={2} opacity={0.8}>
+        <Text fontSize={18} mt="auto" mb="auto" opacity={0.8}>
           @{username}
         </Text>
       </Pressable>
+      <Box flexDir='row' bg='transparent' mt={1} px={SAFE_AREA_PADDING.paddingLeft}>
+        <Box bg='transparent' flexDir='row' mr={2}>
+          {followersAndFollowing ?
+            <Text mr={1} fontWeight='bold' fontSize='md'>{followersAndFollowing.following}</Text>
+            :
+            <Spinner />
+          }
+          <Text fontSize='sm' my='auto'>Following</Text>
+        </Box>
+
+        <Box bg='transparent' flexDir='row'>
+          {followersAndFollowing ?
+            <Text mr={1} fontWeight='bold' fontSize='md'>{followersAndFollowing.followers}</Text>
+            :
+            <Spinner />
+          }
+          <Text fontSize='sm' my='auto'>Followers</Text>
+        </Box>
+      </Box>
       <Box mt={5} backgroundColor="transparent">
         <DrawerItemList {...props} />
       </Box>
@@ -253,7 +270,7 @@ const SettingsNavigator = () => {
 
 const DrawerNavigator = () => {
   const Stack = createDrawerNavigator();
-  const {colors} = useTheme();
+  const { colors } = useTheme();
 
   return (
     <Stack.Navigator
@@ -267,7 +284,7 @@ const DrawerNavigator = () => {
         component={BottomTabNavigator}
         options={{
           title: 'Home',
-          drawerIcon: ({color, size, focused}) => {
+          drawerIcon: ({ color, size, focused }) => {
             return (
               <Feather
                 name="home"
@@ -282,7 +299,7 @@ const DrawerNavigator = () => {
         name="Settings"
         component={SettingsNavigator}
         options={{
-          drawerIcon: ({color, size, focused}) => {
+          drawerIcon: ({ color, size, focused }) => {
             return (
               <AntDesign
                 name="setting"
@@ -302,27 +319,27 @@ const RootNavigator = () => {
 
   return (
     <Stack.Navigator>
-      <Stack.Group screenOptions={{headerShown: false}}>
+      <Stack.Group screenOptions={{ headerShown: false }}>
         <Stack.Screen
           name="Root"
-          options={{title: 'Home'}}
+          options={{ title: 'Home' }}
           component={DrawerNavigator}
         />
         <Stack.Screen
           name="ImageView"
           component={ImageViewerScreen}
-          options={{presentation: 'containedTransparentModal'}}
+          options={{ presentation: 'containedTransparentModal' }}
         />
       </Stack.Group>
       <Stack.Screen
         name="EventDetails"
         component={EventDetailsScreen}
-        options={{headerTitle: '', animation: 'fade', animationDuration: 100}}
+        options={{ headerTitle: '', animation: 'fade', animationDuration: 100 }}
       />
       <Stack.Screen
         name="AddDate"
         component={AddDateScreen}
-        options={{headerTitle: 'Date'}}
+        options={{ headerTitle: 'Date' }}
       />
       <Stack.Screen name="Repeat" component={RepeatScreen} />
       <Stack.Screen name="SearchAddress" component={SearchAddressScreen} />
@@ -330,7 +347,7 @@ const RootNavigator = () => {
       <Stack.Screen
         name="CreateTitle"
         component={AddTitleScreen}
-        options={{headerTitle: 'Create'}}
+        options={{ headerTitle: 'Create' }}
       />
       <Stack.Screen
         name="Profile"
@@ -339,7 +356,7 @@ const RootNavigator = () => {
           animation: 'fade',
           animationDuration: 100,
         }}
-        initialParams={{host_id: auth().currentUser?.uid || ''}}
+        initialParams={{ host_id: auth().currentUser?.uid || '' }}
       />
     </Stack.Navigator>
   );
@@ -349,7 +366,7 @@ const SignInNavigator = () => {
   const Stack = createNativeStackNavigator<SignInStackParamList>();
 
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="EmailVerify" component={EmailVerifyScreen} />
@@ -361,7 +378,7 @@ const SignInNavigator = () => {
 
 const Navigation = () => {
   const [currTheme] = useAtom(currentTheme);
-  const {colors} = useTheme();
+  const { colors } = useTheme();
 
   const [ifSignIn] = useAtom(ifSignedIn);
 

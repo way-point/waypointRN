@@ -1,4 +1,4 @@
-import {fetcher} from '../../config/fetcher';
+import { fetcher } from '../../config/fetcher';
 
 const numFollowerAndFollowing = fetcher
   .path('/api/user/numFollowerAndFollowing')
@@ -6,7 +6,7 @@ const numFollowerAndFollowing = fetcher
   .create();
 
 const NumFollowerAndFollowing = (uid: string) => {
-  return numFollowerAndFollowing({uid})
+  return numFollowerAndFollowing({ uid })
     .then(response => {
       return response.data;
     })

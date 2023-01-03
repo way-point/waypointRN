@@ -1,4 +1,4 @@
-import {fetcher} from '../../config/fetcher';
+import {configureFetcher, fetcher} from '../../config/fetcher';
 
 const CheckRelationshipToUser = fetcher
   .path('/api/user/checkRelationshipToUser')
@@ -6,20 +6,22 @@ const CheckRelationshipToUser = fetcher
   .create();
 
 const checkRelationshipToUser = (uid: string) => {
-  return CheckRelationshipToUser({uid})
-    .then(response => {
-      return response.data;
-    })
-    .catch(e => {
-      if (e instanceof CheckRelationshipToUser.Error) {
-        const error = e.getActualType();
-        throw error.data;
-      }
-      const err = {
-        errors: ['Service Error'],
-      };
-      throw err;
-    });
+  return configureFetcher().then(() => {
+    return CheckRelationshipToUser({uid})
+      .then(response => {
+        return response.data;
+      })
+      .catch(e => {
+        if (e instanceof CheckRelationshipToUser.Error) {
+          const error = e.getActualType();
+          throw error.data;
+        }
+        const err = {
+          errors: ['Service Error'],
+        };
+        throw err;
+      });
+  });
 };
 
 export default checkRelationshipToUser;

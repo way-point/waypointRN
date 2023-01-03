@@ -1,6 +1,6 @@
 import {configureFetcher, fetcher} from '../../config/fetcher';
 
-const followBack = fetcher.path('/api/user/followUser').method('post').create();
+const followBack = fetcher.path('/api/user/follow').method('post').create();
 
 const Follow = (uid: string) => {
   return configureFetcher().then(() => {

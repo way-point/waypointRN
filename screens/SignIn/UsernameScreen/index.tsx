@@ -5,13 +5,12 @@ import {
   Input,
   Pressable,
   ScrollView,
-  Spinner,
   Stack,
   Text,
   useTheme,
 } from 'native-base';
 import {StyleSheet} from 'react-native';
-import {AntDesign, Feather, Ionicons} from '@expo/vector-icons';
+import {AntDesign, Feather} from '@expo/vector-icons';
 import {useAtom} from 'jotai';
 import {
   currentTheme,
@@ -22,7 +21,6 @@ import {
 import {SAFE_AREA_PADDING} from '../../../constants/Layout';
 import {useNavigation} from '@react-navigation/native';
 import {SignInProp} from '../../../navigation/types';
-import IfUsernameExist from '../../../api/route/User/IfUsernameExist';
 import SubmitButton from '../../../components/SubmitButton';
 import UserCreate from '../../../api/route/User/UserCreate';
 import auth from '@react-native-firebase/auth';
@@ -58,57 +56,28 @@ const pickImage = async () => {
   return result;
 };
 
-const UserCheck = (
-  ifLoading: boolean,
-  ifCanUseUsername: boolean,
-  searchTerm: string,
-) => {
-  const {colors} = useTheme();
-  const [currTheme] = useAtom(currentTheme);
-
-  if (searchTerm === '') {
-    return;
-  }
-
-  if (ifLoading) {
-    return <Spinner style={styles.right} />;
-  }
-
-  return ifCanUseUsername ? (
-    <Feather
-      style={styles.right}
-      name="x"
-      size={24}
-      color={colors[currTheme].error}
-    />
-  ) : (
-    <Ionicons
-      style={styles.right}
-      name="checkmark"
-      size={24}
-      color={colors.constants.primary}
-    />
-  );
-};
-
 const UsernameScreen = () => {
   const [curr, send] = useAtom(RegMachine);
   const navigation = useNavigation<SignInProp>();
   const [, setIfSignIn] = useAtom(ifSignedIn);
   const [, setUser] = useAtom(userAtom);
+  const [errMessage, setErrMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  // should be pretty confident this works because we already
-  // checked if user exists and if username exists. This function
-  // creates a user entity in mongodb.
   const createUser = async (username: string, profile_uri?: string) => {
-    const data = await UserCreate(username, profile_uri);
-    if (data && !('errors' in data)) {
-      // user created in mongodb
-      if ('username' in data) {
-        setUser({username: data.username, profile_uri: data.profile_uri});
-      }
-      send({type: 'SIGN_IN'});
-    }
+    setLoading(true);
+    UserCreate(username, profile_uri)
+      .then(res => {
+        setUser({username: res.username, profile_uri: res.profile_uri});
+        setLoading(false);
+        send({type: 'SIGN_IN'});
+      })
+      .catch(err => {
+        if (err[0] === 'username already exists') {
+          setErrMessage('Username already exists');
+          setLoading(false);
+        }
+      });
   };
 
   useEffect(() => {
@@ -118,35 +87,11 @@ const UsernameScreen = () => {
   }, [curr, navigation, setIfSignIn]);
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [ifLoading, setIfLoading] = useState(false);
-  const [ifCanUseUsername, setIfCanUserUsername] = useState(false);
-  const [ifErr, setIfErr] = useState(false);
   const {colors} = useTheme();
   const [currTheme] = useAtom(currentTheme);
   const [profileUri, setProfileUri] = useState(
     auth().currentUser?.photoURL || undefined,
   );
-
-  useEffect(() => {
-    setIfLoading(true);
-    const delayDebounceFn = setTimeout(async () => {
-      // checks if expression contains any form of whitespace
-      setIfErr(false);
-      if (/\s/.test(searchTerm) || searchTerm.length > 50) {
-        setIfCanUserUsername(false);
-        setIfErr(true);
-        setIfLoading(false);
-      } else {
-        const data = await IfUsernameExist(searchTerm);
-        if (data && 'ifUserExist' in data) {
-          setIfCanUserUsername(data.ifUserExist || false);
-          setIfLoading(false);
-        }
-      }
-    }, 1000);
-
-    return () => clearTimeout(delayDebounceFn);
-  }, [searchTerm]);
 
   return (
     <Box flex={1}>
@@ -188,24 +133,30 @@ const UsernameScreen = () => {
             </Box>
           </Box>
           <Text opacity={0.5} px={SAFE_AREA_PADDING.paddingLeft}>
-            Your username willl be permanent so choose wisely
+            Your username will be permanent so choose wisely
           </Text>
 
-          <FormControl isInvalid={ifErr}>
+          <FormControl isInvalid={errMessage !== ''}>
             <Input
               placeholder="Username"
               w={'100%'}
               autoCapitalize="none"
               onChangeText={text => {
+                setErrMessage('');
+                if (/\s/.test(text) || text.length > 50) {
+                  setErrMessage(
+                    "can't contain spaces or contain more than 50 characters",
+                  );
+                }
                 setSearchTerm(text);
               }}
-              rightElement={UserCheck(ifLoading, ifCanUseUsername, searchTerm)}
             />
             <FormControl.ErrorMessage pl={3}>
-              can't contain spaces or contain more than 50 characters
+              {errMessage}
             </FormControl.ErrorMessage>
           </FormControl>
           <SubmitButton
+            ifLoading={loading}
             onPress={async () => {
               let generated_url;
               if (
@@ -221,7 +172,6 @@ const UsernameScreen = () => {
               }
               await createUser(searchTerm, generated_url);
             }}
-            disabled={ifCanUseUsername}
           />
         </Stack>
       </ScrollView>
